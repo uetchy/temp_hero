@@ -180,30 +180,129 @@ void initialiseDungeon()
 	// エリア１ドアの情報
 	//Right 右、　Doun　下、　Left　左、　Up　上、
 	// 1列目のドア情報
-	Room area1[ 7 ][ 1 ].doorInfo[ Up ] = openPath;
-	Room area1[ 7 ][ 1 ].doorInfo[ Left ] = noPath;
-	Room area1[ 7 ][ 1 ].doorInfo[ Right ] = noPath;
-	Room area1[ 7 ][ 1 ].doorInfo[ Down ] = noPath;
+	area1[ 7 ][ 1 ].doorInfo[ Up ] = openPath;
+	area1[ 7 ][ 1 ].doorInfo[ Left ] = noPath;
+	area1[ 7 ][ 1 ].doorInfo[ Right ] = noPath;
+	area1[ 7 ][ 1 ].doorInfo[ Down ] = noPath;
 	// 2列目のドア情報
-	Room area1[ 3 ][ 2 ].doorInfo[ Up ] = openPath;
-	Room area1[ 3 ][ 2 ].doorInfo[ Left ] = noPath;
-	Room area1[ 3 ][ 2 ].doorInfo[ Right ] = noPath;
-	Room area1[ 3 ][ 2 ].doorInfo[ Down ] = noPath;
+	area1[ 3 ][ 2 ].doorInfo[ Up ] = noPath;
+	area1[ 3 ][ 2 ].doorInfo[ Left ] = noPath;
+	area1[ 3 ][ 2 ].doorInfo[ Right ] = noPath;
+	area1[ 3 ][ 2 ].doorInfo[ Down ] = openPath;
 	
-	Room area1[ 4 ][ 2 ].doorInfo[ Up ] = openPath;
-	Room area1[ 4 ][ 2 ].doorInfo[ Left ] = noPath;
-	Room area1[ 4 ][ 2 ].doorInfo[ Right ] = noPath;
-	Room area1[ 4 ][ 2 ].doorInfo[ Down ] = noPath;
+	area1[ 4 ][ 2 ].doorInfo[ Up ] = openPath;
+	area1[ 4 ][ 2 ].doorInfo[ Left ] = noPath;
+	area1[ 4 ][ 2 ].doorInfo[ Right ] = noPath;
+	area1[ 4 ][ 2 ].doorInfo[ Down ] = openPath;
 	
-	Room area1[ 5 ][ 2 ].doorInfo[ Up ] = openPath;
-	Room area1[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
-	Room area1[ 5 ][ 2 ].doorInfo[ Right ] = noPath;
-	Room area1[ 5 ][ 2 ].doorInfo[ Down ] = noPath;
+	area1[ 5 ][ 2 ].doorInfo[ Up ] = openPath;
+	area1[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
+	area1[ 5 ][ 2 ].doorInfo[ Right ] = openPath
+	area1[ 5 ][ 2 ].doorInfo[ Down ] = noPath;
 	
-	Room area1[ 5 ][ 2 ].doorInfo[ Up ] = openPath;
-	Room area1[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
-	Room area1[ 5 ][ 2 ].doorInfo[ Right ] = noPath;
-	Room area1[ 5 ][ 2 ].doorInfo[ Down ] = noPath;
+	area1[ 7 ][ 2 ].doorInfo[ Up ] = noPath;
+	area1[ 7 ][ 2 ].doorInfo[ Left ] = openPath;
+	area1[ 7 ][ 2 ].doorInfo[ Right ] = openPath;
+	area1[ 7 ][ 2 ].doorInfo[ Down ] = noPath;
+	//3列目の道情報
+	area1[ 5 ][ 3 ].doorInfo[ Up ] = noPath;
+	area1[ 5 ][ 3 ].doorInfo[ Left ] = openPath;
+	area1[ 5 ][ 3 ].doorInfo[ Right ] = openPath
+	area1[ 5 ][ 3 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 6 ][ 3 ].doorInfo[ Up ] = openPath;
+	area1[ 6 ][ 3 ].doorInfo[ Left ] = noPath;
+	area1[ 6 ][ 3 ].doorInfo[ Right ] = noPath;
+	area1[ 6 ][ 3 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 7 ][ 3 ].doorInfo[ Up ] = openPath;
+	area1[ 7 ][ 3 ].doorInfo[ Left ] = openPath;
+	area1[ 7 ][ 3 ].doorInfo[ Right ] = openPath;
+	area1[ 7 ][ 3 ].doorInfo[ Down ] = noPath;
+	// 4列目のドア情報
+	area1[ 3 ][ 4 ].doorInfo[ Up ] = noPath;
+	area1[ 3 ][ 4 ].doorInfo[ Left ] = noPath;
+	area1[ 3 ][ 4 ].doorInfo[ Right ] = noPath;
+	area1[ 3 ][ 4 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 4 ][ 4 ].doorInfo[ Up ] = openPath;
+	area1[ 4 ][ 4 ].doorInfo[ Left ] = noPath;
+	area1[ 4 ][ 4 ].doorInfo[ Right ] = noPath;
+	area1[ 4 ][ 4 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 5 ][ 4 ].doorInfo[ Up ] = openPath;
+	area1[ 5 ][ 4 ].doorInfo[ Left ] = openPath;
+	area1[ 5 ][ 4 ].doorInfo[ Right ] = noPath;
+	area1[ 5 ][ 4 ].doorInfo[ Down ] = noPath;
+	
+	area1[ 7 ][ 4 ].doorInfo[ Up ] = noPath;
+	area1[ 7 ][ 4 ].doorInfo[ Left ] = openPath;
+	area1[ 7 ][ 4 ].doorInfo[ Right ] = openPath;
+	area1[ 7 ][ 4 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 8 ][ 4 ].doorInfo[ Up ] = openPath;
+	area1[ 8 ][ 4 ].doorInfo[ Left ] = noPath;
+	area1[ 8 ][ 4 ].doorInfo[ Right ] = noPath;
+
+	// 5列目のドア情報
+	area1[ 5 ][ 5 ].doorInfo[ Up ] = noPath;
+	area1[ 5 ][ 5 ].doorInfo[ Left ] = noPath;
+	area1[ 5 ][ 5 ].doorInfo[ Right ] = openPath;
+	area1[ 5 ][ 5 ].doorInfo[ Down ] = noPath;
+	
+	area1[ 7 ][ 5 ].doorInfo[ Up ] = noPath;
+	area1[ 7 ][ 5 ].doorInfo[ Left ] = openPath;
+	area1[ 7 ][ 5 ].doorInfo[ Right ] = openPath;
+	area1[ 7 ][ 5 ].doorInfo[ Down ] = noPath;
+	// 6列目のドア情報
+	area1[ 3 ][ 6 ].doorInfo[ Up ] = noPath;
+	area1[ 3 ][ 6 ].doorInfo[ Left ] = noPath;
+	area1[ 3 ][ 6 ].doorInfo[ Right ] = noPath;
+	area1[ 3 ][ 6 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 4 ][ 6 ].doorInfo[ Up ] = noPath;
+	area1[ 4 ][ 6 ].doorInfo[ Left ] = noPath;
+	area1[ 4 ][ 6 ].doorInfo[ Right ] = openPath;
+	area1[ 4 ][ 6 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 5 ][ 6 ].doorInfo[ Up ] = openPath;
+	area1[ 5 ][ 6 ].doorInfo[ Left ] = openPath;
+	area1[ 5 ][ 6 ].doorInfo[ Right ] = noPath;
+	area1[ 5 ][ 6 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 6 ][ 6 ].doorInfo[ Up ] = openPath;
+	area1[ 6 ][ 6 ].doorInfo[ Left ] = noPath;
+	area1[ 6 ][ 6 ].doorInfo[ Right ] = noPath;
+	area1[ 6 ][ 6 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 7 ][ 6 ].doorInfo[ Up ] = openPath;
+	area1[ 7 ][ 6 ].doorInfo[ Left ] = noPath;
+	area1[ 7 ][ 6 ].doorInfo[ Right ] = openPath;
+	area1[ 7 ][ 6 ].doorInfo[ Down ] = openPath;
+	
+	area1[ 8 ][ 6 ].doorInfo[ Up ] = openPath;
+	area1[ 8 ][ 6 ].doorInfo[ Left ] = openPath;
+	area1[ 8 ][ 6 ].doorInfo[ Right ] = noPath;
+	// 7列目のドア情報
+	area1[ 4 ][ 7 ].doorInfo[ Up ] = noPath;
+	area1[ 4 ][ 7 ].doorInfo[ Left ] = openPath;
+	area1[ 4 ][ 7 ].doorInfo[ Right ] = openPath;
+	area1[ 4 ][ 7 ].doorInfo[ Down ] = noPath;
+
+	area1[ 8 ][ 7 ].doorInfo[ Up ] = noPath;
+	area1[ 8 ][ 7 ].doorInfo[ Left ] = openPath;
+	area1[ 8 ][ 7 ].doorInfo[ Right ] = openPath;
+	// 8列目のドア情報
+	area1[ 4 ][ 8 ].doorInfo[ Up ] = noPath;
+	area1[ 4 ][ 8 ].doorInfo[ Left ] = noPath;
+	area1[ 4 ][ 8 ].doorInfo[ Right ] = openPath;
+	area1[ 4 ][ 8 ].doorInfo[ Down ] = noPath;
+
+	area1[ 8 ][ 8 ].doorInfo[ Up ] = noPath;
+	area1[ 8 ][ 8 ].doorInfo[ Left ] = noPath;
+	area1[ 8 ][ 8 ].doorInfo[ Right ] = openPath;
+	
+	
 
 	// ドアがないところの情報を修正
 	dungeon[ 4 ][ 4 ].doorInfo[ North ] = noDoor;

@@ -142,3 +142,209 @@ int main( void )
 
 	return 0;
 }
+
+
+// ダンジョンの情報を画面に表示する
+// 一つの部屋は5x5の大きさにする
+// 1列目：北ドア、2列目：見やすくするための空きスペース、3列目：匂い、
+// 4列目：西ドア、プリンスとStinker、東ドア、5列目：刀と健康ポーション、6列目：南ドア
+void showDungeon()
+{
+	int x, y;
+
+	// 部屋を一つずつ表示する
+	for( y = 1; y <= 8; y++ )
+	{
+
+		// 1列目：北ドア
+		for( x = 1; x <= 8; x++ )
+		{
+			if( dungeon[ x ][ y ].princeVisited )
+			{
+				if( dungeon[ x ][ y ].doorInfo[ North ] == noDoor )
+				{
+					printf( "*******" );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ North ] == openDoor )
+				{
+					printf( "***D***" );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ North ] == lockedDoor )
+				{
+					printf( "***L***" );
+				}
+			}
+			else
+			{
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+
+		// 2列目：見やすくするための空きスペース
+		for( x = 1; x <= 8; x++ )
+		{
+			if( dungeon[ x ][ y ].princeVisited )
+			{
+				printf( "*     *" );
+			}
+			else
+			{
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+
+		// 3列目：匂い
+		for( x = 1; x <= 8; x++ )
+		{
+			if( dungeon[ x ][ y ].princeVisited )
+			{
+				if( dungeon[ x ][ y ].stinkerSmell1 || dungeon[ x ][ y ].stinkerSmell2 )
+				{
+					printf( "*  &  *" );
+				}
+				else if( dungeon[ x ][ y ].superStinkerSmell )
+				{
+					printf( "*  #  *" );
+				}
+				else
+				{
+					printf( "*     *" );
+				}
+			}
+			else
+			{
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+
+		// 4列目：西ドア、プリンスとStinker、東ドア
+		for( x = 1; x <= 8; x++ )
+		{
+			if( dungeon[ x ][ y ].princeVisited )
+			{
+				if( dungeon[ x ][ y ].doorInfo[ West ] == noDoor )
+				{
+					printf( "* " );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ West ] == openDoor )
+				{
+					printf( "D " );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ West ] == lockedDoor )
+				{
+					printf( "L " );
+				}
+				if( dungeon[ x ][ y ].hasPrince )
+				{
+					if( prince.hasSword )
+					{
+						printf( "P!" );
+					}
+					else
+					{
+						printf( "P " );
+					}
+				}
+				else
+				{
+					printf( "  " );
+				}
+				if( dungeon[ x ][ y ].hasStinker1 || dungeon[ x ][ y ].hasStinker2 )
+				{
+					printf( "S " );
+				}
+				else if( dungeon[ x ][ y ].hasSuperStinker )
+				{
+					printf( "$ " );
+				}
+				else
+				{
+					printf( "  " );
+				}
+				if( dungeon[ x ][ y ].doorInfo[ East ] == noDoor )
+				{
+					printf( "*" );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ East ] == openDoor )
+				{
+					printf( "D" );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ East ] == lockedDoor )
+				{
+					printf( "L" );
+				}
+			}
+			else {
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+
+		// 5列目：刀と健康ポーション
+		for( x = 1; x <= 8; x++ )
+		{
+			if( dungeon[ x ][ y ].princeVisited )
+			{
+				if( dungeon[ x ][ y ].hasSword )
+				{
+					printf( "* K " );
+				}
+				else
+				{
+					printf( "*   " );
+				}
+				if( dungeon[ x ][ y ].healthPotion )
+				{
+					printf( "H *" );
+				}
+				else
+				{
+					printf( "  *" );
+				}
+			}
+			else
+			{
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+
+		// 6列目：南ドア
+		for( x = 1; x <= 8; x++ )
+		{
+			if( dungeon[ x ][ y ].princeVisited )
+			{
+				if( dungeon[ x ][ y ].doorInfo[ South ] == noDoor )
+				{
+					printf( "*******" );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ South ] == openDoor )
+				{
+					printf( "***D***" );
+				}
+				else if( dungeon[ x ][ y ].doorInfo[ South ] == lockedDoor )
+				{
+					printf( "***L***" );
+				}
+			}
+			else
+			{
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+
+	}
+
+	// 記号の説明
+	printf( "P = Prince, S = Stinker, $ = Super Stinker\n" );
+	printf( "& = Stinker smell, # = Super Stinker smell\n" );
+	printf( "K = Sword, P! = Prince has sword, H = Health potion\n" );
+	printf( "D = Open Door, L = Locked door, * = Wall \n" );
+
+	// プリンスの健康状況を表示
+	printf( "Prince HP: %d\n", prince.healthPoints );
+}

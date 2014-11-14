@@ -4,7 +4,7 @@
 
 **やったぜ**
 
-## 寿司
+## :sushi:
 
 ```c
 typedef struct

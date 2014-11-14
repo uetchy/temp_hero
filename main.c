@@ -75,7 +75,7 @@ const int Down		= 2;
 const int Left		= 3;
 
 // 関数のプロトタイプ
-void initialisearealist();
+void initialiseareaList();
 void initialisePlayer();
 void initialiseGameEndingConditions();
 void printGameExplanation();
@@ -102,7 +102,7 @@ int main( void )
 	// ゲームループ：勝利条件と敗北条件が満たしていないまで続く
 	while( 1 )
 	{
-		showarealist();							// ダンジョンの情報を表示
+		showareaList();							// ダンジョンの情報を表示
 		showRoomInfo();							// 部屋の情報を表示
 
 		checkEncountGauge();					// Stinkerがいるなら戦闘
@@ -110,7 +110,7 @@ int main( void )
 		{
 			break;
 		}
-		if( rescuedPrincess )					// Super Stinkerを倒した（勝利）
+		if( BossDead )					// Super Stinkerを倒した（勝利）
 		{
 			break;
 		}

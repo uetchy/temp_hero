@@ -147,35 +147,34 @@ void initialiseDungeon()
 {
 	int y;
 
-	// プリンスは最初(1,1)の部屋にいる
-	dungeon[ 1 ][ 1 ].hasPrince = 1;
+	// プレイヤーは最初area1(8,4)の部屋にいる
+	area1[ 8 ][ 4 ].hasPlayer = 1;
+	/*
+	// プレイヤーはジャンプした後、area2(3,8)の部屋にいる
+	area2[ 3 ][ 8 ].hasPlayer = 1;
+	*/
 	// プリンスは(1,1)の部屋を訪問している
-	dungeon[ 1 ][ 1 ].princeVisited = 1;
-	// Stinker1は(2,5)の部屋にいる
-	dungeon[ 2 ][ 5 ].hasStinker1 = 1;
-	// Stinker1の匂いの情報を隣の部屋に追加
-	dungeon[ 1 ][ 5 ].stinkerSmell1 = 1;
-	dungeon[ 3 ][ 5 ].stinkerSmell1 = 1;
-	dungeon[ 2 ][ 4 ].stinkerSmell1 = 1;
-	// Stinker2は(3,2)の部屋にいる
-	dungeon[ 3 ][ 2 ].hasStinker2 = 1;
-	// Stinker2の匂いの情報を隣の部屋に追加
-	dungeon[ 2 ][ 2 ].stinkerSmell2 = 1;
-	dungeon[ 4 ][ 2 ].stinkerSmell2 = 1;
-	dungeon[ 3 ][ 3 ].stinkerSmell2 = 1;
-	dungeon[ 3 ][ 1 ].stinkerSmell2 = 1;
-	// Super Stinkerは(4,4)の部屋にいる
-	dungeon[ 4 ][ 4 ].hasSuperStinker = 1;
-	// Super Stinkerの匂いの情報を隣の部屋に追加
-	dungeon[ 3 ][ 4 ].superStinkerSmell = 1;
-	dungeon[ 5 ][ 4 ].superStinkerSmell = 1;
-	dungeon[ 4 ][ 3 ].superStinkerSmell = 1;
-	dungeon[ 4 ][ 5 ].superStinkerSmell = 1;
-	// 刀は(1,4)の部屋にある
-	dungeon[ 1 ][ 4 ].hasSword = 1;
-	// 健康ポーションは(5,3)と(3,5)の部屋にある
-	dungeon[ 5 ][ 3 ].healthPotion = 1;
-	dungeon[ 3 ][ 5 ].healthPotion = 1;
+	area1[ 1 ][ 1 ].princeVisited = 1;
+	// potionの場所
+	area1[ 5 ][ 5 ].hasPotion = 1;
+	area1[ 5 ][ 3 ].hasPotion = 1;
+	area1[ 3 ][ 4 ].hasPotion = 1;
+	area2[ 6 ][ 4 ].hasPotion = 1;
+	area2[ 3 ][ 2 ].hasPotion = 1;
+	// 鍵の場所
+	area1[ 8 ][ 8 ].hasKey = 1;
+	area2[ 7 ][ 8 ].hasKey = 1;
+	// ヒントの場所
+	area1[ 7 ][ 4 ].hint = 1;
+	area1[ 7 ][ 1 ].hint = 1;
+	area1[ 3 ][ 6 ].hint = 1;
+	area1[ 8 ][ 8 ].hint = 1;
+	area2[ 4 ][ 6 ].hint = 1;
+	area2[ 1 ][ 4 ].hint = 1;
+	area2[ 6 ][ 8 ].hint = 1;
+	// 固有敵の場所
+	area2[ 8 ][ 8 ].uniqueBossId = 2;	//裏ボス
+	area2[ 6 ][ 1 ].uniqueBossId = 1;	//ボス
 
 	// エリア１ドアの情報
 	//Right 右、　Doun　下、　Left　左、　Up　上、
@@ -302,18 +301,150 @@ void initialiseDungeon()
 	area1[ 8 ][ 8 ].doorInfo[ Left ] = noPath;
 	area1[ 8 ][ 8 ].doorInfo[ Right ] = openPath;
 	
-	
-
-	// ドアがないところの情報を修正
-	dungeon[ 4 ][ 4 ].doorInfo[ North ] = noDoor;
-	dungeon[ 4 ][ 4 ].doorInfo[ South ] = noDoor;
-	dungeon[ 4 ][ 4 ].doorInfo[ West ] = noDoor;
-	dungeon[ 4 ][ 3 ].doorInfo[ South ] = noDoor;
-	dungeon[ 4 ][ 5 ].doorInfo[ North ] = noDoor;
-	dungeon[ 3 ][ 4 ].doorInfo[ East ] = noDoor;
-	// ロックされているドアの情報を修正
-	dungeon[ 4 ][ 8 ].doorInfo[ East ] = lockedDoor;
-	dungeon[ 5 ][ 4 ].doorInfo[ West ] = lockedDoor;
+	// エリア2ドアの情報
+	// ８行列目
+	// area2 (1,8)
+	area2[ 1 ][ 8 ].doorInfo[ Up ] = noPath;
+	area2[ 1 ][ 8 ].doorInfo[ Left ] = noPath;
+	area2[ 1 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 1 ][ 8 ].doorInfo[ Down ] = openPath;
+	// area2 (2,8)
+	area2[ 2 ][ 8 ].doorInfo[ Up ] = openPath;
+	area2[ 2 ][ 8 ].doorInfo[ Left ] = noPath;
+	area2[ 2 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 2 ][ 8 ].doorInfo[ Down ] = openPath;
+	// area2 (3,8)
+	area2[ 3 ][ 8 ].doorInfo[ Up ] = openPath;
+	area2[ 3 ][ 8 ].doorInfo[ Left ] = noPath;
+	area2[ 3 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 3 ][ 8 ].doorInfo[ Down ] = openPath;
+	// area2 (4,8)
+	area2[ 4 ][ 8 ].doorInfo[ Up ] = openPath;
+	area2[ 4 ][ 8 ].doorInfo[ Left ] = openPath;
+	area2[ 4 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 4 ][ 8 ].doorInfo[ Down ] = noPath;
+	// area2 (6,8)
+	area2[ 6 ][ 8 ].doorInfo[ Up ] = noPath;
+	area2[ 6 ][ 8 ].doorInfo[ Left ] = openPath;
+	area2[ 6 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 6 ][ 8 ].doorInfo[ Down ] = openPath;
+	// area2 (7,8)
+	area2[ 7 ][ 8 ].doorInfo[ Up ] = openPath;
+	area2[ 7 ][ 8 ].doorInfo[ Left ] = noPath;
+	area2[ 7 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 7 ][ 8 ].doorInfo[ Down ] = openPath;
+	// area2 (6,8)
+	area2[ 6 ][ 8 ].doorInfo[ Up ] = openPath;
+	area2[ 6 ][ 8 ].doorInfo[ Left ] = noPath;
+	area2[ 6 ][ 8 ].doorInfo[ Right ] = noPath;
+	area2[ 6 ][ 8 ].doorInfo[ Down ] = noPath;
+	//７行列目
+	// area2 (4,7)
+	area2[ 4 ][ 7 ].doorInfo[ Up ] = noPath;
+	area2[ 4 ][ 7 ].doorInfo[ Left ] = openPath;
+	area2[ 4 ][ 7 ].doorInfo[ Right ] = openPath;
+	area2[ 4 ][ 7 ].doorInfo[ Down ] = noPath;
+	// area2 (6,7)
+	area2[ 6 ][ 7 ].doorInfo[ Up ] = noPath;
+	area2[ 6 ][ 7 ].doorInfo[ Left ] = openPath;
+	area2[ 6 ][ 7 ].doorInfo[ Right ] = openPath;
+	area2[ 6 ][ 7 ].doorInfo[ Down ] = noPath;
+	// area2 (4,7)
+	area2[ 4 ][ 7 ].doorInfo[ Up ] = noPath;
+	area2[ 4 ][ 7 ].doorInfo[ Left ] = openPath;
+	area2[ 4 ][ 7 ].doorInfo[ Right ] = openPath;
+	area2[ 4 ][ 7 ].doorInfo[ Down ] = noPath;
+	//６行列目
+	// area2 (4,6)
+	area2[ 4 ][ 6 ].doorInfo[ Up ] = noPath;
+	area2[ 4 ][ 6 ].doorInfo[ Left ] = openPath;
+	area2[ 4 ][ 6 ].doorInfo[ Right ] = openPath;
+	area2[ 4 ][ 6 ].doorInfo[ Down ] = openPath;
+	// area2 (5,6)
+	area2[ 5 ][ 6 ].doorInfo[ Up ] = openPath;
+	area2[ 5 ][ 6 ].doorInfo[ Left ] = noPath;
+	area2[ 5 ][ 6 ].doorInfo[ Right ] = noPath;
+	area2[ 5 ][ 6 ].doorInfo[ Down ] = openPath;
+	// area2 (6,6)
+	area2[ 6 ][ 6 ].doorInfo[ Up ] = openPath;
+	area2[ 6 ][ 6 ].doorInfo[ Left ] = noPath;
+	area2[ 6 ][ 6 ].doorInfo[ Right ] = openPath;
+	area2[ 6 ][ 6 ].doorInfo[ Down ] = noPath;
+	// ５行列目
+	// area2 (4,5)
+	area2[ 4 ][ 5 ].doorInfo[ Up ] = noPath;
+	area2[ 4 ][ 5 ].doorInfo[ Left ] = openPath;
+	area2[ 4 ][ 5 ].doorInfo[ Right ] = openPath;
+	area2[ 4 ][ 5 ].doorInfo[ Down ] = noPath;
+	// ４行列目
+	// area2 (1,4)
+	area2[ 4 ][ 5 ].doorInfo[ Up ] = noPath;
+	area2[ 4 ][ 5 ].doorInfo[ Left ] = openPath;
+	area2[ 4 ][ 5 ].doorInfo[ Right ] = openPath;
+	area2[ 4 ][ 5 ].doorInfo[ Down ] = noPath;
+	// area2 (1,4)
+	area2[ 1 ][ 4 ].doorInfo[ Up ] = openPath;
+	area2[ 1 ][ 4 ].doorInfo[ Left ] = noPath;
+	area2[ 1 ][ 4 ].doorInfo[ Right ] = noPath;
+	area2[ 1 ][ 4 ].doorInfo[ Down ] = openPath;
+	// area2 (2,4)
+	area2[ 2 ][ 4 ].doorInfo[ Up ] = openPath;
+	area2[ 2 ][ 4 ].doorInfo[ Left ] = noPath;
+	area2[ 2 ][ 4 ].doorInfo[ Right ] = noPath;
+	area2[ 2 ][ 4 ].doorInfo[ Down ] = openPath;
+	// area2 (3,4)
+	area2[ 3 ][ 4 ].doorInfo[ Up ] = openPath;
+	area2[ 3 ][ 4 ].doorInfo[ Left ] = openPath;
+	area2[ 3 ][ 4 ].doorInfo[ Right ] = noPath;
+	area2[ 3 ][ 4 ].doorInfo[ Down ] = openPath;
+	// area2 (4,4)
+	area2[ 4 ][ 4 ].doorInfo[ Up ] = openPath;
+	area2[ 4 ][ 4 ].doorInfo[ Left ] = noPath;
+	area2[ 4 ][ 4 ].doorInfo[ Right ] = openPath;
+	area2[ 4 ][ 4 ].doorInfo[ Down ] = openPath;
+	// area2 (5,4)
+	area2[ 5 ][ 4 ].doorInfo[ Up ] = openPath;
+	area2[ 5 ][ 4 ].doorInfo[ Left ] = noPath;
+	area2[ 5 ][ 4 ].doorInfo[ Right ] = noPath;
+	area2[ 5 ][ 4 ].doorInfo[ Down ] = openPath;
+	// area2 (6,4)
+	area2[ 6 ][ 4 ].doorInfo[ Up ] = openPath;
+	area2[ 6 ][ 4 ].doorInfo[ Left ] = noPath;
+	area2[ 6 ][ 4 ].doorInfo[ Right ] = noPath;
+	area2[ 6 ][ 4 ].doorInfo[ Down ] = noPath;
+	// ３行列目
+	// area2 (3,4)
+	area2[ 3 ][ 4 ].doorInfo[ Up ] = noPath;
+	area2[ 3 ][ 4 ].doorInfo[ Left ] = openPath;
+	area2[ 3 ][ 4 ].doorInfo[ Right ] = openPath;
+	area2[ 3 ][ 4 ].doorInfo[ Down ] = noPath;
+	// 2行列目
+	// area2 (3,2)
+	area2[ 3 ][ 2 ].doorInfo[ Up ] = noPath;
+	area2[ 3 ][ 2 ].doorInfo[ Left ] = openPath;
+	area2[ 3 ][ 2 ].doorInfo[ Right ] = noPath;
+	area2[ 3 ][ 2 ].doorInfo[ Down ] = openPath;
+	// area2 (4,2)
+	area2[ 4 ][ 2 ].doorInfo[ Up ] = ooenPath;
+	area2[ 4 ][ 2 ].doorInfo[ Left ] = noPath;
+	area2[ 4 ][ 2 ].doorInfo[ Right ] = noPath;
+	area2[ 4 ][ 2 ].doorInfo[ Down ] = openPath;
+	// area2 (5,2)
+	area2[ 5 ][ 2 ].doorInfo[ Up ] = ooenPath;
+	area2[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
+	area2[ 5 ][ 2 ].doorInfo[ Right ] = noPath;
+	area2[ 5 ][ 2 ].doorInfo[ Down ] = openPath;
+	// area2 (6,2)
+	area2[ 6 ][ 2 ].doorInfo[ Up ] = ooenPath;
+	area2[ 6 ][ 2 ].doorInfo[ Left ] = openPath;
+	area2[ 6 ][ 2 ].doorInfo[ Right ] = noPath;
+	area2[ 6 ][ 2 ].doorInfo[ Down ] = noPath;
+	// 1行列目
+	// area2 (6,1)
+	area2[ 6 ][ 1 ].doorInfo[ Up ] = noPath;
+	area2[ 6 ][ 1 ].doorInfo[ Left ] = noPath;
+	area2[ 6 ][ 1 ].doorInfo[ Right ] = openPath;
+	area2[ 6 ][ 1 ].doorInfo[ Down ] = noPath;
 }
 
 // ダンジョンの情報を画面に表示する

@@ -143,6 +143,79 @@ int main( void )
 	return 0;
 }
 
+void initialiseDungeon()
+{
+	int y;
+
+	// プリンスは最初(1,1)の部屋にいる
+	dungeon[ 1 ][ 1 ].hasPrince = 1;
+	// プリンスは(1,1)の部屋を訪問している
+	dungeon[ 1 ][ 1 ].princeVisited = 1;
+	// Stinker1は(2,5)の部屋にいる
+	dungeon[ 2 ][ 5 ].hasStinker1 = 1;
+	// Stinker1の匂いの情報を隣の部屋に追加
+	dungeon[ 1 ][ 5 ].stinkerSmell1 = 1;
+	dungeon[ 3 ][ 5 ].stinkerSmell1 = 1;
+	dungeon[ 2 ][ 4 ].stinkerSmell1 = 1;
+	// Stinker2は(3,2)の部屋にいる
+	dungeon[ 3 ][ 2 ].hasStinker2 = 1;
+	// Stinker2の匂いの情報を隣の部屋に追加
+	dungeon[ 2 ][ 2 ].stinkerSmell2 = 1;
+	dungeon[ 4 ][ 2 ].stinkerSmell2 = 1;
+	dungeon[ 3 ][ 3 ].stinkerSmell2 = 1;
+	dungeon[ 3 ][ 1 ].stinkerSmell2 = 1;
+	// Super Stinkerは(4,4)の部屋にいる
+	dungeon[ 4 ][ 4 ].hasSuperStinker = 1;
+	// Super Stinkerの匂いの情報を隣の部屋に追加
+	dungeon[ 3 ][ 4 ].superStinkerSmell = 1;
+	dungeon[ 5 ][ 4 ].superStinkerSmell = 1;
+	dungeon[ 4 ][ 3 ].superStinkerSmell = 1;
+	dungeon[ 4 ][ 5 ].superStinkerSmell = 1;
+	// 刀は(1,4)の部屋にある
+	dungeon[ 1 ][ 4 ].hasSword = 1;
+	// 健康ポーションは(5,3)と(3,5)の部屋にある
+	dungeon[ 5 ][ 3 ].healthPotion = 1;
+	dungeon[ 3 ][ 5 ].healthPotion = 1;
+
+	// エリア１ドアの情報
+	//Right 右、　Doun　下、　Left　左、　Up　上、
+	// 1列目のドア情報
+	Room area1[ 7 ][ 1 ].doorInfo[ Up ] = openPath;
+	Room area1[ 7 ][ 1 ].doorInfo[ Left ] = noPath;
+	Room area1[ 7 ][ 1 ].doorInfo[ Right ] = noPath;
+	Room area1[ 7 ][ 1 ].doorInfo[ Down ] = noPath;
+	// 2列目のドア情報
+	Room area1[ 3 ][ 2 ].doorInfo[ Up ] = openPath;
+	Room area1[ 3 ][ 2 ].doorInfo[ Left ] = noPath;
+	Room area1[ 3 ][ 2 ].doorInfo[ Right ] = noPath;
+	Room area1[ 3 ][ 2 ].doorInfo[ Down ] = noPath;
+	
+	Room area1[ 4 ][ 2 ].doorInfo[ Up ] = openPath;
+	Room area1[ 4 ][ 2 ].doorInfo[ Left ] = noPath;
+	Room area1[ 4 ][ 2 ].doorInfo[ Right ] = noPath;
+	Room area1[ 4 ][ 2 ].doorInfo[ Down ] = noPath;
+	
+	Room area1[ 5 ][ 2 ].doorInfo[ Up ] = openPath;
+	Room area1[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
+	Room area1[ 5 ][ 2 ].doorInfo[ Right ] = noPath;
+	Room area1[ 5 ][ 2 ].doorInfo[ Down ] = noPath;
+	
+	Room area1[ 5 ][ 2 ].doorInfo[ Up ] = openPath;
+	Room area1[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
+	Room area1[ 5 ][ 2 ].doorInfo[ Right ] = noPath;
+	Room area1[ 5 ][ 2 ].doorInfo[ Down ] = noPath;
+
+	// ドアがないところの情報を修正
+	dungeon[ 4 ][ 4 ].doorInfo[ North ] = noDoor;
+	dungeon[ 4 ][ 4 ].doorInfo[ South ] = noDoor;
+	dungeon[ 4 ][ 4 ].doorInfo[ West ] = noDoor;
+	dungeon[ 4 ][ 3 ].doorInfo[ South ] = noDoor;
+	dungeon[ 4 ][ 5 ].doorInfo[ North ] = noDoor;
+	dungeon[ 3 ][ 4 ].doorInfo[ East ] = noDoor;
+	// ロックされているドアの情報を修正
+	dungeon[ 4 ][ 8 ].doorInfo[ East ] = lockedDoor;
+	dungeon[ 5 ][ 4 ].doorInfo[ West ] = lockedDoor;
+}
 
 // ダンジョンの情報を画面に表示する
 // 一つの部屋は5x5の大きさにする

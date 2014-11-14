@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// sushi
+
 typedef struct
 {
     int uniqueBossId,  // 固有敵のインデックス（nullならいない）

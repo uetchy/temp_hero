@@ -1,12 +1,49 @@
 #include <stdio.h>
 
-// sushi
+/*
+[00][01][02][03]
+[10][11][12][13]
+[20][21][22][23]
+[30][31][32][33]
+
+monsters = [
+    [
+        "Iida monster", // Monster name
+        10000, // HP
+        10000, // Attack power
+        "---", // Ascii art
+        [ // Parts
+            ["Head", true],
+            ["Stomach", false],
+            ["Tail", false]
+        ]
+    ],
+    [
+        "Iida monster", // Monster name
+        10000, // HP
+        10000, // Attack power
+        "---", // Ascii art
+        [ // Weakpoint
+            ["Head", true],
+            ["Stomach", false],
+            ["Tail", false]
+        ]
+    ]
+]
+
+*/
+
+#define M_NAME 0
+#define M_HP 1
+#define M_POWER 2
+#define M_AA 3
+#define M_PARTS 4
 
 typedef struct
 {
     int uniqueBossId,  // 固有敵のインデックス（nullならいない）
     int hasPotion,     // ポーションが落ちているか
-    int hasKey,           // 鍵が落ちているか？
+    int hasKey,        // 鍵が落ちているか？
     String hint,       // ヒント内容（nullならヒント無し）
     int doorLocked,    // ドアに鍵がかかっているか？
     int canJump,       // ジャンプ出来るか

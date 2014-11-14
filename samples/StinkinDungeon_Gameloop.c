@@ -21,7 +21,7 @@ typedef struct
 
 // ダンジョンの部屋は5x5のグリッドなので2時配列
 // 紙プロトタイプは(0,0)からではなく，(1,1)からスタートので配列は6対6にする
-Room dungeon[ 8 ][ 6 ];
+Room dungeon[ 8 ][ 8 ];
 
 /*
 [00][01][02][03]
@@ -374,11 +374,11 @@ void showDungeon()
 	int x, y;
 
 	// 部屋を一つずつ表示する
-	for( y = 1; y <= 5; y++ )
+	for( y = 1; y <= 8; y++ )
 	{
 
 		// 1列目：北ドア
-		for( x = 1; x <= 5; x++ )
+		for( x = 1; x <= 8; x++ )
 		{
 			if( dungeon[ x ][ y ].princeVisited )
 			{
@@ -403,7 +403,7 @@ void showDungeon()
 		printf( "\n" );
 
 		// 2列目：見やすくするための空きスペース
-		for( x = 1; x <= 5; x++ )
+		for( x = 1; x <= 8; x++ )
 		{
 			if( dungeon[ x ][ y ].princeVisited )
 			{
@@ -417,7 +417,7 @@ void showDungeon()
 		printf( "\n" );
 
 		// 3列目：匂い
-		for( x = 1; x <= 5; x++ )
+		for( x = 1; x <= 8; x++ )
 		{
 			if( dungeon[ x ][ y ].princeVisited )
 			{
@@ -442,7 +442,7 @@ void showDungeon()
 		printf( "\n" );
 
 		// 4列目：西ドア、プリンスとStinker、東ドア
-		for( x = 1; x <= 5; x++ )
+		for( x = 1; x <= 8; x++ )
 		{
 			if( dungeon[ x ][ y ].princeVisited )
 			{
@@ -505,7 +505,7 @@ void showDungeon()
 		printf( "\n" );
 
 		// 5列目：刀と健康ポーション
-		for( x = 1; x <= 5; x++ )
+		for( x = 1; x <= 8; x++ )
 		{
 			if( dungeon[ x ][ y ].princeVisited )
 			{
@@ -534,7 +534,7 @@ void showDungeon()
 		printf( "\n" );
 
 		// 6列目：南ドア
-		for( x = 1; x <= 5; x++ )
+		for( x = 1; x <= 8; x++ )
 		{
 			if( dungeon[ x ][ y ].princeVisited )
 			{

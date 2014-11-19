@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 /*
 [00][01][02][03]
@@ -33,35 +34,14 @@ monsters = [
 
 */
 
+// Constants
+
+// Monster
 #define M_NAME 0
 #define M_HP 1
 #define M_POWER 2
 #define M_AA 3
 #define M_PARTS 4
-
-typedef struct
-{
-    int uniqueBossId,  // 固有敵のインデックス（nullならいない）
-    int hasPotion,     // ポーションが落ちているか
-    int hasKey,        // 鍵が落ちているか？
-    String hint,       // ヒント内容（nullならヒント無し）
-    int doorLocked,    // ドアに鍵がかかっているか？
-    int canJump,       // ジャンプ出来るか
-} Room;
-
-typedef struct
-{
-    int hasKey,           // 鍵を持っているか？
-    int hasPotion,        // ポーションを持っているか？
-    int beatenHiddenBoss, // 裏ボスを倒したか？
-    int x,                // 現在地X
-    int y                 // 現在地Y
-} Player
-
-Room areaList = [
-    Room area1[8][8],
-    Room area2[8][8]
-]
 
 // 道の状況
 const int noPath		= 0;
@@ -69,17 +49,34 @@ const int openPath		= 1;
 const int lockedDoor	= 2;
 
 // 方向
-const int Up		= 0;
+const int Up		  = 0;
 const int Right		= 1;
 const int Down		= 2;
 const int Left		= 3;
 
-// 関数のプロトタイプ
+// Structures
+struct Room {
+  int uniqueBossId;  // 固有敵のインデックス（nullならいない）
+  int hasPotion;     // ポーションが落ちているか
+  int hasKey;        // 鍵が落ちているか？
+  char hint;         // ヒント内容（nullならヒント無し）
+  int doorLocked;    // ドアに鍵がかかっているか？
+  int canJump;       // ジャンプ出来るか
+};
+
+struct Player {
+  int hasKey;           // 鍵を持っているか？
+  int hasPotion;        // ポーションを持っているか？
+  int beatenHiddenBoss; // 裏ボスを倒したか？
+  int x;                // 現在地X
+  int y;                // 現在地Y
+};
+
+// Declare prototypes
 void initialiseareaList();
 void initialisePlayer();
 void initialiseGameEndingConditions();
 void printGameExplanation();
-void showarealist();
 void showRoomInfo();
 int getUserMove();
 void movePlayer( int );
@@ -88,20 +85,20 @@ void tryReadHint( void );
 void tryDrinkPotion( void );
 void tryTakeKey( void );
 
-int main( void )
-{
-	char c;
-	int moveDirection;				// 移動方向
+int main( void ) {
+	// Variables
+	char c; // TODO: What's this?
 
-	// 初期化
-	initialisearealist();					// ダンジョンの初期化
-	initialisePlayer();						// プリンスの情報を初期化
-	initialiseGameEndingConditions();		// ゲームの終了条件を初期化
-	printGameExplanation();					// ゲームのルールを表示
+	// Initialize
+	// TODO: 初期化処理を書く
 
-	// ゲームループ：勝利条件と敗北条件が満たしていないまで続く
-	while( 1 )
-	{
+	// Initialize Monsters
+	monsters = {
+		{"Monster", 100, 100, "AA", struct Monster_Part{"Head", 0} }
+	};
+
+	// Game Loop
+	while( 1 ) {
 		showareaList();							// ダンジョンの情報を表示
 		showRoomInfo();							// 部屋の情報を表示
 
@@ -188,17 +185,17 @@ void initialiseDungeon()
 	area1[ 3 ][ 2 ].doorInfo[ Left ] = noPath;
 	area1[ 3 ][ 2 ].doorInfo[ Right ] = noPath;
 	area1[ 3 ][ 2 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 4 ][ 2 ].doorInfo[ Up ] = openPath;
 	area1[ 4 ][ 2 ].doorInfo[ Left ] = noPath;
 	area1[ 4 ][ 2 ].doorInfo[ Right ] = noPath;
 	area1[ 4 ][ 2 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 5 ][ 2 ].doorInfo[ Up ] = openPath;
 	area1[ 5 ][ 2 ].doorInfo[ Left ] = noPath;
 	area1[ 5 ][ 2 ].doorInfo[ Right ] = openPath
 	area1[ 5 ][ 2 ].doorInfo[ Down ] = noPath;
-	
+
 	area1[ 7 ][ 2 ].doorInfo[ Up ] = noPath;
 	area1[ 7 ][ 2 ].doorInfo[ Left ] = openPath;
 	area1[ 7 ][ 2 ].doorInfo[ Right ] = openPath;
@@ -208,12 +205,12 @@ void initialiseDungeon()
 	area1[ 5 ][ 3 ].doorInfo[ Left ] = openPath;
 	area1[ 5 ][ 3 ].doorInfo[ Right ] = openPath
 	area1[ 5 ][ 3 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 6 ][ 3 ].doorInfo[ Up ] = openPath;
 	area1[ 6 ][ 3 ].doorInfo[ Left ] = noPath;
 	area1[ 6 ][ 3 ].doorInfo[ Right ] = noPath;
 	area1[ 6 ][ 3 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 7 ][ 3 ].doorInfo[ Up ] = openPath;
 	area1[ 7 ][ 3 ].doorInfo[ Left ] = openPath;
 	area1[ 7 ][ 3 ].doorInfo[ Right ] = openPath;
@@ -223,22 +220,22 @@ void initialiseDungeon()
 	area1[ 3 ][ 4 ].doorInfo[ Left ] = noPath;
 	area1[ 3 ][ 4 ].doorInfo[ Right ] = noPath;
 	area1[ 3 ][ 4 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 4 ][ 4 ].doorInfo[ Up ] = openPath;
 	area1[ 4 ][ 4 ].doorInfo[ Left ] = noPath;
 	area1[ 4 ][ 4 ].doorInfo[ Right ] = noPath;
 	area1[ 4 ][ 4 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 5 ][ 4 ].doorInfo[ Up ] = openPath;
 	area1[ 5 ][ 4 ].doorInfo[ Left ] = openPath;
 	area1[ 5 ][ 4 ].doorInfo[ Right ] = noPath;
 	area1[ 5 ][ 4 ].doorInfo[ Down ] = noPath;
-	
+
 	area1[ 7 ][ 4 ].doorInfo[ Up ] = noPath;
 	area1[ 7 ][ 4 ].doorInfo[ Left ] = openPath;
 	area1[ 7 ][ 4 ].doorInfo[ Right ] = openPath;
 	area1[ 7 ][ 4 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 8 ][ 4 ].doorInfo[ Up ] = openPath;
 	area1[ 8 ][ 4 ].doorInfo[ Left ] = noPath;
 	area1[ 8 ][ 4 ].doorInfo[ Right ] = noPath;
@@ -248,7 +245,7 @@ void initialiseDungeon()
 	area1[ 5 ][ 5 ].doorInfo[ Left ] = noPath;
 	area1[ 5 ][ 5 ].doorInfo[ Right ] = openPath;
 	area1[ 5 ][ 5 ].doorInfo[ Down ] = noPath;
-	
+
 	area1[ 7 ][ 5 ].doorInfo[ Up ] = noPath;
 	area1[ 7 ][ 5 ].doorInfo[ Left ] = openPath;
 	area1[ 7 ][ 5 ].doorInfo[ Right ] = openPath;
@@ -258,27 +255,27 @@ void initialiseDungeon()
 	area1[ 3 ][ 6 ].doorInfo[ Left ] = noPath;
 	area1[ 3 ][ 6 ].doorInfo[ Right ] = noPath;
 	area1[ 3 ][ 6 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 4 ][ 6 ].doorInfo[ Up ] = noPath;
 	area1[ 4 ][ 6 ].doorInfo[ Left ] = noPath;
 	area1[ 4 ][ 6 ].doorInfo[ Right ] = openPath;
 	area1[ 4 ][ 6 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 5 ][ 6 ].doorInfo[ Up ] = openPath;
 	area1[ 5 ][ 6 ].doorInfo[ Left ] = openPath;
 	area1[ 5 ][ 6 ].doorInfo[ Right ] = noPath;
 	area1[ 5 ][ 6 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 6 ][ 6 ].doorInfo[ Up ] = openPath;
 	area1[ 6 ][ 6 ].doorInfo[ Left ] = noPath;
 	area1[ 6 ][ 6 ].doorInfo[ Right ] = noPath;
 	area1[ 6 ][ 6 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 7 ][ 6 ].doorInfo[ Up ] = openPath;
 	area1[ 7 ][ 6 ].doorInfo[ Left ] = noPath;
 	area1[ 7 ][ 6 ].doorInfo[ Right ] = openPath;
 	area1[ 7 ][ 6 ].doorInfo[ Down ] = openPath;
-	
+
 	area1[ 8 ][ 6 ].doorInfo[ Up ] = openPath;
 	area1[ 8 ][ 6 ].doorInfo[ Left ] = openPath;
 	area1[ 8 ][ 6 ].doorInfo[ Right ] = noPath;
@@ -300,7 +297,7 @@ void initialiseDungeon()
 	area1[ 8 ][ 8 ].doorInfo[ Up ] = noPath;
 	area1[ 8 ][ 8 ].doorInfo[ Left ] = noPath;
 	area1[ 8 ][ 8 ].doorInfo[ Right ] = openPath;
-	
+
 	// エリア2ドアの情報
 	// ８行列目
 	// area2 (1,8)

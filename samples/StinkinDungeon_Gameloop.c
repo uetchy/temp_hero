@@ -320,15 +320,12 @@ void printGameExplanation()
 {
 	char c, userSelection;
 
-	printf( "****************************************\n" );
-	printf( "*                                      *\n" );
-	printf( "*      Welcome to Stinkin' Dungeon     *\n" );
-	printf( "*                                      *\n" );
-	printf( "*       A simple text-based RPG        *\n" );
-	printf( "*                                      *\n" );
-	printf( "*      Design: Reijer Grimbergen       *\n" );
-	printf( "*                                      *\n" );
-	printf( "****************************************\n" );
+	printf( "- T e m p o r a r y  H e r o -\n" );
+  printf(" ___ ___         __                _____.___.                  .__\n");
+  printf(" /   |   \\_____  |  | __ ____   ____\\__  |   |__ __ __ __  _____|  |__ __\n");
+  printf("/    ~    \\__  \\ |  |/ // __ \\ /    \\/   |   |  |  \\  |  \\/  ___/  |  \\__\\\n");
+  printf("\\    Y    // __ \\|    <\\  ___/|   |  \\____   |  |  /  |  /\\___ \\|   Y  \\/ __ \\_\n");
+  printf(" \\___|_  /(____  /__|_ \\___  >___|  / ______|____/|____//____  >___|  (____  /\n");
 
 	printf( "\n" );
 	printf( "1) Show the rules of the game\n" );

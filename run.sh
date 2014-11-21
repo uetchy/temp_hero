@@ -1,4 +1,4 @@
 #!/bin/sh
 
-gcc main.c -o App
-./App
+gcc main.c
+./a.out

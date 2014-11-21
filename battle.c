@@ -32,7 +32,7 @@ const int princeLoses		= 2;
 int stinker1HP;
 int stinker2HP;
 int weakpoint;
-
+char a[10][4][100];
 //モンスター（^－^）の部位　プラス弱点
 
 
@@ -42,6 +42,7 @@ void stinkerFightLoop( int, int, int, int );
 int stinkerFight( int *, int, int, int );
 int princeAttack( int , int );
 int stinkerAttack( void );
+
 
 int main( void )
 {

@@ -15,13 +15,12 @@
 
 // プリンスとStinkerの最大ＨＰ
 const int heroHP			= 15;
-const int stinker1StartHP		= 20;
-const int stinker2StartHP		= 20;
-const int superStinkerStartHP	= 25;
+const int stinker1StartHP		= 12;
+const int stinker2StartHP		= 12;
+const int superStinkerStartHP	= 18;
 
 // 攻撃のダメージを決める値	
 const int princeAttackRange			= 1;
-const double swordDamageRatio		= 2;
 const int stinkerAttackRange		= 2;
 const int superStinkerAttackRange	= 3;
 
@@ -36,14 +35,18 @@ const int princeLoses		= 2;
 int stinker1HP;
 int stinker2HP;
 int superStinkerHP;
+int weakpoint;
+
+//モンスター（^－^）の部位　プラス弱点
+
 
 // 関数のプロトタイプ
 void testStinkerFight( void );
-void stinkerFightLoop( int, int, int );
-int stinkerFight( int *, int, int );
-void superStinkerFightLoop( int, int, int );
-int superStinkerFight( int *, int, int );
-int princeAttack( int );
+void stinkerFightLoop( int, int, int, int );
+int stinkerFight( int *, int, int, int );
+void superStinkerFightLoop( int, int, int ,int);
+int superStinkerFight( int *, int, int ,int);
+int princeAttack( int , int );
 int stinkerAttack( void );
 int superStinkerAttack( void );
 
@@ -89,19 +92,23 @@ void testStinkerFight( void )
 		{
 		case '1':
 			// 刀なしのStinker戦闘
-			stinkerFightLoop( heroHP, stinker1StartHP, 0 );
+			stinkerFightLoop( heroHP, stinker1StartHP, 0 ,0);
 			break;
 		case '2':
 			// 刀ありのStinker戦闘
-			stinkerFightLoop( heroHP, stinker1StartHP, 1 );
+			stinkerFightLoop( heroHP, stinker1StartHP, 1 ,0);
 			break;
 		case '3':
 			// 刀なしのSuper Stinker戦闘
-			superStinkerFightLoop( heroHP, superStinkerStartHP, 0 );
+			superStinkerFightLoop( heroHP, superStinkerStartHP, 1 ,1 );
 			break;
 		case '4':
+			// 刀なしのSuper Stinker戦闘
+			superStinkerFightLoop( heroHP, superStinkerStartHP, 0 ,0);
+			break;
+		case '5':
 			// 刀ありのSuper Stinker戦闘
-			superStinkerFightLoop( heroHP, superStinkerStartHP, 1 );
+			superStinkerFightLoop( heroHP, superStinkerStartHP, 1 ,0);
 			break;
 		case 'Q':
 			endTestSession = 1;
@@ -116,7 +123,7 @@ void testStinkerFight( void )
 
 // 複数のStinker戦闘をシミュレーションして、総合結果を表示する
 // 戦闘終了のプリンスに残っているＨＰの平均も計算する
-void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
+void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 {
 	int fightNumber = 1000;
 	int result, i;
@@ -129,7 +136,7 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 
 	for( i = 1; i <= fightNumber; i++ )
 	{
-		result = stinkerFight( &princeHP, stinkerHP, hasSword );
+		result = stinkerFight( &princeHP, stinkerHP, hasSword ,weakpoint);
 		if( result == princeWins )
 		{
 			princeWinNo++;
@@ -147,7 +154,7 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 
 // 複数のSuper Stinker戦闘をシミュレーションして、総合結果を表示する
 // 戦闘終了のプリンスに残っているＨＰの平均も計算する
-void superStinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
+void superStinkerFightLoop( int princeHP, int stinkerHP, int hasSword , int weakpoint)
 {
 	int fightNumber = 1000;
 	int result, i;
@@ -160,7 +167,7 @@ void superStinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 
 	for( i = 1; i <= fightNumber; i++ )
 	{
-		result = superStinkerFight( &princeHP, stinkerHP, hasSword );
+		result = superStinkerFight( &princeHP, stinkerHP, hasSword ,weakpoint );
 		if( result == princeWins )
 		{
 			princeWinNo++;
@@ -178,12 +185,12 @@ void superStinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 
 // １回のプリンスとStinkerの戦闘シミュレーション
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
-int stinkerFight( int *princeHP, int stinkerHP, int hasSword )
+int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 {
 	while( 1 )
 	{
 		// プリンスは攻撃する
-		stinkerHP -= princeAttack( hasSword );
+		stinkerHP -= princeAttack( hasSword , weakpoint);
 		// Stinkerを倒したかどうかのチェック
 		if( stinkerHP <= 0 )
 		{
@@ -203,12 +210,12 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword )
 
 // １回のプリンスとStinkerの戦闘シミュレーション
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
-int superStinkerFight( int *princeHP, int stinkerHP, int hasSword )
+int superStinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint)
 {
 	while( 1 )
 	{
 		// プリンスは攻撃する
-		stinkerHP -= princeAttack( hasSword );
+		stinkerHP -= princeAttack( hasSword ,weakpoint);
 		// Stinkerを倒したかどうかのチェック
 		if( stinkerHP <= 0 )
 		{
@@ -226,13 +233,17 @@ int superStinkerFight( int *princeHP, int stinkerHP, int hasSword )
 	return 0;
 }
 
-// プリンスの攻撃
-int princeAttack( int hasSword )
+// へろの攻撃
+int princeAttack( int hasSword ,int weakpoint )
 {
-	// 攻撃のダメージは乱数で決める
+	// 攻撃のダメージ
 	int damage = princeAttackRange;
 	// 刀があると攻撃力アップ
 	if( hasSword )
+	{
+		damage = damage*2;
+	}
+	if( weakpoint )
 	{
 		damage = damage*2;
 	}

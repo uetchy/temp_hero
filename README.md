@@ -17,3 +17,37 @@ $ ./run.sh
 ```
 
 以上のコマンドでアプリをコンパイルして実行することが出来ます。
+
+## Monstersの構造
+
+```
+[00][01][02][03]
+[10][11][12][13]
+[20][21][22][23]
+[30][31][32][33]
+
+monsters = [
+    [
+        "Iida monster", // Monster name
+        10000, // HP
+        10000, // Attack power
+        "---", // Ascii art
+        [ // Parts
+            ["Head", true],
+            ["Stomach", false],
+            ["Tail", false]
+        ]
+    ],
+    [
+        "Iida monster", // Monster name
+        10000, // HP
+        10000, // Attack power
+        "---", // Ascii art
+        [ // Weakpoint
+            ["Head", true],
+            ["Stomach", false],
+            ["Tail", false]
+        ]
+    ]
+]
+```

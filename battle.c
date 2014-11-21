@@ -50,9 +50,13 @@ int main( void )
 
 	srand( time( NULL ) );			// Stinker戦闘のため乱数を初期化
 
-	printf( "**********************************************************\n" );
-	printf( "* Alfa version to test the balance of the Stinker fights *\n" );
-	printf( "**********************************************************\n\n" );
+	printf( "- T e m p o r a r y  H e r o -\n" );
+  printf(" ___ ___         __                _____.___.                  .__\n");
+  printf(" /   |   \\_____  |  | __ ____   ____\\__  |   |__ __ __ __  _____|  |__ __\n");
+  printf("/    ~    \\__  \\ |  |/ // __ \\ /    \\/   |   |  |  \\  |  \\/  ___/  |  \\__\\\n");
+  printf("\\    Y    // __ \\|    <\\  ___/|   |  \\____   |  |  /  |  /\\___ \\|   Y  \\/ __ \\_\n");
+  printf(" \\___|_  /(____  /__|_ \\___  >___|  / ______|____/|____//____  >___|  (____  /\n");
+  printf( "Alpha version\n" );
 	testStinkerFight();					// Stinkerがいるなら戦闘
 
 	printf( "\nPress any key to continue.\n" );

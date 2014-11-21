@@ -20,6 +20,23 @@ const int superStinkerStartHP	= 18;
 const int princeAttackRange			= 1;
 const int stinkerAttackRange		= 2;
 const int superStinkerAttackRange	= 3;
+//モンスター雑魚定義
+typedef struct{           /* _person がタグ名 */
+    char name[20];        /* 文字配列型のメンバ name */
+    int hp;					/* HP */
+	int power;				//パワー
+	char point1[256];		//wpは攻撃部位
+	char poitn2[256];
+	char point3[256];
+	char point4[256];
+    int wp;         		//wpは弱点部位を示す　
+	//弱点部位は攻撃部位を選択するときにいれる数字とれらし合わせて判断する
+}monster_t;
+//モンスター雑魚ステータス
+const monster_t monsters[100];
+const monsters[1] = {"Tom",3 , 1, "175", "66.5","rere","sese",2};
+  
+
 
 // 調整する値はここまで
 //==========================================

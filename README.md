@@ -1,3 +1,5 @@
+# 派遣勇者
+
 ```
                       - T e m p o r a r y  H e r o -
   ___ ___         __                _____.___.                  .__
@@ -8,15 +10,24 @@
        \/      \/     \/    \/     \/\/                       \/     \/     \/
 ```
 
-## Usage
+## How to Compile
 
-### run.sh
+### Manually compile
+
+gccを使ってコンパイルする。例えば、`gcc battle.c`などのようにする。
+
+```bash
+$ gcc <コンパイルするCファイル>
+$ ./a.out
+```
+
+### Compile automatically
+
+以下のコマンドで__main.c__をコンパイルして実行することが出来ます。
 
 ```bash
 $ ./run.sh
 ```
-
-以上のコマンドでアプリをコンパイルして実行することが出来ます。
 
 ## Monstersの構造
 

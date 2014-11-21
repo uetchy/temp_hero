@@ -230,11 +230,11 @@ int superStinkerFight( int *princeHP, int stinkerHP, int hasSword )
 int princeAttack( int hasSword )
 {
 	// 攻撃のダメージは乱数で決める
-	int damage = rand() % princeAttackRange;
+	int damage = princeAttackRange;
 	// 刀があると攻撃力アップ
 	if( hasSword )
 	{
-		damage *= swordDamageRatio;
+		damage = damage*2;
 	}
 	return damage;
 }
@@ -243,7 +243,7 @@ int princeAttack( int hasSword )
 int stinkerAttack( void )
 {
 	// 攻撃のダメージは乱数で決める
-	int damage = rand() % stinkerAttackRange;
+	int damage = stinkerAttackRange;
 	return damage;
 }
 
@@ -251,6 +251,6 @@ int stinkerAttack( void )
 int superStinkerAttack( void )
 {
 	// 攻撃のダメージは乱数で決める
-	int damage = rand() % superStinkerAttackRange;
+	int damage = superStinkerAttackRange;
 	return damage;
 }

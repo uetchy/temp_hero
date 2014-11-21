@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define PERSON_NUM 10
-
-
+#define PERSON_NUM 9
 //==========================================
 // 以下の値を調整して，ゲームバランスを決める
 // 調整の目標：プリンスの勝率は次のようにする
@@ -27,41 +25,13 @@ typedef struct{           /* _person がタグ名 */
     char name[20];        /* 文字配列型のメンバ name */
     int hp;					/* HP */
 	int power;				//パワー
-	char point1[256];		//wpは攻撃部位
-	char poitn2[256];
-	char point3[256];
-	char point4[256];
+	char point1[200];		//wpは攻撃部位
+	char poitn2[200];
+	char point3[200];
+	char point4[200];
     int wp;         		//wpは弱点部位を示す　
 	//弱点部位は攻撃部位を選択するときにいれる数字とれらし合わせて判断する
 }monster_t;
-
-
-// 調整する値はここまで
-//==========================================
-
-// プリンスとStinkerの戦闘結果
-const int princeWins		= 1;
-const int princeLoses		= 2;
-
-// StinkerのＨＰを格納する変数
-int stinker1HP;
-int stinker2HP;
-int weakpoint;
-char a[10][4][100];
-//モンスター（^－^）の部位　プラス弱点
-
-
-// 関数のプロトタイプ
-void testStinkerFight( void );
-void stinkerFightLoop( int, int, int, int );
-int stinkerFight( int *, int, int, int );
-int princeAttack( int , int );
-int stinkerAttack( void );
-
-
-int main( void )
-{
-
 
 //モンスター雑魚ステータス
   
@@ -76,6 +46,32 @@ monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "????","????","????","Feet",1},
 								{"ピ◌チュウ",2 , 4, "Ear","Eye","Tail","Cheek",4},
 								{"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4},
 								{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3}};
+
+// 調整する値はここまで
+//==========================================
+
+// プリンスとStinkerの戦闘結果
+const int princeWins		= 1;
+const int princeLoses		= 2;
+
+// StinkerのＨＰを格納する変数
+int stinker1HP;
+int stinker2HP;
+int weakpoint;
+
+
+// 関数のプロトタイプ
+void testStinkerFight( void );
+void stinkerFightLoop( int, int, int, int );
+int stinkerFight( int *, int, int, int );
+int princeAttack( int , int );
+int stinkerAttack( void );
+
+
+int main( void )
+{
+
+
 
 
 
@@ -189,16 +185,20 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
 int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 {
+
+int a;
+char bb[80];
+
 	while( 1 )
 	{
 		printf("ポーションを使う：0 \n");
 		printf("どの部位を攻撃しますか？ \n");
-		printf（"%s :1\n", monsters[1].point1）;
-		printf（"%s :2\n", monsters[1].point2）;
-		printf（"%s :3\n", monsters[1].point3）;
-		printf("%s :4\n", monsters[1].point4);
-		int a;
-　　　	char bb[80];
+		printf（"%s \n", monsters[0].point1）;
+		printf（"%s \n", monsters[0].point2）;
+		printf（"%s \n", monsters[0].point3）;
+		printf("%s \n", monsters[0].point4);
+		
+　　　	
 　　　	printf("数値を入力して下さい：");
 
 　　　	gets(bb);

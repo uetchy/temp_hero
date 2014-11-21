@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#define PERSON_NUM 10
+
 
 //==========================================
 // 以下の値を調整して，ゲームバランスを決める
@@ -184,6 +186,30 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 {
 	while( 1 )
 	{
+		printf("ポーションを使う：0 \n");
+		printf("どの部位を攻撃しますか？ \n");
+		printf（"%s :1\n", monsters[1].point1）;
+		printf（"%s :2\n", monsters[1].point2）;
+		printf（"%s :3\n", monsters[1].point3）;
+		printf("%s :4\n", monsters[1].point4);
+		int a;
+　　　	char bb[80];
+　　　	printf("数値を入力して下さい：");
+
+　　　	gets(bb);
+　　　	a=atoi(bb);
+　　　	printf("入力された数値は　%d　です\n",a);
+
+		if(0 == a){
+		*princeHP = heroHP;
+		}else if(a == monsters[1].wp){
+		weakpoint = 1;
+		}else if(a <= 4){
+		weakpoint = 0;
+		}
+		
+		if(a <= 4){
+		
 		// プリンスは攻撃する
 		stinkerHP -= princeAttack( hasSword , weakpoint);
 		// Stinkerを倒したかどうかのチェック
@@ -197,6 +223,8 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 		if( *princeHP <= 0 )
 		{
 			return princeLoses;
+		}
+		
 		}
 
 	}

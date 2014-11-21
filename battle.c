@@ -34,8 +34,18 @@ typedef struct{           /* _person がタグ名 */
 }monster_t;
 //モンスター雑魚ステータス
 const monster_t monsters[100];
-const monsters[1] = {"Tom",3 , 1, "175", "66.5","rere","sese",2};
-  
+// monster[] = { name, HP, atk, part1, part2, part3, part4, weakpart };
+const monsters[0] = {"Andy",3 , 2, "????","????","????","Feet",1};
+const monsters[1] = {"Ue-sama",4 , 2, "Eye","Throat","Armpit","Feet",2};
+const monsters[2] = {"Yazaki",3 , 3, "Right Hand","Right Feet","Mac book","iPhone",3};
+const monsters[3] = {"Iida",8 , 1, "Laptop","Mobile Phone","Hoodies","Bag",3};
+const monsters[4] = {"Yoshioka",6 , 2, "Hair","Throat","Pelvis","Nose",4};
+const monsters[5] = {"Muramatsu",2 , 8, "Hair","Keyboard","Mobile Phone","Mouse",2};
+const monsters[6] = {"どら◌モン",5 , 1, "Pocket","Dorayaki","Tail","Rat",2};
+const monsters[7] = {"ピ◌チュウ",2 , 4, "Ear","Eye","Tail","Cheek",4};
+const monsters[8] = {"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4};
+const monsters[9] = {"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3};
+
 
 
 // 調整する値はここまで

@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.60])
 AC_INIT([temp_hero], [0.1], [uetchy@randompaper.co])
 AM_INIT_AUTOMAKE([foreign 1.14.1])
 AC_CONFIG_SRCDIR([samples/StinkinDungeon_Gameloop.c])

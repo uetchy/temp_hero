@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #define PERSON_NUM 100
+
 //==========================================
 // 以下の値を調整して，ゲームバランスを決める
 // 調整の目標：プリンスの勝率は次のようにする
@@ -44,8 +45,8 @@ monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "EEEE","??E","Q???","Feet",1},
 								{"Muramatsu",2 , 8, "Hair","Keyboard","Mobile Phone","Mouse",2},
 								{"どら◌モン",5 , 1, "Pocket","Dorayaki","Tail","Rat",2},
 								{"ピ◌チュウ",2 , 4, "Ear","Eye","Tail","Cheek",4},
-								{"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4}};
-							//	{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3}};
+								{"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4},
+								{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3}};
 
 // 調整する値はここまで
 //==========================================
@@ -65,7 +66,7 @@ void testStinkerFight( void );
 void stinkerFightLoop( int, int, int, int );
 int stinkerFight( int *, int, int, int );
 int princeAttack( int , int );
-int stinkerAttack( void );
+int stinkerAttack( int );
 
 
 int main( void )
@@ -154,7 +155,7 @@ void testStinkerFight( void )
 // 戦闘終了のプリンスに残っているＨＰの平均も計算する
 void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 {
-	int fightNumber = 1000;
+	int fightNumber = 2;
 	int result, i;
 	int princeWinNo = 0;
 	int startHP = princeHP;
@@ -185,40 +186,41 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
 int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 {
-
-//int a;
-//char bb[80];
+	int mo;
+	//雑魚モンスターをランダムにきめるための変数
+	mo = rand() % 10;
 
 	while( 1 )
 	{
+		//プレイヤーのできる行動を指示
 		printf("ポーションを使う：0 \n");
 		printf("どの部位を攻撃しますか？ \n");
-		printf("%s :1 \n", monsters[1].point1);
-		printf("%s :2 \n", monsters[1].point2);
-		printf("%s :3 \n", monsters[1].point3);
-		printf("%s:4 \n", monsters[1].point4);
-		
+		printf("%s :1 \n", monsters[mo].point1);
+		printf("%s :2 \n", monsters[mo].point2);
+		printf("%s :3 \n", monsters[mo].point3);
+		printf("%s:4 \n", monsters[mo].point4);
+		//入力される値を保持するための変数
 		int a;
 		char bb[80];
-
+		//プレイヤーがどこを攻撃するか決める　数字が入力される。
 		printf("数値を入力して下さい：");
 		gets(bb);
 		a=atoi(bb);
 		printf("入力された数値は　%d　です\n",a);
-
-		if(a == monsters[1].wp){
+		//入力された値が弱点か弱点ではないか判断
+		if(a == monsters[mo].wp){
 		weakpoint = 1;
 		}else if(a <= 4){
 		weakpoint = 0;
 		}
 		
-		if(a == 0){		
+		if(a == 0){	//ポーションを使うと宣言	
 		*princeHP +=10;
 		if(*princeHP >= heroHP){
 		*princeHP = heroHP;
 		}		
 		printf("へーローHP %d \n",*princeHP);
-		*princeHP -= stinkerAttack();
+		*princeHP -= stinkerAttack( mo );
 		printf("へーローHP %d \n",*princeHP);
 		// プリンスが死んだかどうかのチェック
 		if( *princeHP <= 0 ){
@@ -226,7 +228,7 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 			return princeLoses;
 		}
 		
-		}else if(a <= 4){
+		}else if(a <= 4){//攻撃すると宣言
 		// プリンスは攻撃する
 		stinkerHP -= princeAttack( hasSword , weakpoint);
 		printf("雑魚HP %d \n",stinkerHP);
@@ -236,14 +238,14 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 			return princeWins;
 		}
 		// Stinkerは反撃する
-		*princeHP -= stinkerAttack();
+		*princeHP -= stinkerAttack( mo );
 		printf("へーローHP %d \n",*princeHP);
 		// プリンスが死んだかどうかのチェック
 		if( *princeHP <= 0 ){
 			printf("雑魚勝利 \n");
 			return princeLoses;
 		}
-		}else if(a > 4){
+		}else if(a > 4){//それ以外の数字が入力された
 			printf("入力の数字が間違っています。 \n");
 		
 		
@@ -272,8 +274,8 @@ int princeAttack( int hasSword ,int weakpoint )
 }
 
 // Enemy attack
-int stinkerAttack( void ){
+int stinkerAttack( int mo ){
 	int damage = stinkerAttackRange;
-	printf("%s の攻撃  %dダメージ \n",monsters[1].name ,damage);
+	printf("%s の攻撃  %dダメージ \n",monsters[mo].name ,damage);
 	return damage;
 }

@@ -1,7 +1,5 @@
 # 派遣勇者
 
-[![Build Status](https://travis-ci.org/uetchy/temp_hero.svg)](https://travis-ci.org/uetchy/temp_hero)
-
 ```
                       - T e m p o r a r y  H e r o -
   ___ ___         __                _____.___.                  .__

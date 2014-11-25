@@ -1,4 +1,3 @@
-*.out
 # Created by https://www.gitignore.io
 
 ### Autotools ###
@@ -25,6 +24,7 @@ Makefile.in
 *.ko
 *.obj
 *.elf
+*.out
 
 # Precompiled Headers
 *.gch
@@ -50,3 +50,5 @@ Makefile.in
 *.x86_64
 *.hex
 
+# autoheader
+config.h.in*

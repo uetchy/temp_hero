@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define PERSON_NUM 9
+#define PERSON_NUM 100
 //==========================================
 // 以下の値を調整して，ゲームバランスを決める
 // 調整の目標：プリンスの勝率は次のようにする
@@ -25,10 +25,10 @@ typedef struct{           /* _person がタグ名 */
     char name[20];        /* 文字配列型のメンバ name */
     int hp;					/* HP */
 	int power;				//パワー
-	char point1[200];		//wpは攻撃部位
-	char poitn2[200];
-	char point3[200];
-	char point4[200];
+	char point1[256];		//wpは攻撃部位
+	char point2[256];
+	char point3[256];
+	char point4[256];
     int wp;         		//wpは弱点部位を示す　
 	//弱点部位は攻撃部位を選択するときにいれる数字とれらし合わせて判断する
 }monster_t;
@@ -36,7 +36,7 @@ typedef struct{           /* _person がタグ名 */
 //モンスター雑魚ステータス
   
 // monster[] = { name, HP, atk, part1, part2, part3, part4, weakpart };
-monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "????","????","????","Feet",1},
+monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "EEEE","??E","Q???","Feet",1},
 								{"Ue-sama",4 , 2, "Eye","Throat","Armpit","Feet",2},
 								{"Yazaki",3 , 3, "Right Hand","Right Feet","Mac book","iPhone",3},
 								{"Iida",8 , 1, "Laptop","Mobile Phone","Hoodies","Bag",3},
@@ -44,8 +44,8 @@ monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "????","????","????","Feet",1},
 								{"Muramatsu",2 , 8, "Hair","Keyboard","Mobile Phone","Mouse",2},
 								{"どら◌モン",5 , 1, "Pocket","Dorayaki","Tail","Rat",2},
 								{"ピ◌チュウ",2 , 4, "Ear","Eye","Tail","Cheek",4},
-								{"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4},
-								{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3}};
+								{"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4}};
+							//	{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3}};
 
 // 調整する値はここまで
 //==========================================
@@ -186,56 +186,72 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 {
 
-int a;
-char bb[80];
+//int a;
+//char bb[80];
 
 	while( 1 )
 	{
 		printf("ポーションを使う：0 \n");
 		printf("どの部位を攻撃しますか？ \n");
-		printf（"%s \n", monsters[0].point1）;
-		printf（"%s \n", monsters[0].point2）;
-		printf（"%s \n", monsters[0].point3）;
-		printf("%s \n", monsters[0].point4);
+		printf("%s :1 \n", monsters[1].point1);
+		printf("%s :2 \n", monsters[1].point2);
+		printf("%s :3 \n", monsters[1].point3);
+		printf("%s:4 \n", monsters[1].point4);
 		
-　　　	
-　　　	printf("数値を入力して下さい：");
+		int a;
+		char bb[80];
 
-　　　	gets(bb);
-　　　	a=atoi(bb);
-　　　	printf("入力された数値は　%d　です\n",a);
+		printf("数値を入力して下さい：");
+		gets(bb);
+		a=atoi(bb);
+		printf("入力された数値は　%d　です\n",a);
 
-		if(0 == a){
-		*princeHP = heroHP;
-		}else if(a == monsters[1].wp){
+		if(a == monsters[1].wp){
 		weakpoint = 1;
 		}else if(a <= 4){
 		weakpoint = 0;
 		}
 		
-		if(a <= 4){
+		if(a == 0){		
+		*princeHP +=10;
+		if(*princeHP >= heroHP){
+		*princeHP = heroHP;
+		}		
+		printf("へーローHP %d \n",*princeHP);
+		*princeHP -= stinkerAttack();
+		printf("へーローHP %d \n",*princeHP);
+		// プリンスが死んだかどうかのチェック
+		if( *princeHP <= 0 ){
+			printf("雑魚勝利 \n");
+			return princeLoses;
+		}
 		
+		}else if(a <= 4){
 		// プリンスは攻撃する
 		stinkerHP -= princeAttack( hasSword , weakpoint);
+		printf("雑魚HP %d \n",stinkerHP);
 		// Stinkerを倒したかどうかのチェック
-		if( stinkerHP <= 0 )
-		{
+		if( stinkerHP <= 0 ){
+				printf("ヒーロー勝利 \n");
 			return princeWins;
 		}
 		// Stinkerは反撃する
 		*princeHP -= stinkerAttack();
+		printf("へーローHP %d \n",*princeHP);
 		// プリンスが死んだかどうかのチェック
-		if( *princeHP <= 0 )
-		{
+		if( *princeHP <= 0 ){
+			printf("雑魚勝利 \n");
 			return princeLoses;
 		}
+		}else if(a > 4){
+			printf("入力の数字が間違っています。 \n");
+		
 		
 		}
 
 	}
 	return 0;
 }
-
 // へろの攻撃
 int princeAttack( int hasSword ,int weakpoint )
 {
@@ -250,12 +266,14 @@ int princeAttack( int hasSword ,int weakpoint )
 	{
 		damage = damage*2;
 	}
+	printf("へーローの攻撃  %dダメージ \n",damage);
+
 	return damage;
 }
 
 // Enemy attack
-int stinkerAttack( void )
-{
+int stinkerAttack( void ){
 	int damage = stinkerAttackRange;
+	printf("%s の攻撃  %dダメージ \n",monsters[1].name ,damage);
 	return damage;
 }

@@ -1,6 +1,8 @@
 #!/bin/sh
 
-autoheader
-aclocal
-automake --add-missing --copy
-autoconf
+# autoheader
+# aclocal
+# automake --add-missing --copy
+# autoconf
+
+autoreconf --install

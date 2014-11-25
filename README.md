@@ -18,7 +18,7 @@
 
 gccを使ってコンパイルする。例えば、`gcc battle.c`などのようにする。
 
-```bash
+```session
 $ gcc <コンパイルするCファイル>
 $ ./a.out
 ```
@@ -27,15 +27,26 @@ $ ./a.out
 
 以下のコマンドで__main.c__をコンパイルして実行することが出来ます。
 
-```bash
-$ ./run.sh
+```session
+$ ./bootstrap
+$ ./configure
+$ make
+$ ./src/battle
+```
+
+#### Clean
+
+以下のコマンドでクリーニング
+
+```session
+$ make maintainer-clean
 ```
 
 ## 構造体の仕様
 
 ### Monster関係
 
-```
+```c
 [00][01][02][03]
 [10][11][12][13]
 [20][21][22][23]

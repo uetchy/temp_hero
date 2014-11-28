@@ -113,20 +113,20 @@ int main( void )
 	}
 
 	// 勝利か敗北のメッセージでゲーム終了する
-	printf( "*************¥n" );
-	printf( "* GAME OVER *¥n" );
-	printf( "*************¥n¥n" );
+	printf( "*************\n" );
+	printf( "* GAME OVER *\n" );
+	printf( "*************\n\n" );
 	if( rescuedPrincess )
 	{
-		printf( "You have defeated the Stinkers and saved your princess.¥n" );
-		printf( "Of course, you and your princess live happily ever after.¥n" );
+		printf( "You have defeated the Stinkers and saved your princess.\n" );
+		printf( "Of course, you and your princess live happily ever after.\n" );
 	}
 	else
 	{
-		printf( "You died in battle and the Stinkers dance happily on your grave.¥n" );
-		printf( "Of course, they keep the princess in their dungeon forever.¥n" );
+		printf( "You died in battle and the Stinkers dance happily on your grave.\n" );
+		printf( "Of course, they keep the princess in their dungeon forever.\n" );
 	}
-	printf( "¥nPress any key to continue.¥n" );
+	printf( "\nPress any key to continue.\n" );
 	c = getchar();
 
 	return 0;
@@ -276,48 +276,48 @@ void printGameExplanation()
 {
 	char c, userSelection;
 
-	printf( "****************************************¥n" );
-	printf( "*                                      *¥n" );
-	printf( "*      Welcome to Stinkin' Dungeon     *¥n" );
-	printf( "*                                      *¥n" );
-	printf( "*       A simple text-based RPG        *¥n" );
-	printf( "*                                      *¥n" );
-	printf( "*      Design: Reijer Grimbergen       *¥n" );
-	printf( "*                                      *¥n" );
-	printf( "****************************************¥n" );
+	printf( "****************************************\n" );
+	printf( "*                                      *\n" );
+	printf( "*      Welcome to Stinkin' Dungeon     *\n" );
+	printf( "*                                      *\n" );
+	printf( "*       A simple text-based RPG        *\n" );
+	printf( "*                                      *\n" );
+	printf( "*      Design: Reijer Grimbergen       *\n" );
+	printf( "*                                      *\n" );
+	printf( "****************************************\n" );
 
-	printf( "¥n" );
-	printf( "1) Show the rules of the game¥n" );
-	printf( "2) Start the game¥n" );
+	printf( "\n" );
+	printf( "1) Show the rules of the game\n" );
+	printf( "2) Start the game\n" );
 	printf( "Please enter your selection: " );
 
 	// ユーザの選択を獲得
 	c = getchar();
 	userSelection = c;
-	while( ( c = getchar() ) != '¥n' )
+	while( ( c = getchar() ) != '\n' )
 		;
 	if( userSelection == '1' )
 	{
-		printf( "¥nRules of Stinkin' Dungeon:¥n");
-		printf( "==========================¥n" );
-		printf( "1) You are a prince and in room (1,1) of the Dungeon of the Stinkers¥n" );
-		printf( "2) Somewhere in this dungeon there is a princess that you must rescue from the Stinkers¥n" );
-		printf( "3) There are two Stinkers and one Super Stinker in this dungeon¥n" );
-		printf( "4) When you enter a room with a Stinker, you must fight him¥n" );
-		printf( "5) When fighting a Stinker, your health points will go down¥n" );
-		printf( "6) To improve your chances of beating a Stinker, you need a sword that is somewhere in the dungeon¥n" );
-		printf( "7) If you survive a Stinker fight, you can restore your health by drinking an health potion that is somewhere in the dungeon¥n" );
-		printf( "8) You cannot carry a health potion with you. If you want to use it you must go back to the room you found it¥n" );
-		printf( "9) The princess is in the room with the Super Stinker¥n" );
-		printf( "10) To enter the room with the Super Stinker you need two keys¥n" );
-		printf( "11) Each Stinker holds one of the keys. If you defeat a Stinker, you will get the key he carries.¥n" );
-		printf( "12) Each room has a number of doors through which you can go to get to the other rooms¥n" );
-		printf( "13) Only by visiting a room, you will get access to the information about this room¥n" );
-		printf( "14) The Stinkers smell so bad that you can smell them in the neighboring room¥n" );
-		printf( "¥nPress any key to start the game.¥n" );
+		printf( "\nRules of Stinkin' Dungeon:\n");
+		printf( "==========================\n" );
+		printf( "1) You are a prince and in room (1,1) of the Dungeon of the Stinkers\n" );
+		printf( "2) Somewhere in this dungeon there is a princess that you must rescue from the Stinkers\n" );
+		printf( "3) There are two Stinkers and one Super Stinker in this dungeon\n" );
+		printf( "4) When you enter a room with a Stinker, you must fight him\n" );
+		printf( "5) When fighting a Stinker, your health points will go down\n" );
+		printf( "6) To improve your chances of beating a Stinker, you need a sword that is somewhere in the dungeon\n" );
+		printf( "7) If you survive a Stinker fight, you can restore your health by drinking an health potion that is somewhere in the dungeon\n" );
+		printf( "8) You cannot carry a health potion with you. If you want to use it you must go back to the room you found it\n" );
+		printf( "9) The princess is in the room with the Super Stinker\n" );
+		printf( "10) To enter the room with the Super Stinker you need two keys\n" );
+		printf( "11) Each Stinker holds one of the keys. If you defeat a Stinker, you will get the key he carries.\n" );
+		printf( "12) Each room has a number of doors through which you can go to get to the other rooms\n" );
+		printf( "13) Only by visiting a room, you will get access to the information about this room\n" );
+		printf( "14) The Stinkers smell so bad that you can smell them in the neighboring room\n" );
+		printf( "\nPress any key to start the game.\n" );
 		c = getchar();
 	}
-	printf( "Good luck with your quest to save the princess!¥n" );
+	printf( "Good luck with your quest to save the princess!\n" );
 
 }
 
@@ -356,7 +356,7 @@ void showDungeon()
 				printf( "       " );
 			}
 		}
-		printf( "¥n" );
+		printf( "\n" );
 
 		// 2列目：見やすくするための空きスペース
 		for( x = 1; x <= 5; x++ )
@@ -370,7 +370,7 @@ void showDungeon()
 				printf( "       " );
 			}
 		}
-		printf( "¥n" );
+		printf( "\n" );
 
 		// 3列目：匂い
 		for( x = 1; x <= 5; x++ )
@@ -395,7 +395,7 @@ void showDungeon()
 				printf( "       " );
 			}
 		}
-		printf( "¥n" );
+		printf( "\n" );
 
 		// 4列目：西ドア、プリンスとStinker、東ドア
 		for( x = 1; x <= 5; x++ )
@@ -458,7 +458,7 @@ void showDungeon()
 				printf( "       " );
 			}
 		}
-		printf( "¥n" );
+		printf( "\n" );
 
 		// 5列目：刀と健康ポーション
 		for( x = 1; x <= 5; x++ )
@@ -487,7 +487,7 @@ void showDungeon()
 				printf( "       " );
 			}
 		}
-		printf( "¥n" );
+		printf( "\n" );
 
 		// 6列目：南ドア
 		for( x = 1; x <= 5; x++ )
@@ -512,18 +512,18 @@ void showDungeon()
 				printf( "       " );
 			}
 		}
-		printf( "¥n" );
+		printf( "\n" );
 
 	}
 
 	// 記号の説明
-	printf( "P = Prince, S = Stinker, $ = Super Stinker¥n" );
-	printf( "& = Stinker smell, # = Super Stinker smell¥n" );
-	printf( "K = Sword, P! = Prince has sword, H = Health potion¥n" );
-	printf( "D = Open Door, L = Locked door, * = Wall ¥n" );
+	printf( "P = Prince, S = Stinker, $ = Super Stinker\n" );
+	printf( "& = Stinker smell, # = Super Stinker smell\n" );
+	printf( "K = Sword, P! = Prince has sword, H = Health potion\n" );
+	printf( "D = Open Door, L = Locked door, * = Wall \n" );
 
 	// プリンスの健康状況を表示
-	printf( "Prince HP: %d¥n", prince.healthPoints );
+	printf( "Prince HP: %d\n", prince.healthPoints );
 }
 
 // 部屋の情報を表示する
@@ -535,68 +535,68 @@ void showRoomInfo()
 	// この部屋にStinkerかSuper Stinkerがいることを表示
 	if( dungeon[ x ][ y ].hasStinker1 || dungeon[ x ][ y ].hasStinker2 )
 	{
-		printf( "There is a Stinker in this room¥n" );
+		printf( "There is a Stinker in this room\n" );
 	}
 	if( dungeon[ x ][ y ].hasSuperStinker )
 	{
-		printf( "There is a Super Stinker in this room¥n" );
+		printf( "There is a Super Stinker in this room\n" );
 	}
 	// この部屋に刀があることを表示
 	if( dungeon[ x ][ y ].hasSword )
 	{
-		printf( "There is a sword in this room¥n" );
+		printf( "There is a sword in this room\n" );
 	}
 	// この部屋に健康ポーションがあることを表示
 	if( dungeon[ x ][ y ].healthPotion )
 	{
-		printf( "There is a health potion in this room¥n" );
+		printf( "There is a health potion in this room\n" );
 	}
 	// この部屋の匂いを表示
 	if( dungeon[ x ][ y ].stinkerSmell1 || dungeon[ x ][ y ].stinkerSmell2 )
 	{
-		printf( "There is a bad smell in this room¥n" );
+		printf( "There is a bad smell in this room\n" );
 	}
 	if( dungeon[ x ][ y ].superStinkerSmell )
 	{
-		printf( "There is a very foul stench in this room¥n" );
+		printf( "There is a very foul stench in this room\n" );
 	}
 	if( !dungeon[ x ][ y ].stinkerSmell1 && !dungeon[ x ][ y ].stinkerSmell2 &&
 		!dungeon[ x ][ y ].superStinkerSmell )
 	{
-		printf( "There is no smell in this room¥n" );
+		printf( "There is no smell in this room\n" );
 	}
 	// この部屋のドア情報を表示
 	if( dungeon[ x ][ y ].doorInfo[ North ] == openDoor )
 	{
-		printf( "There is a door to the North¥n" );
+		printf( "There is a door to the North\n" );
 	}
 	else if( dungeon[ x ][ y ].doorInfo[ North ] == lockedDoor )
 	{
-		printf( "There is a locked door to the North¥n" );
+		printf( "There is a locked door to the North\n" );
 	}
 	if( dungeon[ x ][ y ].doorInfo[ East ] == openDoor )
 	{
-		printf( "There is a door to the East¥n" );
+		printf( "There is a door to the East\n" );
 	}
 	else if( dungeon[ x ][ y ].doorInfo[ East ] == lockedDoor )
 	{
-		printf( "There is a locked door to the East¥n" );
+		printf( "There is a locked door to the East\n" );
 	}
 	if( dungeon[ x ][ y ].doorInfo[ South ] == openDoor )
 	{
-		printf( "There is a door to the South¥n" );
+		printf( "There is a door to the South\n" );
 	}
 	else if( dungeon[ x ][ y ].doorInfo[ South ] == lockedDoor )
 	{
-		printf( "There is a locked door to the South¥n" );
+		printf( "There is a locked door to the South\n" );
 	}
 	if( dungeon[ x ][ y ].doorInfo[ West ] == openDoor )
 	{
-		printf( "There is a door to the West¥n" );
+		printf( "There is a door to the West\n" );
 	}
 	else if( dungeon[ x ][ y ].doorInfo[ West ] == lockedDoor )
 	{
-		printf( "There is a locked door to the West¥n" );
+		printf( "There is a locked door to the West\n" );
 	}
 }
 
@@ -610,7 +610,7 @@ int getUserMove()
 	int y = prince.roomY;
 
 	// 正しい方向が入力されてないまで繰り返す
-	while( !legalDirection ) 
+	while( !legalDirection )
 	{
 		// ユーザーから方向を入力
 		printf( "Enter door direction (N,E,S,W): " );
@@ -637,12 +637,12 @@ int getUserMove()
 				}
 				else
 				{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}
 			else
 			{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		case 'E':
@@ -661,12 +661,12 @@ int getUserMove()
 				}
 				else
 				{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}
 			else
 			{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		case 'S':
@@ -685,12 +685,12 @@ int getUserMove()
 				}
 				else
 				{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}
 			else
 			{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		case 'W':
@@ -709,17 +709,17 @@ int getUserMove()
 				}
 				else
 				{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}
 			else
 			{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		default:
 			// 不正入力
-			printf( "Illegal door direction¥n" );
+			printf( "Illegal door direction\n" );
 			break;
 		}
 	}
@@ -778,7 +778,7 @@ void tryPickUpSword( void )
 	{
 		prince.hasSword = 1;
 		dungeon[ x ][ y ].hasSword = 0;
-		printf( "You have picked up a sword!¥n" );
+		printf( "You have picked up a sword!\n" );
 	}
 }
 
@@ -793,7 +793,7 @@ void tryDrinkHealthPotion( void )
 	{
 		prince.healthPoints = princeStartHP;
 		dungeon[ x ][ y ].healthPotion = 0;		// 健康ポーションは一回しか使えない
-		printf( "You drink a health potion and feel great!¥n" );
+		printf( "You drink a health potion and feel great!\n" );
 	}
 
 }

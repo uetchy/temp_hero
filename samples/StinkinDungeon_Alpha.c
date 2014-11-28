@@ -19,7 +19,7 @@ const int stinker1StartHP		= 25;
 const int stinker2StartHP		= 25;
 const int superStinkerStartHP	= 30;
 
-// 攻撃のダメージを決める値	
+// 攻撃のダメージを決める値
 const int princeAttackRange			= 8;
 const double swordDamageRatio		= 2.6;
 const int stinkerAttackRange		= 11;
@@ -53,12 +53,12 @@ int main( void )
 
 	srand( time( NULL ) );			// Stinker戦闘のため乱数を初期化
 
-	printf( "**********************************************************¥n" );
-	printf( "* Alfa version to test the balance of the Stinker fights *¥n" );
-	printf( "**********************************************************¥n¥n" );
+	printf( "**********************************************************\n" );
+	printf( "* Alfa version to test the balance of the Stinker fights *\n" );
+	printf( "**********************************************************\n\n" );
 	testStinkerFight();					// Stinkerがいるなら戦闘
 
-	printf( "¥nPress any key to continue.¥n" );
+	printf( "\nPress any key to continue.\n" );
 	c = getchar();
 
 	return 0;
@@ -73,17 +73,17 @@ void testStinkerFight( void )
 	while( !endTestSession )
 	{
 
-		printf( "1) Fight Stinker without sword¥n" );
-		printf( "2) Fight Stinker with sword¥n" );
-		printf( "3) Fight Super Stinker without sword¥n" );
-		printf( "4) Fight Super Stinker with sword¥n" );
-		printf( "Q) Stop test session¥n" );
+		printf( "1) Fight Stinker without sword\n" );
+		printf( "2) Fight Stinker with sword\n" );
+		printf( "3) Fight Super Stinker without sword\n" );
+		printf( "4) Fight Super Stinker with sword\n" );
+		printf( "Q) Stop test session\n" );
 		printf( "Please enter your selection: " );
 
 		// ユーザの選択を獲得
 		c = getchar();
 		userSelection = c;
-		while( ( c = getchar() ) != '¥n' )
+		while( ( c = getchar() ) != '\n' )
 			;
 		switch( userSelection )
 		{
@@ -107,11 +107,11 @@ void testStinkerFight( void )
 			endTestSession = 1;
 			break;
 		default:
-			printf( "Illegal input¥n" );
+			printf( "Illegal input\n" );
 			break;
 		}
 	}
-	
+
 }
 
 // 複数のStinker戦闘をシミュレーションして、総合結果を表示する
@@ -124,8 +124,8 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 	int startHP = princeHP;
 	int totalPrinceHP = 0;
 
-	printf( "¥nPrince HP: %d¥n", princeHP );
-	printf( "Stinker HP: %d¥n", stinkerHP );
+	printf( "\nPrince HP: %d\n", princeHP );
+	printf( "Stinker HP: %d\n", stinkerHP );
 
 	for( i = 1; i <= fightNumber; i++ )
 	{
@@ -139,9 +139,9 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 	}
 
 	// プリンスの勝利数を表示
-	printf( "Prince number of wins: %d ( %f%% )¥n", princeWinNo, ( princeWinNo / (double) fightNumber ) * 100.0 );
+	printf( "Prince number of wins: %d ( %f%% )\n", princeWinNo, ( princeWinNo / (double) fightNumber ) * 100.0 );
 	// プリンスの残りＨＰの平均を表示
-	printf( "Average remaining prince HP: %f¥n¥n", ( totalPrinceHP / (double) fightNumber ) );
+	printf( "Average remaining prince HP: %f\n\n", ( totalPrinceHP / (double) fightNumber ) );
 
 }
 
@@ -155,8 +155,8 @@ void superStinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 	int startHP = princeHP;
 	int totalPrinceHP = 0;
 
-	printf( "¥nPrince HP: %d¥n", princeHP );
-	printf( "Super Stinker HP: %d¥n", stinkerHP );
+	printf( "\nPrince HP: %d\n", princeHP );
+	printf( "Super Stinker HP: %d\n", stinkerHP );
 
 	for( i = 1; i <= fightNumber; i++ )
 	{
@@ -170,9 +170,9 @@ void superStinkerFightLoop( int princeHP, int stinkerHP, int hasSword )
 	}
 
 	// プリンスの勝利数を表示
-	printf( "Prince number of wins: %d ( %f%% )¥n", princeWinNo, ( princeWinNo / (double) fightNumber ) * 100.0 );
+	printf( "Prince number of wins: %d ( %f%% )\n", princeWinNo, ( princeWinNo / (double) fightNumber ) * 100.0 );
 	// プリンスの残りＨＰの平均を表示
-	printf( "Average remaining prince HP: %f¥n¥n", ( totalPrinceHP / (double) fightNumber ) );
+	printf( "Average remaining prince HP: %f\n\n", ( totalPrinceHP / (double) fightNumber ) );
 
 }
 
@@ -196,7 +196,7 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword )
 		{
 			return princeLoses;
 		}
-		
+
 	}
 	return 0;
 }
@@ -221,7 +221,7 @@ int superStinkerFight( int *princeHP, int stinkerHP, int hasSword )
 		{
 			return princeLoses;
 		}
-		
+
 	}
 	return 0;
 }

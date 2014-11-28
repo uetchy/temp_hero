@@ -1,6 +1,6 @@
 #include "define.h"
 
-void initialiseArea(struct Room area[2][8][8], struct Player player) {
+void initialiseArea(struct Room area[2][MAX_WIDTH][MAX_HEIGHT], struct Player player) {
   // Initialize player position
   player.c_area = 0;
   player.x = 8;
@@ -26,9 +26,13 @@ void initialiseArea(struct Room area[2][8][8], struct Player player) {
   area[ 1 ][ 1 ][ 4 ].hint = 1;
   area[ 1 ][ 6 ][ 8 ].hint = 1;
 
+  // Stair location
+  area[ 0 ][ 7 ][ 4 ].canJump;
+  
+  
   // Unique boss location
-  area[ 1 ][ 8 ][ 8 ].uniqueBossId = 2; // Hidden-boos
-  area[ 1 ][ 6 ][ 1 ].uniqueBossId = 1; // Boss
+  area[ 1 ][ 8 ][ 8 ].uniqueBossId = 1; // Hidden-boos
+  area[ 1 ][ 6 ][ 1 ].uniqueBossId = 0; // Boss
 
   // Area 1 door location
   // Row 1
@@ -161,96 +165,49 @@ void initialiseArea(struct Room area[2][8][8], struct Player player) {
   area[ 0 ][ 8 ][ 8 ].doorInfo[ D_RIGHT ] = DC_LOCKED;
 
   // Area 2 door
-  // Row 8
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // 1行列目
 
-  // area[ 1 ] (2,8)
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (6,1)
+  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  // area[ 1 ] (3,8)
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (4,8)
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
+  // 2行列目
 
-  // area[ 1 ] (6,8)
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (3,2)
+  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (7,8)
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (4,2)
+  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (6,8)
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
+  // area[ 1 ] (5,2)
+  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  //７行列目
+  // area[ 1 ] (6,2)
+  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_DOWN ] = DC_NIL;
+  
+  // ３行列目
 
-  // area[ 1 ] (4,7)
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
-
-  // area[ 1 ] (6,7)
-  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
-
-  // area[ 1 ] (4,7)
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
-
-  //６行列目
-
-  // area[ 1 ] (4,6)
-  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
-
-  // area[ 1 ] (5,6)
-  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
-
-  // area[ 1 ] (6,6)
-  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
-
-  // ５行列目
-
-  // area[ 1 ] (4,5)
-  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_DOWN ] = DC_NIL;
-
+  // area[ 1 ] (3,4)
+  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
+  
   // ４行列目
 
   // area[ 1 ] (1,4)
@@ -295,45 +252,94 @@ void initialiseArea(struct Room area[2][8][8], struct Player player) {
   area[ 1 ][ 6 ][ 4 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 1 ][ 6 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  // ３行列目
+  // ５行列目
 
-  // area[ 1 ] (3,4)
-  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 3 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
+  // area[ 1 ] (4,5)
+  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 5 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  // 2行列目
+  //６行列目
 
-  // area[ 1 ] (3,2)
-  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 3 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (4,6)
+  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (4,2)
-  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 4 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (5,6)
+  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 5 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (5,2)
-  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 5 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (6,6)
+  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  // area[ 1 ] (6,2)
-  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 2 ].doorInfo[ D_DOWN ] = DC_NIL;
+  //７行列目
 
-  // 1行列目
+  // area[ 1 ] (4,7)
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  // area[ 1 ] (6,1)
-  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
+  // area[ 1 ] (6,7)
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
+
+  // area[ 1 ] (4,7)
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
+
+  // Row 8
+  // area[ 1 ] (1,8)  
+  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+
+  // area[ 1 ] (2,8)
+  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+
+  // area[ 1 ] (3,8)
+  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+
+  // area[ 1 ] (4,8)
+  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
+
+  // area[ 1 ] (6,8)
+  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+
+  // area[ 1 ] (7,8)
+  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+
+  // area[ 1 ] (8,8)
+  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
 }

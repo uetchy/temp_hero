@@ -10,20 +10,9 @@
        \/      \/     \/    \/     \/\/                       \/     \/     \/
 ```
 
-## How to Compile
+## Compiling
 
-### Manually compile
-
-gccを使ってコンパイルする。例えば、`gcc battle.c`などのようにする。
-
-```session
-$ gcc <コンパイルするCファイル>
-$ ./a.out
-```
-
-### Compile automatically
-
-以下のコマンドで__main.c__をコンパイルして実行することが出来ます。これには、__Automake__と__Autoconf__が必要です。
+以下のコマンドで完全な自動コンパイルが可能です。これには、__Autotools__が必要です。
 
 ```session
 $ ./bootstrap
@@ -32,46 +21,25 @@ $ make
 $ ./src/main
 ```
 
-#### Clean
-
-以下のコマンドでクリーニング
+また、`make`と`./src/main`をまとめた`run.sh`を開発中に使うことが推奨されています。
 
 ```session
-$ make maintainer-clean
+$ ./run.sh
 ```
 
-## 構造体の仕様
+### Clean
 
-### Monster関係
+下記のコマンドでクリーニングが出来ます。
 
-```c
-[00][01][02][03]
-[10][11][12][13]
-[20][21][22][23]
-[30][31][32][33]
+```session
+$ make clean # コンパイルした実行ファイルを削除
+$ make maintainer-clean # Autotoolsによって自動生成された中間ファイルの全てを完膚なきまでに削除
+```
 
-monsters = [
-    [
-        "Iida monster", // Monster name
-        10000, // HP
-        10000, // Attack power
-        "---", // Ascii art
-        [ // Parts
-            ["Head", true],
-            ["Stomach", false],
-            ["Tail", false]
-        ]
-    ],
-    [
-        "Iida monster", // Monster name
-        10000, // HP
-        10000, // Attack power
-        "---", // Ascii art
-        [ // Weakpoint
-            ["Head", true],
-            ["Stomach", false],
-            ["Tail", false]
-        ]
-    ]
-]
+### Distribution
+
+`make dist`コマンドで配布可能なアーカイブを生成することが出来ます。
+
+```session
+$ make dist
 ```

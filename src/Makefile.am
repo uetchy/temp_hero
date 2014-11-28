@@ -1,2 +1,5 @@
-bin_PROGRAMS = main.out
-main_SOURCES = main.c area.c player.c renderer.c
+bin_PROGRAMS = main
+main_SOURCES = main.c map.c player.c image.c
+
+maintainer-clean-local:
+	rm -f Makefile.in

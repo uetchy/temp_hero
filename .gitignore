@@ -50,11 +50,10 @@ Makefile.in
 *.x86_64
 *.hex
 
-# autoheader
-config.h*
-
 # custom
+Makefile
+config.h*
 *.log
 *.status
 .deps
-Makefile
+

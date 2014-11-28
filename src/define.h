@@ -23,9 +23,10 @@ struct Room {
   int uniqueBossId;  // 固有敵のインデックス（nullならいない）
   int hasPotion;     // ポーションが落ちているか
   int hasKey;        // 鍵が落ちているか？
-  char hint;         // ヒント内容（nullならヒント無し）
+  char hint[256];    // ヒント内容（nullならヒント無し）
   int doorInfo[4];   // ドア開通状態
-  int canJump;       // ジャンプ出来るか
+  int canJump;       // 次のエリアにジャンプ出来るか
+  int playerVisited; // プレイヤーが通ったか
 };
 
 struct Player {
@@ -37,3 +38,14 @@ struct Player {
   int x;                // 現在地X
   int y;                // 現在地Y
 };
+
+// Declare prototypes
+// Initializer
+void initialiseArea(struct Room[2][8][8]);
+void initializePlayer(struct Player);
+
+// Renderer
+void render();
+
+// Helper
+void checkEncountGauge();

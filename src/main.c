@@ -2,38 +2,25 @@
 #include <string.h>
 #include "define.h"
 
+// Initializer variables
 struct Room area[2][8][8];
 struct Player player;
 
-// Declare prototypes
-// Initializer
-void initialiseArea(struct Room[2][8][8], struct Player);
-
-// Renderer
-void showArea();
-
-// Helper
-void checkEncountGauge();
-
-
 int main( void ) {
-	// Variables
+	// Temporary variables
 	char c; // Input
 
 	// Initialize
-	initialiseArea(area, player);
+	initialiseArea(area);
+	initializePlayer(player);
 
-	printf("%d", player.c_area);
+	printf("start render");
 
-	// for( int y = 1; y <= 8; y++ ) {
-	// 	for( int x = 1; x <= 8; x++ ) {
-	// 		printf("%d", area[player.c_area][x][y].hasPotion);
-	// 	}
-	// }
+	render();
 
 	// Game Loop
 	// while( 1 ) {
-	// 	// showArea();
+	// 	// render();
 	// 	// checkEncountGauge(); // Zakoがいるなら戦闘
 
 	// 	// tryDrinkPotion();						// ポーションがあるか、使うかのチェック
@@ -67,74 +54,72 @@ int main( void ) {
 	return 0;
 }
 
+// Rendering map
+void render() {
+	int x, y;
 
+	// 部屋を一つずつ表示する
+	for( y = 1; y <= 8; y++ ) {
 
-// // Show map
-// void showArea() {
-// 	int x, y;
+		// 1列目：北ドア
+		for( x = 1; x <= 8; x++ ) {
+			if( area[ player.c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_NIL ) {
+				printf( "*******" );
+			}
+			else if( area[ player.c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_OPEN ) {
+				printf( "***D***" );
+			}
+			else if( area[ player.c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_LOCKED ) {
+				printf( "***L***" );
+			}
+		}
+		printf( "\n" );
 
-// 	// 部屋を一つずつ表示する
-// 	for( y = 1; y <= 8; y++ ) {
+		// 2列目：見やすくするための空きスペース
+		for( x = 1; x <= 8; x++ ) {
+			if( area[ player.c_area ][ x ][ y ].playerVisited ) {
+				printf( "*     *" );
+			} else {
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
 
-// 		// 1列目：北ドア
-// 		for( x = 1; x <= 8; x++ ) {
-// 			if( area[ player.c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_NIL ) {
-// 				printf( "*******" );
-// 			}
-// 			else if( area[ player.c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_OPEN ) {
-// 				printf( "***D***" );
-// 			}
-// 			else if( area[ player.c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_LOCKED ) {
-// 				printf( "***L***" );
-// 			}
-// 		}
-// 		printf( "\n" );
+		// 3列目：鍵と健康ポーション
+		for( x = 1; x <= 8; x++ )
+		{
+			if( area[ player.c_area ][ x ][ y ].playerVisited )
+			{
+				if( area[ player.c_area ][ x ][ y ].hasKey )
+				{
+					printf( "* K " );
+				}
+				else
+				{
+					printf( "*   " );
+				}
+				if( area[ player.c_area ][ x ][ y ].hasPotion )
+				{
+					printf( "H *" );
+				}
+				else
+				{
+					printf( "  *" );
+				}
+			}
+			else
+			{
+				printf( "       " );
+			}
+		}
+		printf( "\n" );
+	}
 
-// 		// 2列目：見やすくするための空きスペース
-// 		for( x = 1; x <= 8; x++ ) {
-// 			if( area[ player.c_area ][ x ][ y ].heroVisited ) {
-// 				printf( "*     *" );
-// 			} else {
-// 				printf( "       " );
-// 			}
-// 		}
-// 		printf( "\n" );
+	// 記号の説明
+	printf( "P = Player, U = Hidden Boss, B = Boss\n" );
+	printf( "K = Key, P! = Player defeated the hidden boss, H = Health potion\n" );
+	printf( "D = Open Door, L = Locked door, * = Wall \n" );
 
-// 		// 3列目：鍵と健康ポーション
-// 		for( x = 1; x <= 8; x++ )
-// 		{
-// 			if( area[ player.c_area ][ x ][ y ].heroVisited )
-// 			{
-// 				if( area[ player.c_area ][ x ][ y ].hasKey )
-// 				{
-// 					printf( "* K " );
-// 				}
-// 				else
-// 				{
-// 					printf( "*   " );
-// 				}
-// 				if( area[ player.c_area ][ x ][ y ].healthPotion )
-// 				{
-// 					printf( "H *" );
-// 				}
-// 				else
-// 				{
-// 					printf( "  *" );
-// 				}
-// 			}
-// 			else
-// 			{
-// 				printf( "       " );
-// 			}
-// 		}
-// 		printf( "\n" );
-// 	}
-
-// 	// 記号の説明
-// 	printf( "P = Player, U = Hidden Boss, B = Boss\n" );
-// 	printf( "K = Key, P! = Player defeated the hidden boss, H = Health potion\n" );
-// 	printf( "D = Open Door, L = Locked door, * = Wall \n" );
-
-// 	// プリンスの健康状況を表示
-// 	printf( "Player HP: %d\n", prince.healthPoints );
-// }
+	// プリンスの健康状況を表示
+	// printf( "Player HP: %d\n", prince.healthPoints );
+}

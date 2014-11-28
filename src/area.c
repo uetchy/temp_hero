@@ -1,7 +1,7 @@
 #include <string.h>
 #include "area.h"
 
-void initialiseArea(struct Room area[2][8][8]) {
+void initialiseArea(struct Room area[2][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location
   area[ 0 ][ 5 ][ 5 ].hasPotion = 1;
   area[ 0 ][ 5 ][ 3 ].hasPotion = 1;

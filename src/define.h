@@ -1,3 +1,6 @@
+#ifndef H_DEFINE
+#define H_DEFINE
+
 // Constants
 
 // Monster
@@ -47,11 +50,4 @@ struct Player {
   int y;                // 現在地Y
 };
 
-// Declare prototypes
-
-
-// Renderer
-void render();
-
-// Helper
-void checkEncountGauge();
+#endif

@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #define PERSON_NUM 100
-#include "define.h"
+#include "player.h"
+
 // プリンスの最大ＨＰ
 const int heroHP			= 15;
 //モンスター雑魚定義
@@ -54,11 +55,13 @@ int stinkerFight( int *, int, int, int );
 int princeAttack( int , int );
 int stinkerAttack( int );
 
+struct Player player 
 
 int main( struct Player player )
 {
 	char c;
-
+	initializePlayer(player);
+	player.hp = 15;
 	srand( time( NULL ) );			// Stinker戦闘のため乱数を初期化
 
 	printf( "- T e m p o r a r y  H e r o -\n" );
@@ -153,7 +156,7 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 		princeHP = startHP; // 次の戦闘のためにプリンスのＨＰを初期値に戻す
 	}
 
-	// プリンスの勝利数を表示
+	// プリンスの勝利数を表示yer
 	printf( "Prince number of wins: %d ( %f%% )\n", princeWinNo, ( princeWinNo / (double) fightNumber ) * 100.0 );
 	// プリンスの残りＨＰの平均を表示
 	printf( "Average remaining prince HP: %f\n\n", ( totalPrinceHP / (double) fightNumber ) );
@@ -164,7 +167,8 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
 int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 {
-
+	initializePlayer(player);
+	
 	//モンスターを決めるための変数
 	int mo;
 	if(monnsuta == 0){
@@ -180,7 +184,7 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 	
 	printf( "\nPrince HP: %d\n", *princeHP );
 	printf( "%s HP: %d\n",monsters[mo].name, stinkerHP );
-
+	*princeHP = player.hp;
 	
 	while( 1 )
 	{
@@ -237,6 +241,7 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 		// Stinkerを倒したかどうかのチェック
 		if( stinkerHP <= 0 ){
 				printf("ヒーロー勝利 \n");
+				player.hp =*princeHP;
 			return princeWins;
 		}
 		// Stinkerは反撃する

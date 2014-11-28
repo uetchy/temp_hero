@@ -3,24 +3,8 @@
 #include <time.h>
 #define PERSON_NUM 100
 
-//==========================================
-// 以下の値を調整して，ゲームバランスを決める
-// 調整の目標：プリンスの勝率は次のようにする
-// 対Stinker(刀なし）：10%
-// 対Stinker(刀あり）：85%
-// 対Super Stinker(刀なし）：5%
-// 対Super Stinker(刀あり）：67%
-
 // プリンスとStinkerの最大ＨＰ
 const int heroHP			= 15;
-const int stinker1StartHP		= 12;
-const int stinker2StartHP		= 12;
-const int superStinkerStartHP	= 18;
-
-// 攻撃のダメージを決める値
-const int princeAttackRange			= 1;
-const int stinkerAttackRange		= 2;
-const int superStinkerAttackRange	= 3;
 //モンスター雑魚定義
 typedef struct{           /* _person がタグ名 */
     char name[20];        /* 文字配列型のメンバ name */
@@ -195,7 +179,7 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 	stinkerHP = monsters[mo].hp;
 	
 	printf( "\nPrince HP: %d\n", *princeHP );
-	printf( "Stinker HP: %d\n", stinkerHP );
+	printf( "%s HP: %d\n",monsters[mo].name, stinkerHP );
 
 	
 	while( 1 )
@@ -276,7 +260,7 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 int princeAttack( int hasSword ,int weakpoint )
 {
 	// 攻撃のダメージ
-	int damage = princeAttackRange;
+	int damage = 1;
 	// 刀があると攻撃力アップ
 	if( hasSword )
 	{
@@ -293,7 +277,7 @@ int princeAttack( int hasSword ,int weakpoint )
 
 // Enemy attack
 int stinkerAttack( int mo ){
-	int damage = stinkerAttackRange;
+	int damage = monsters[mo].power;
 	printf("%s の攻撃  %dダメージ \n",monsters[mo].name ,damage);
 	return damage;
 }

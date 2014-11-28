@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #define PERSON_NUM 100
-#include "player.h"
+#include "player.c"
 
 // プリンスの最大ＨＰ
 const int heroHP			= 15;
@@ -55,10 +55,9 @@ int stinkerFight( int *, int, int, int );
 int princeAttack( int , int );
 int stinkerAttack( int );
 
-struct Player player 
+struct Player player ;
 
-int main( struct Player player )
-{
+int main( void ){
 	char c;
 	initializePlayer(player);
 	player.hp = 15;
@@ -165,8 +164,8 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 
 // １回のプリンスとStinkerの戦闘シミュレーション
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
-int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
-{
+int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn ){
+	
 	initializePlayer(player);
 	
 	//モンスターを決めるための変数
@@ -182,7 +181,7 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 	int stinkerHP;
 	stinkerHP = monsters[mo].hp;
 	
-	printf( "\nPrince HP: %d\n", *princeHP );
+	printf( "\nPrince HP: %d\n", player.hp );
 	printf( "%s HP: %d\n",monsters[mo].name, stinkerHP );
 	*princeHP = player.hp;
 	

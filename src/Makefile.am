@@ -1,2 +1,2 @@
-bin_PROGRAMS = main
-main_SOURCES = main.c
+bin_PROGRAMS = main.out
+main_SOURCES = main.c area.c player.c renderer.c

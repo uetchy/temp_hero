@@ -23,13 +23,13 @@ $ ./a.out
 
 ### Compile automatically
 
-以下のコマンドで__main.c__をコンパイルして実行することが出来ます。
+以下のコマンドで__main.c__をコンパイルして実行することが出来ます。これには、__Automake__と__Autoconf__が必要です。
 
 ```session
 $ ./bootstrap
 $ ./configure
 $ make
-$ ./src/battle
+$ ./src/main
 ```
 
 #### Clean

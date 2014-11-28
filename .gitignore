@@ -51,4 +51,10 @@ Makefile.in
 *.hex
 
 # autoheader
-config.h.in*
+config.h*
+
+# custom
+*.log
+*.status
+.deps
+Makefile

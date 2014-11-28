@@ -1,5 +1,5 @@
 #include <string.h>
-#include "define.h"
+#include "area.h"
 
 void initialiseArea(struct Room area[2][8][8]) {
   // Potion location

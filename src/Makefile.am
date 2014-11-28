@@ -1,2 +1,2 @@
 bin_PROGRAMS = main
-test_SOURCES = main.c
+main_SOURCES = main.c

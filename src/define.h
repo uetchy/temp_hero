@@ -48,9 +48,7 @@ struct Player {
 };
 
 // Declare prototypes
-// Initializer
-void initialiseArea(struct Room[2][MAX_WIDTH][MAX_HEIGHT]);
-void initializePlayer(struct Player);
+
 
 // Renderer
 void render();

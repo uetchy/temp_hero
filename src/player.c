@@ -1,4 +1,4 @@
-#include "define.h"
+#include "player.h"
 
 void initializePlayer(struct Player player) {
   // Condition

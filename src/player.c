@@ -1,6 +1,6 @@
 #include "player.h"
 
-void initializePlayer(struct Player* player) {
+void initPlayer(struct Player* player) {
   // Condition
   player->hp = 100000;
   player->beatenHBoss = 0;

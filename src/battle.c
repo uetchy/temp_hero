@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #define PERSON_NUM 100
-
-// プリンスとStinkerの最大ＨＰ
+#include "define.h"
+// プリンスの最大ＨＰ
 const int heroHP			= 15;
 //モンスター雑魚定義
 typedef struct{           /* _person がタグ名 */
@@ -48,14 +48,14 @@ int weakpoint;
 
 
 // 関数のプロトタイプ
-void testStinkerFight( void );
+void testStinkerFight();
 void stinkerFightLoop( int, int, int, int );
 int stinkerFight( int *, int, int, int );
 int princeAttack( int , int );
 int stinkerAttack( int );
 
 
-int main( void )
+int main( struct Player player )
 {
 	char c;
 
@@ -77,11 +77,11 @@ int main( void )
 }
 
 // Stinkerがいるなら戦闘
-void testStinkerFight( void )
+void testStinkerFight()
 {
 	char c, userSelection;
 	int endTestSession = 0;
-
+	
 	while( !endTestSession )
 	{
 

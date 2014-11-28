@@ -1,2 +1,2 @@
-bin_PROGRAMS = battle
-test_SOURCES = battle.c
+bin_PROGRAMS = main
+test_SOURCES = main.c

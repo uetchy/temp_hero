@@ -1,10 +1,8 @@
+#include <string.h>
 #include "define.h"
 
+
 void initialiseArea(struct Room area[2][MAX_WIDTH][MAX_HEIGHT], struct Player player) {
-  // Initialize player position
-  player.c_area = 0;
-  player.x = 8;
-  player.y = 4;
 
   // Potion location
   area[ 0 ][ 5 ][ 5 ].hasPotion = 1;
@@ -18,13 +16,13 @@ void initialiseArea(struct Room area[2][MAX_WIDTH][MAX_HEIGHT], struct Player pl
   area[ 1 ][ 7 ][ 8 ].hasKey = 1;
 
   // Hint location
-  area[ 0 ][ 7 ][ 4 ].hint = 1;
-  area[ 0 ][ 7 ][ 1 ].hint = 1;
-  area[ 0 ][ 3 ][ 6 ].hint = 1;
-  area[ 0 ][ 8 ][ 8 ].hint = 1;
-  area[ 1 ][ 4 ][ 6 ].hint = 1;
-  area[ 1 ][ 1 ][ 4 ].hint = 1;
-  area[ 1 ][ 6 ][ 8 ].hint = 1;
+  strcpy(area[ 0 ][ 7 ][ 4 ].hint, "this is a hint");
+  strcpy(area[ 0 ][ 7 ][ 1 ].hint, "this is a hint");
+  strcpy(area[ 0 ][ 3 ][ 6 ].hint, "this is a hint");
+  strcpy(area[ 0 ][ 8 ][ 8 ].hint, "this is a hint");
+  strcpy(area[ 1 ][ 4 ][ 6 ].hint, "this is a hint");
+  strcpy(area[ 1 ][ 1 ][ 4 ].hint, "this is a hint");
+  strcpy(area[ 1 ][ 6 ][ 8 ].hint, "this is a hint");
 
   // Stair location
   area[ 0 ][ 7 ][ 4 ].canJump;
@@ -33,6 +31,13 @@ void initialiseArea(struct Room area[2][MAX_WIDTH][MAX_HEIGHT], struct Player pl
   // Unique boss location
   area[ 1 ][ 8 ][ 8 ].uniqueBossId = 1; // Hidden-boos
   area[ 1 ][ 6 ][ 1 ].uniqueBossId = 0; // Boss
+
+  // Player visited
+  for ( int a; a <= 2; a++ )
+    for ( int x; x <= 8; x++ )
+      for ( int y; y <= 8; y++ )
+        area[a][x][y].playerVisited = 0;
+
 
   // Area 1 door location
   // Row 1

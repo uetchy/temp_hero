@@ -22,10 +22,10 @@ typedef struct{           /* _person がタグ名 */
 //モンスター雑魚ステータス
   
 // monster[] = { name, HP, atk, part1, part2, part3, part4, weakpart };
-monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "EEEE","??E","0","0",1},
+monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "EEEE","??E","1","1",1},
 								{"Ue-sama",4 , 2, "Eye","Throat","Armpit","Feet",2},
-								{"Yazaki",3 , 3, "Right Hand","Right Feet","0","0",2},
-								{"Iida",8 , 1, "Laptop","Mobile Phone","Hoodies","0",3},
+								{"Yazaki",3 , 3, "Right Hand","Right Feet","1","1",2},
+								{"Iida",8 , 1, "Laptop","Mobile Phone","Hoodies","1",3},
 								{"Yoshioka",6 , 2, "Hair","Throat","Pelvis","Nose",4},
 								{"Muramatsu",2 , 8, "Hair","Keyboard","Mobile Phone","Mouse",2},
 								{"とらえモン",5 , 1, "Pocket","Dorayaki","Tail","Rat",2},
@@ -173,9 +173,9 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn ){
 	if(monnsuta == 0){
 	//雑魚モンスターをランダムにきめるための変数
 	mo = rand() % 10;
-	}else if(monnsuta == 1){
+	}else if(monnsuta == 1){//ボス指定
 	mo =10;
-	}else if(monnsuta == 1){
+	}else if(monnsuta == 1){//ボス指定
 	mo =11;
 	}
 	int stinkerHP;
@@ -197,10 +197,10 @@ int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn ){
 		printf("どの部位を攻撃しますか？ \n");
 		printf("%s :1 \n", monsters[mo].point1);
 		printf("%s :2 \n", monsters[mo].point2);
-		if(0 != atoi(monsters[mo].point3)){
+		if(1 != atoi(monsters[mo].point3)){
 		printf("%s :3 \n", monsters[mo].point3);
 		}
-		if(0 != atoi(monsters[mo].point4)){
+		if(1 != atoi(monsters[mo].point4)){
 		printf("%s :4 \n", monsters[mo].point4);
 		}
 		

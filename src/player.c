@@ -3,7 +3,7 @@
 void initializePlayer(struct Player* player) {
   // Condition
   player->hp = 100000;
-  player->beatenHiddenBoss = 0;
+  player->beatenHBoss = 0;
 
   // Items
   player->hasPotion = 0;

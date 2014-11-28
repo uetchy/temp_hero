@@ -37,16 +37,18 @@ typedef struct{           /* _person がタグ名 */
 //モンスター雑魚ステータス
   
 // monster[] = { name, HP, atk, part1, part2, part3, part4, weakpart };
-monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "EEEE","??E","Q???","Feet",1},
+monster_t monsters[PERSON_NUM] = {{"Andy",3 , 2, "EEEE","??E","0","0",1},
 								{"Ue-sama",4 , 2, "Eye","Throat","Armpit","Feet",2},
-								{"Yazaki",3 , 3, "Right Hand","Right Feet","Mac book","iPhone",3},
-								{"Iida",8 , 1, "Laptop","Mobile Phone","Hoodies","Bag",3},
+								{"Yazaki",3 , 3, "Right Hand","Right Feet","0","0",2},
+								{"Iida",8 , 1, "Laptop","Mobile Phone","Hoodies","0",3},
 								{"Yoshioka",6 , 2, "Hair","Throat","Pelvis","Nose",4},
 								{"Muramatsu",2 , 8, "Hair","Keyboard","Mobile Phone","Mouse",2},
-								{"どら◌モン",5 , 1, "Pocket","Dorayaki","Tail","Rat",2},
-								{"ピ◌チュウ",2 , 4, "Ear","Eye","Tail","Cheek",4},
-								{"ぷよ◌よ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4},
-								{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3}};
+								{"とらえモン",5 , 1, "Pocket","Dorayaki","Tail","Rat",2},
+								{"ビカチュウ",2 , 4, "Ear","Eye","Tail","Cheek",4},
+								{"ぷにょよ",3 , 2, "邪魔ぷよ","１れんさ","５れんさ","１０れんさ",4},
+								{"matsuko",10 , 1, "Eye","Throat","Jaw","Hair",3},
+								{"ボス",25 , 3, "頭","腕","おなか","えんだ―",4},
+								{"裏ボス",20 , 3, "頭","顎","脇腹","足",1}};
 
 // 調整する値はここまで
 //==========================================
@@ -71,12 +73,6 @@ int stinkerAttack( int );
 
 int main( void )
 {
-
-
-
-
-
-
 	char c;
 
 	srand( time( NULL ) );			// Stinker戦闘のため乱数を初期化
@@ -122,23 +118,23 @@ void testStinkerFight( void )
 		{
 		case '1':
 			// 刀なしのStinker戦闘
-			stinkerFightLoop( heroHP, stinker1StartHP, 0 ,0);
+			stinkerFightLoop( heroHP, 0, 0 ,0);
 			break;
 		case '2':
 			// 刀ありのStinker戦闘
-			stinkerFightLoop( heroHP, stinker1StartHP, 1 ,0);
+			stinkerFightLoop( heroHP, 0, 1 ,0);
 			break;
 		case '3':
 			// 刀なしのSuper Stinker戦闘
-			stinkerFightLoop( heroHP, superStinkerStartHP, 1 ,1 );
+			stinkerFightLoop( heroHP, 0, 1 ,1 );
 			break;
 		case '4':
 			// 刀なしのSuper Stinker戦闘
-			stinkerFightLoop( heroHP, superStinkerStartHP, 0 ,0);
+			stinkerFightLoop( heroHP, 1, 0 ,1);
 			break;
 		case '5':
 			// 刀ありのSuper Stinker戦闘
-			stinkerFightLoop( heroHP, superStinkerStartHP, 1 ,0);
+			stinkerFightLoop( heroHP, 2, 1 ,1);
 			break;
 		case 'Q':
 			endTestSession = 1;
@@ -161,9 +157,7 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 	int startHP = princeHP;
 	int totalPrinceHP = 0;
 
-	printf( "\nPrince HP: %d\n", princeHP );
-	printf( "Stinker HP: %d\n", stinkerHP );
-
+	
 	for( i = 1; i <= fightNumber; i++ )
 	{
 		result = stinkerFight( &princeHP, stinkerHP, hasSword ,weakpoint);
@@ -184,21 +178,45 @@ void stinkerFightLoop( int princeHP, int stinkerHP, int hasSword ,int weakpoint)
 
 // １回のプリンスとStinkerの戦闘シミュレーション
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタ*princeHPを使用
-int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
+int stinkerFight( int *princeHP, int monnsuta, int hasSword ,int posyonn )
 {
+
+	//モンスターを決めるための変数
 	int mo;
+	if(monnsuta == 0){
 	//雑魚モンスターをランダムにきめるための変数
 	mo = rand() % 10;
+	}else if(monnsuta == 1){
+	mo =10;
+	}else if(monnsuta == 1){
+	mo =11;
+	}
+	int stinkerHP;
+	stinkerHP = monsters[mo].hp;
+	
+	printf( "\nPrince HP: %d\n", *princeHP );
+	printf( "Stinker HP: %d\n", stinkerHP );
 
+	
 	while( 1 )
 	{
+		if(posyonn == 1){
 		//プレイヤーのできる行動を指示
 		printf("ポーションを使う：0 \n");
+		
+		}
+		
+		
 		printf("どの部位を攻撃しますか？ \n");
 		printf("%s :1 \n", monsters[mo].point1);
 		printf("%s :2 \n", monsters[mo].point2);
+		if(0 != atoi(monsters[mo].point3)){
 		printf("%s :3 \n", monsters[mo].point3);
-		printf("%s:4 \n", monsters[mo].point4);
+		}
+		if(0 != atoi(monsters[mo].point4)){
+		printf("%s :4 \n", monsters[mo].point4);
+		}
+		
 		//入力される値を保持するための変数
 		int a;
 		char bb[80];
@@ -213,9 +231,9 @@ int stinkerFight( int *princeHP, int stinkerHP, int hasSword ,int weakpoint )
 		}else if(a <= 4){
 		weakpoint = 0;
 		}
-		
-		if(a == 0){	//ポーションを使うと宣言	
+		if(a == 0 && posyonn == 1){	//ポーションを使うと宣言	
 		*princeHP +=10;
+		posyonn = 0;
 		if(*princeHP >= heroHP){
 		*princeHP = heroHP;
 		}		

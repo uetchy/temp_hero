@@ -1,11 +1,15 @@
 // Constants
 
 // Monster
-#define M_NAME 0
-#define M_HP 1
-#define M_POWER 2
-#define M_AA 3
-#define M_PARTS 4
+// #define M_NAME 0
+// #define M_HP 1
+// #define M_POWER 2
+// #define M_AA 3
+// #define M_PARTS 4
+
+// Boss
+#define B_BOSS 0
+#define B_HIDDEN_BOSS 1
 
 // Condition
 #define DC_NIL 0
@@ -17,6 +21,10 @@
 #define D_RIGHT 1
 #define D_DOWN 2
 #define D_LEFT 3
+
+// World settings
+#define MAX_WIDTH 8
+#define MAX_HEIGHT 8
 
 // Structures
 struct Room {
@@ -41,7 +49,7 @@ struct Player {
 
 // Declare prototypes
 // Initializer
-void initialiseArea(struct Room[2][8][8]);
+void initialiseArea(struct Room[2][MAX_WIDTH][MAX_HEIGHT]);
 void initializePlayer(struct Player);
 
 // Renderer

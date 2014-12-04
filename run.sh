@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make && ./src/main
+./configure --with-readline=`brew --prefix readline` && make && ./src/main

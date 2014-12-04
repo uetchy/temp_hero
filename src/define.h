@@ -44,7 +44,8 @@ struct Player {
   int hp;               // HP
   int hasKey;           // 鍵を持っているか？
   int hasPotion;        // ポーションを持っているか？
-  int beatenHBoss; // 裏ボスを倒したか？
+  int beatenBoss;       // ボスを倒したか？
+  int beatenHBoss;      // 裏ボスを倒したか？
   int c_area;           // 今プレイヤーがいるエリア
   int x;                // 現在地X
   int y;                // 現在地Y

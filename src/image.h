@@ -2,5 +2,6 @@
 #define H_IMAGE
 
 void printTitle();
+void printRules();
 
 #endif

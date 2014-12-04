@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <readline/readline.h>
 
 #include "define.h"
 #include "map.h"
@@ -25,21 +24,9 @@ int main( void ) {
 
 	printTitle();
 
-	char *prompt = getenv("PS2");
-	char *line = NULL;
-	int lineSize;
-
-	while (line = readline(prompt)) {
-		lineSize = strlen(line);
-		printf("%c", line[0]);
-		printf("\n");
-
-		free(line);
-	}
-
 	// Game loop
 	while( 1 ) {
-		// renderMap(area, &player);
+		renderMap(area, &player);
 		// checkEncountGauge(); // Zakoがいるなら戦闘
 
 		// tryDrinkPotion();						// ポーションがあるか、使うかのチェック
@@ -50,6 +37,7 @@ int main( void ) {
 
 		// Await user input
 		printf( "\nPress any key to continue.\n" );
+		c = getchar();
 	}
 }
 

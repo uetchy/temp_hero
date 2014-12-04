@@ -40,7 +40,70 @@ int main( void ) {
 		c = getchar();
 	}
 }
+void showRoomInfo()
+{
+	int x = prince.roomX;
+	int y = prince.roomY;
 
+	
+	// この部屋に刀があることを表示
+	if( dungeon[ x ][ y ].hasSword )
+	{
+		printf( "There is a sword in this room\n" );
+	}
+	// この部屋に健康ポーションがあることを表示
+	if( dungeon[ x ][ y ].healthPotion )
+	{
+		printf( "There is a health potion in this room\n" );
+	}
+	// この部屋の匂いを表示
+	if( dungeon[ x ][ y ].stinkerSmell1 || dungeon[ x ][ y ].stinkerSmell2 )
+	{
+		printf( "There is a bad smell in this room\n" );
+	}
+	if( dungeon[ x ][ y ].superStinkerSmell )
+	{
+		printf( "There is a very foul stench in this room\n" );
+	}
+	if( !dungeon[ x ][ y ].stinkerSmell1 && !dungeon[ x ][ y ].stinkerSmell2 &&
+		!dungeon[ x ][ y ].superStinkerSmell )
+	{
+		printf( "There is no smell in this room\n" );
+	}
+	// この部屋のドア情報を表示
+	if( dungeon[ x ][ y ].doorInfo[ North ] == openDoor )
+	{
+		printf( "There is a door to the North\n" );
+	}
+	else if( dungeon[ x ][ y ].doorInfo[ North ] == lockedDoor )
+	{
+		printf( "There is a locked door to the North\n" );
+	}
+	if( dungeon[ x ][ y ].doorInfo[ East ] == openDoor )
+	{
+		printf( "There is a door to the East\n" );
+	}
+	else if( dungeon[ x ][ y ].doorInfo[ East ] == lockedDoor )
+	{
+		printf( "There is a locked door to the East\n" );
+	}
+	if( dungeon[ x ][ y ].doorInfo[ South ] == openDoor )
+	{
+		printf( "There is a door to the South\n" );
+	}
+	else if( dungeon[ x ][ y ].doorInfo[ South ] == lockedDoor )
+	{
+		printf( "There is a locked door to the South\n" );
+	}
+	if( dungeon[ x ][ y ].doorInfo[ West ] == openDoor )
+	{
+		printf( "There is a door to the West\n" );
+	}
+	else if( dungeon[ x ][ y ].doorInfo[ West ] == lockedDoor )
+	{
+		printf( "There is a locked door to the West\n" );
+	}
+}
 	// ユーザーから移動方向を入力してもらう
 int getUserMove() {
 	int direction = -1;

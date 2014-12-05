@@ -1,5 +1,5 @@
-#ifndef H_IMAGE
-#define H_IMAGE
+#ifndef H_SCREENPLAY
+#define H_SCREENPLAY
 
 void printTitle();
 void printRules();

@@ -3,13 +3,6 @@
 
 // Constants
 
-// Monster
-// #define M_NAME 0
-// #define M_HP 1
-// #define M_POWER 2
-// #define M_AA 3
-// #define M_PARTS 4
-
 // Boss
 #define B_BOSS 0
 #define B_HIDDEN_BOSS 1

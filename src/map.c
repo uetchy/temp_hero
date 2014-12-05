@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "map.h"
 
-void initMap(struct Room area[2][MAX_WIDTH][MAX_HEIGHT]) {
+void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location
   area[ 0 ][ 5 ][ 5 ].hasPotion = 1;
   area[ 0 ][ 5 ][ 3 ].hasPotion = 1;
@@ -24,8 +25,7 @@ void initMap(struct Room area[2][MAX_WIDTH][MAX_HEIGHT]) {
   strcpy(area[ 1 ][ 6 ][ 8 ].hint, "this is a hint");
 
   // Stair location
-  // area[ 0 ][ 7 ][ 4 ].canJump;
-
+  area[ 0 ][ 7 ][ 4 ].canJump = 1;
 
   // Unique boss location
   area[ 1 ][ 8 ][ 8 ].uniqueBossId = 1; // Hidden-boos

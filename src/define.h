@@ -19,6 +19,7 @@
 #define D_LEFT 3
 
 // World settings
+#define MAX_AREA 2
 #define MAX_WIDTH 8
 #define MAX_HEIGHT 8
 

@@ -22,7 +22,6 @@ struct Player player;
 int main( void ) {
 	// Temporary variables
 	char c; // Input
-	int cflag; // Continuous flag
 
 	// Initialize
 	initMap(area);

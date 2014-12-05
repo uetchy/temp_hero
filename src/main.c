@@ -38,6 +38,7 @@ int main( void ) {
 		printf( "\nPress key to select menu.\n" );
 		printf( "[1] START GAME\n" );
 		printf( "[2] SHOW RULES\n" );
+		printf( "[3] ルールを見る\n" );
 
 		c = getchar();
 
@@ -47,7 +48,10 @@ int main( void ) {
 		  break;
 		} else if(c == '2'){ // Show rules
 			clearScreen();
-			printRules();
+			printRulesEN();
+		} else if(c == '3'){ // Show rules
+			clearScreen();
+			printRulesJP();
 		} else {
 			clearLines(4);
 		}

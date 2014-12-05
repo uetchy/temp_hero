@@ -4,6 +4,7 @@
 
 #include "define.h"
 #include "main.h"
+#include "renderer.h"
 #include "cli.h"
 #include "map.h"
 #include "player.h"
@@ -16,8 +17,8 @@ int getUserMove();
 void movePlayer(int);
 
 // Initializer variables
-struct Room area[2][MAX_WIDTH][MAX_HEIGHT];
-struct Player player;
+Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
+Player player;
 
 int main( void ) {
 	// Temporary variables
@@ -26,12 +27,13 @@ int main( void ) {
 	// Initialize
 	initMap(area);
 	initPlayer(&player);
-	initMonsters();
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
 	// Print title menu
 	clearScreen();
+	renderFrame(5);
+
 	printTitle();
 
 	while(1) {

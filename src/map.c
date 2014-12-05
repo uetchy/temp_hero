@@ -3,7 +3,7 @@
 
 #include "map.h"
 
-void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
+void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location
   area[ 0 ][ 5 ][ 5 ].hasPotion = 1;
   area[ 0 ][ 5 ][ 3 ].hasPotion = 1;
@@ -28,49 +28,51 @@ void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 7 ][ 4 ].canJump = 1;
 
   // Unique boss location
-  area[ 1 ][ 8 ][ 8 ].uniqueBossId = 1; // Hidden-boos
+  area[ 1 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
   area[ 1 ][ 6 ][ 1 ].uniqueBossId = 0; // Boss
 
   // Player visited
-  for ( int a; a <= 2; a++ )
-    for ( int x; x <= 8; x++ )
-      for ( int y; y <= 8; y++ )
+  for ( int a=0; a < MAX_AREA; a++ ) {
+    for ( int x=0; x < MAX_WIDTH; x++ ) {
+      for ( int y=0; y < MAX_HEIGHT; y++ ) {
         area[a][x][y].playerVisited = 0;
-
+      }
+    }
+  }
 
   // Area 1 door location
   // Row 1
-  area[ 0 ][ 7 ][ 1 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 7 ][ 1 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 7 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 2
-  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 7 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 7 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 2 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 2 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 3
-  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
   area[ 0 ][ 6 ][ 3 ].doorInfo[ D_UP ] = DC_OPEN;
   area[ 0 ][ 6 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
@@ -103,9 +105,9 @@ void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 7 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 7 ][ 4 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 8 ][ 4 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 8 ][ 4 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 8 ][ 4 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 7 ][ 4 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 4 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 7 ][ 4 ].doorInfo[ D_RIGHT ] = DC_NIL;
 
   // Row 5
   area[ 0 ][ 5 ][ 5 ].doorInfo[ D_UP ] = DC_NIL;
@@ -144,9 +146,9 @@ void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 7 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 7 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 8 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 8 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 8 ][ 6 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_RIGHT ] = DC_NIL;
 
   // Row 7
   area[ 0 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
@@ -154,19 +156,19 @@ void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 8 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 8 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 8 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 7 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
 
   // Row 8
-  area[ 0 ][ 4 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 4 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 4 ][ 8 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 4 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 8 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 8 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 8 ][ 8 ].doorInfo[ D_RIGHT ] = DC_LOCKED;
+  area[ 0 ][ 7 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 7 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 7 ][ 7 ].doorInfo[ D_RIGHT ] = DC_LOCKED;
 
   // Area 2 door
   // 1行列目
@@ -306,49 +308,49 @@ void initMap(struct Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
 
   // Row 8
   // area[ 1 ] (1,8)
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 1 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 1 ][ 1 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 1 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 1 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 1 ][ 7 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (2,8)
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 2 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (2,7)
+  area[ 1 ][ 2 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 2 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 2 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 2 ][ 7 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (3,8)
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 3 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (3,7)
+  area[ 1 ][ 3 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 3 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 3 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 3 ][ 7 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (4,8)
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 4 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
+  // area[ 1 ] (4,7)
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 4 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  // area[ 1 ] (6,8)
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 6 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (6,7)
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 6 ][ 7 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (7,8)
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 7 ][ 8 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  // area[ 1 ] (7,7)
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  // area[ 1 ] (8,8)
-  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 1 ][ 8 ][ 8 ].doorInfo[ D_DOWN ] = DC_NIL;
+  // area[ 1 ] (7,7)
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 1 ][ 7 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 }
 
-int positionToEquals(struct Player* p, int r_x, int r_y) {
+int positionToEquals(Player* p, int r_x, int r_y) {
   if ( p->x == r_x && p->y == r_y ) {
     return 1;
   } else {
@@ -357,7 +359,7 @@ int positionToEquals(struct Player* p, int r_x, int r_y) {
 }
 
 // Rendering map
-void renderMap(struct Room area[2][MAX_WIDTH][MAX_HEIGHT], struct Player* player) {
+void renderMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
   int x, y;
 
   // Show per room

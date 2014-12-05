@@ -3,7 +3,7 @@
 
 #include "define.h"
 
-void initMap(struct Room[2][MAX_WIDTH][MAX_HEIGHT]);
-void renderMap(struct Room[2][MAX_WIDTH][MAX_HEIGHT], struct Player*);
+void initMap(Room[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]);
+void renderMap(Room[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player*);
 
 #endif

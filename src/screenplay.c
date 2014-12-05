@@ -31,8 +31,6 @@ void printRules() {
   printf( "13) The potion will heal you back to full health when used outside of battle\n" );
   printf( "14) Or heal for 10 HP when used in battle\n" );
   printf( "15) Using potion when battling will use your turn, so you can't use potion and attack at the same time\n" );
-  printf( "14) Or heal for 10 HP when used in battle\n" );
-  printf( "\nPress any key to start the game.\n" );
 
   printf( "Good luck with your quest to escape the dungeon\n" );
 }

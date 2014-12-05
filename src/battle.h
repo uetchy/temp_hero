@@ -1,8 +1,9 @@
 #ifndef H_BATTLE
 #define H_BATTLE
 
-#include "player.h"
+#include "define.h"
 
-int battle( int *, int, int, int );
+void initMonsters();
+int battle(struct Player*, int);
 
 #endif

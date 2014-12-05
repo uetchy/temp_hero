@@ -8,7 +8,7 @@
 #include "map.h"
 #include "player.h"
 #include "screenplay.h"
-#include "../config.h"
+#include "battle.h"
 
 // *** Prototypes
 void gameLoop();
@@ -26,6 +26,7 @@ int main( void ) {
 	// Initialize
 	initMap(area);
 	initPlayer(&player);
+	initMonsters();
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
@@ -62,8 +63,9 @@ void gameLoop() {
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか
 		// tryTakeKey(); // 鍵があるかどうか
-		int moveDirection = getUserMove(); // ユーザーから移動方向を入力してもらう
-		movePlayer( moveDirection );
+		// int moveDirection = getUserMove(); // ユーザーから移動方向を入力してもらう
+		// movePlayer( moveDirection );
+		battle(&player, 0);
 	}
 }
 
@@ -188,7 +190,7 @@ void movePlayer( int direction ){
 	area[ currentArea ][ newX ][ newY ].playerVisited = 1;
 
 	// TODO: Battle
-	// doBattle();
+	int victory_status = battle(&player, area[ currentArea ][ newX ][ newY ].uniqueBossId);
 
 	// TODO: 勝利条件
 	printf( "*************\n" );

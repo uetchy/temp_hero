@@ -45,4 +45,15 @@ struct Player {
   int y;                // 現在地Y
 };
 
+typedef struct { // _person がタグ名
+  char name[256];    // 文字配列型のメンバ name
+  int hp;
+  int power;
+  char point1[256]; //wpは攻撃部位
+  char point2[256];
+  char point3[256];
+  char point4[256];
+  int wp;           //wpは弱点部位のインデックスを示す　
+} Monster;
+
 #endif

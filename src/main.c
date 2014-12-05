@@ -3,10 +3,17 @@
 #include <string.h>
 
 #include "define.h"
+#include "main.h"
+#include "cli.h"
 #include "map.h"
 #include "player.h"
-#include "image.h"
+#include "screenplay.h"
 #include "../config.h"
+
+// *** Prototypes
+void gameLoop();
+int getUserMove();
+void movePlayer(int);
 
 // Initializer variables
 struct Room area[2][MAX_WIDTH][MAX_HEIGHT];
@@ -15,6 +22,7 @@ struct Player player;
 int main( void ) {
 	// Temporary variables
 	char c; // Input
+	int cflag; // Continuous flag
 
 	// Initialize
 	initMap(area);
@@ -22,26 +30,45 @@ int main( void ) {
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
+	// Print title menu
+	clearScreen();
 	printTitle();
 
-	// Game loop
-	while( 1 ) {
+	while(1) {
+		printf( "\nPress key to select menu.\n" );
+		printf( "[1] START GAME\n" );
+		printf( "[2] SHOW RULES\n" );
+
+		c = getchar();
+
+		if (c == '1'){ // Start game
+			clearScreen();
+			gameLoop();
+		  break;
+		} else if(c == '2'){ // Show rules
+			clearScreen();
+			printRules();
+		} else {
+			clearLines(4);
+		}
+	}
+
+}
+
+// Game loop
+void gameLoop() {
+	while(1) {
 		renderMap(area, &player);
 		// checkEncountGauge(); // Zakoがいるなら戦闘
-
-		// tryDrinkPotion();						// ポーションがあるか、使うかのチェック
-		// tryReadHint();							// ヒントあるかどうか
-		// tryTakeKey();								// 鍵があるかどうか
-		// moveDirection = getUserMove();			// ユーザーから移動方向を入力してもらう
-		// movePlayer( moveDirection );			// ユーザが選んだ方向にプリンスを移動させる
-
-		// Await user input
-		printf( "\nPress any key to continue.\n" );
-		c = getchar();
+		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
+		// tryReadHint(); // ヒントあるかどうか
+		// tryTakeKey(); // 鍵があるかどうか
+		int moveDirection = getUserMove(); // ユーザーから移動方向を入力してもらう
+		movePlayer( moveDirection );
 	}
 }
 
-	// ユーザーから移動方向を入力してもらう
+// ユーザーから移動方向を入力してもらう
 int getUserMove() {
 	int direction = -1;
 	int current_area = player.c_area;
@@ -70,10 +97,10 @@ int getUserMove() {
 					direction = D_UP;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}else{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		case 'E':
@@ -86,10 +113,10 @@ int getUserMove() {
 					direction = D_RIGHT;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}else{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		case 'S':
@@ -102,10 +129,10 @@ int getUserMove() {
 					direction = D_DOWN;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}else{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		case 'W':
@@ -118,15 +145,15 @@ int getUserMove() {
 					direction = D_LEFT;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter¥n" );
+					printf( "This door is locked. You need two keys to enter\n" );
 				}
 			}else{
-				printf( "You cannot move in this direction¥n" );
+				printf( "You cannot move in this direction\n" );
 			}
 			break;
 		default:
 			// 不正入力
-			printf( "Illegal door direction¥n" );
+			printf( "Illegal door direction\n" );
 			break;
 		}
 	}

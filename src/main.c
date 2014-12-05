@@ -5,15 +5,16 @@
 #include "define.h"
 #include "main.h"
 #include "renderer.h"
-#include "cli.h"
 #include "map.h"
 #include "player.h"
 #include "screenplay.h"
 #include "battle.h"
 
-// *** Prototypes
+#define ES_NEXT_LINE_IN_FRAME "\x1b[1B\r\x1b[2C"
+
+// Prototypes
 void gameLoop();
-int getUserMove();
+int  getUserMove();
 void movePlayer(int);
 
 // Initializer variables
@@ -25,6 +26,7 @@ int main( void ) {
 	char c; // Input
 
 	// Initialize
+	disableCursor();
 	initMap(area);
 	initPlayer(&player);
 
@@ -32,16 +34,15 @@ int main( void ) {
 
 	// Print title menu
 	clearScreen();
-	renderFrame(5);
-
 	printTitle();
 
 	while(1) {
-		printf( "\nPress key to select menu.\n" );
-		printf( "[1] START GAME\n" );
-		printf( "[2] SHOW RULES\n" );
-		printf( "[3] ルールを見る\n" );
-
+		renderFrame(5);
+		printf( "Press key to select menu.%s", ES_NEXT_LINE_IN_FRAME );
+		printf( "[1] START GAME%s", ES_NEXT_LINE_IN_FRAME );
+		printf( "[2] SHOW RULES%s", ES_NEXT_LINE_IN_FRAME );
+		printf( "[3] ルールを見る%s", ES_NEXT_LINE_IN_FRAME );
+		printf( ">> " );
 		c = getchar();
 
 		if (c == '1'){ // Start game
@@ -71,7 +72,7 @@ void gameLoop() {
 		// tryTakeKey(); // 鍵があるかどうか
 		// int moveDirection = getUserMove(); // ユーザーから移動方向を入力してもらう
 		// movePlayer( moveDirection );
-		battle(&player, 0);
+		battle(&player, area[ player.c_area ][ player.x ][ player.y ].uniqueBossId);
 	}
 }
 

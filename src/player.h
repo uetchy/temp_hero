@@ -4,6 +4,6 @@
 #include "define.h"
 
 // Initializer
-void initPlayer(struct Player*);
+void initPlayer(Player*);
 
 #endif

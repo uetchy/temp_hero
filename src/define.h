@@ -2,6 +2,8 @@
 #define H_DEFINE
 
 // Constants
+#define PERSON_NUM 100
+#define MAX_PLAYER_HP 15
 
 // Boss
 #define B_BOSS 0
@@ -24,7 +26,7 @@
 #define MAX_HEIGHT 8
 
 // Structures
-struct Room {
+typedef struct {
   int uniqueBossId;  // 固有敵のインデックス（nullならいない）
   int hasPotion;     // ポーションが落ちているか
   int hasKey;        // 鍵が落ちているか？
@@ -32,9 +34,9 @@ struct Room {
   int doorInfo[4];   // ドア開通状態
   int canJump;       // 次のエリアにジャンプ出来るか
   int playerVisited; // プレイヤーが通ったか
-};
+} Room;
 
-struct Player {
+typedef struct {
   int hp;               // HP
   int hasKey;           // 鍵を持っているか？
   int hasPotion;        // ポーションを持っているか？
@@ -43,16 +45,16 @@ struct Player {
   int c_area;           // 今プレイヤーがいるエリア
   int x;                // 現在地X
   int y;                // 現在地Y
-};
+} Player;
 
 typedef struct { // _person がタグ名
-  char name[256];    // 文字配列型のメンバ name
+  char name[100];    // 文字配列型のメンバ name
   int hp;
   int power;
-  char point1[256]; //wpは攻撃部位
-  char point2[256];
-  char point3[256];
-  char point4[256];
+  char point1[100]; //wpは攻撃部位
+  char point2[100];
+  char point3[100];
+  char point4[100];
   int wp;           //wpは弱点部位のインデックスを示す　
 } Monster;
 

@@ -3,7 +3,6 @@
 
 #include "define.h"
 
-void initMonsters();
-int battle(struct Player*, int);
+int battle(Player*, int);
 
 #endif

@@ -2,6 +2,7 @@
 #define H_SCREENPLAY
 
 void printTitle();
-void printRules();
+void printRulesEN();
+void printRulesJP();
 
 #endif

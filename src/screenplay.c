@@ -13,7 +13,7 @@ void printTitle() {
   printf("|                        　　                        　,,,ll'\n");
 }
 
-void printRules() {
+void printRulesEN() {
   printf( "\nRules of Hakken Yuusha:\n");
   printf( "==========================\n" );
   printf( "1) You are a hero that was summoned inside of a dungeon\n" );
@@ -33,4 +33,13 @@ void printRules() {
   printf( "15) Using potion when battling will use your turn, so you can't use potion and attack at the same time\n" );
 
   printf( "Good luck with your quest to escape the dungeon\n" );
+}
+
+void printRulesJP() {
+  printf( "\n派遣勇者のルール:\n");
+  printf( "==========================\n" );
+  printf( "1) まだ完成していません\n" );
+  printf( "2) 英語の方を見てください\n" );
+  
+  printf( "では。。。健闘を祈る\n" );
 }

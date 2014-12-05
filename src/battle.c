@@ -8,8 +8,20 @@
 #define PERSON_NUM 100
 #define MAX_PLAYER_HP 15
 
-// monster[] = { name, HP, atk, part1, part2, part3, part4, weakpart };
-Monster monsters[PERSON_NUM];
+Monster monsters[PERSON_NUM] = {
+	{"Andy", 3, 2, "EEEE", "??E", "1", "1", 1},
+	{"Ue-sama", 4, 2, "Eye", "Throat", "Armpit", "Feet", 2},
+	{"Yazaki", 3, 3, "Right Hand", "Right Feet", "1", "1", 2},
+	{"Iida", 8, 1, "Laptop", "Mobile Phone", "Hoodies", "1", 3},
+	{"Yoshioka", 6, 2, "Hair", "Throat", "Pelvis", "Nose", 4},
+	{"Muramatsu", 2, 8, "Hair", "Keyboard", "Mobile Phone", "Mouse", 2},
+	{"とらえモン", 5, 1, "Pocket", "Dorayaki", "Tail", "Rat", 2},
+	{"ビカチュウ", 2, 4, "Ear", "Eye", "Tail", "Cheek", 4},
+	{"ぷにょよ", 3, 2, "邪魔ぷよ", "１れんさ", "５れんさ", "１０れんさ", 4},
+	{"matsuko", 10, 1, "Eye", "Throat", "Jaw", "Hair", 3},
+	{"ボス", 25, 3, "頭", "腕", "おなか", "えんだ―", 4},
+	{"裏ボス", 20, 3, "頭", "顎", "脇腹", "足", 1}
+};
 
 // 調整する値はここまで
 //==========================================
@@ -31,21 +43,6 @@ void initMonsters() {
 // １回のPlayerとZakoの戦闘シミュレーション
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタplayer->hpを使用
 int battle(struct Player* player, int uniqueBossId) {
-	Monster monsters[PERSON_NUM] = {
-		{"Andy", 3, 2, "EEEE", "??E", "1", "1", 1},
-		{"Ue-sama", 4, 2, "Eye", "Throat", "Armpit", "Feet", 2},
-		{"Yazaki", 3, 3, "Right Hand", "Right Feet", "1", "1", 2},
-		{"Iida", 8, 1, "Laptop", "Mobile Phone", "Hoodies", "1", 3},
-		{"Yoshioka", 6, 2, "Hair", "Throat", "Pelvis", "Nose", 4},
-		{"Muramatsu", 2, 8, "Hair", "Keyboard", "Mobile Phone", "Mouse", 2},
-		{"とらえモン", 5, 1, "Pocket", "Dorayaki", "Tail", "Rat", 2},
-		{"ビカチュウ", 2, 4, "Ear", "Eye", "Tail", "Cheek", 4},
-		{"ぷにょよ", 3, 2, "邪魔ぷよ", "１れんさ", "５れんさ", "１０れんさ", 4},
-		{"matsuko", 10, 1, "Eye", "Throat", "Jaw", "Hair", 3},
-		{"ボス", 25, 3, "頭", "腕", "おなか", "えんだ―", 4},
-		{"裏ボス", 20, 3, "頭", "顎", "脇腹", "足", 1}
-	};
-
 	int mo;
 
 	switch ( uniqueBossId ) {
@@ -121,7 +118,7 @@ int battle(struct Player* player, int uniqueBossId) {
 		} else if (input <= 4) {//攻撃すると宣言
 			// Playerは攻撃する
 			enemyHP -= playerAttack( player->beatenHBoss , weakpoint);
-			printf("雑魚HP %d \n",enemyHP);
+			printf("雑魚HP %d \n", enemyHP);
 			// Zakoを倒したかどうかのチェック
 			if ( enemyHP <= 0 ) {
 				printf("ヒーロー勝利 \n");
@@ -146,7 +143,7 @@ int battle(struct Player* player, int uniqueBossId) {
 }
 
 // Player attack func
-int playerAttack( int beatenHBoss ,int weakpoint ) {
+int playerAttack( int beatenHBoss, int weakpoint ) {
 	// 攻撃のダメージ
 	int damage = 1;
 
@@ -165,7 +162,8 @@ int playerAttack( int beatenHBoss ,int weakpoint ) {
 
 // Enemy attack func
 int enemyAttack( int mo ) {
+	printf("mo: %d", monsters[mo]);
 	int damage = monsters[mo].power;
-	printf("%s の攻撃  %dダメージ \n", monsters[mo].name ,damage);
+	printf("%s の攻撃  %dダメージ \n", monsters[mo].name, damage);
 	return damage;
 }

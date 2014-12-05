@@ -2,7 +2,7 @@
 
 void initPlayer(struct Player* player) {
   // Condition
-  player->hp = 100000;
+  player->hp = 15;
   player->beatenHBoss = 0;
 
   // Items
@@ -11,6 +11,6 @@ void initPlayer(struct Player* player) {
 
   // Area
   player->c_area = 0;
-  player->x = 8;
-  player->y = 4;
+  player->x      = 8;
+  player->y      = 4;
 }

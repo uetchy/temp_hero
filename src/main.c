@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <termios.h>
+#include <ncurses.h>
 
 #include "define.h"
 #include "main.h"
@@ -30,6 +31,7 @@ int main( void ) {
 	default_term = term;
 	term.c_lflag &= ~ICANON;
 	tcsetattr(fileno(stdin), TCSANOW, &term);
+	// initscr();
 
 	// Temporary variables
 	char c; // Input
@@ -45,6 +47,8 @@ int main( void ) {
 	clearScreen();
 	printTitle();
 
+	int cur = 0;
+
 	while(1) {
 		renderFrame(5);
 		printf( "Press key to select menu.%s", ES_NEXT_LINE_IN_FRAME );
@@ -53,6 +57,9 @@ int main( void ) {
 		printf( "[3] ルールを見る%s", ES_NEXT_LINE_IN_FRAME );
 		printf( ">> " );
 		c = getchar();
+
+		// printf("%c\n", c);
+		// break;
 
 		if (c == '1'){ // Start game
 			clearScreen();
@@ -69,8 +76,13 @@ int main( void ) {
 		}
 	}
 
+	// Restore canonical mode
 	tcsetattr(fileno(stdin), TCSANOW, &default_term);
 	return 0;
+}
+
+void checkEncountGauge() {
+
 }
 
 // Game loop

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <termios.h>
 
 #include "define.h"
 #include "main.h"
@@ -22,6 +24,13 @@ Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
 Player player;
 
 int main( void ) {
+	// Set un-canonical mode
+	struct termios term, default_term;
+	tcgetattr(fileno(stdin), &term);
+	default_term = term;
+	term.c_lflag &= ~ICANON;
+	tcsetattr(fileno(stdin), TCSANOW, &term);
+
 	// Temporary variables
 	char c; // Input
 
@@ -60,6 +69,8 @@ int main( void ) {
 		}
 	}
 
+	tcsetattr(fileno(stdin), TCSANOW, &default_term);
+	return 0;
 }
 
 // Game loop

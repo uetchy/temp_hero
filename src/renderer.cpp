@@ -4,7 +4,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#include "renderer.h"
+#include "renderer.hpp"
 
 UIDescriptor uiDescriptor = {"╗", "╔", "╝", "╚", "═", "║"};
 

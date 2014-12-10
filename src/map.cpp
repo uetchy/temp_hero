@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "map.h"
+#include "map.hpp"
 
 void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location

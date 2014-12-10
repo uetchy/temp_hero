@@ -4,11 +4,11 @@
 AC_PREREQ([2.69])
 AC_INIT([temp_hero], [0.1], [uetchy@randompaper.co])
 AM_INIT_AUTOMAKE([foreign 1.14.1])
-AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
-AC_PROG_CC
+AC_PROG_CXX
 
 # Checks for libraries.
 

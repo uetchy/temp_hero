@@ -1,4 +1,4 @@
-#include "player.h"
+#include "player.hpp"
 
 void initPlayer(Player* player) {
   // Condition

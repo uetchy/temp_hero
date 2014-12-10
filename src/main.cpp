@@ -3,15 +3,15 @@
 #include <string.h>
 #include <unistd.h>
 #include <termios.h>
-#include <ncurses.h>
+// #include <ncurses.h>
 
-#include "define.h"
-#include "main.h"
-#include "renderer.h"
-#include "map.h"
-#include "player.h"
-#include "screenplay.h"
-#include "battle.h"
+#include "define.hpp"
+#include "main.hpp"
+#include "renderer.hpp"
+#include "map.hpp"
+#include "player.hpp"
+#include "screenplay.hpp"
+#include "battle.hpp"
 
 #define ES_NEXT_LINE_IN_FRAME "\x1b[1B\r\x1b[2C"
 
@@ -26,12 +26,11 @@ Player player;
 
 int main( void ) {
 	// Set un-canonical mode
-	struct termios term, default_term;
-	tcgetattr(fileno(stdin), &term);
-	default_term = term;
-	term.c_lflag &= ~ICANON;
-	tcsetattr(fileno(stdin), TCSANOW, &term);
-	// initscr();
+	// struct termios term, default_term;
+	// tcgetattr(fileno(stdin), &term);
+	// default_term = term;
+	// term.c_lflag &= ~ICANON;
+	// tcsetattr(fileno(stdin), TCSANOW, &term);
 
 	// Temporary variables
 	char c; // Input
@@ -77,7 +76,7 @@ int main( void ) {
 	}
 
 	// Restore canonical mode
-	tcsetattr(fileno(stdin), TCSANOW, &default_term);
+	// tcsetattr(fileno(stdin), TCSANOW, &default_term);
 	return 0;
 }
 

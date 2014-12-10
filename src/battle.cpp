@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "battle.h"
+#include "battle.hpp"
 
 // PlayerとZakoの戦闘結果
 #define EOB_PLAYER_WON 1

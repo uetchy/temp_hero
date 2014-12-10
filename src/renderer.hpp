@@ -10,18 +10,7 @@ typedef struct {
   char frame_v[20];
 } UIDescriptor;
 
-typedef struct {
-  int row;
-  int column;
-} TermEnv;
-
-void disableCursor();
-void clearLine();
-void clearLines(int);
-void clearScreen();
-void moveCursor(int, int);
 void applyUIDescriptor(char *, char *, char *, char *, char *, char *);
-TermEnv getTermEnv();
 void wrapWithColor(const char *color, char *str);
 void renderFrame(int);
 

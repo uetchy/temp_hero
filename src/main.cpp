@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <termios.h>
-// #include <ncurses.h>
+#include <ncurses.h>
+#include <locale.h>
 
 #include "define.hpp"
 #include "main.hpp"
@@ -12,8 +11,6 @@
 #include "player.hpp"
 #include "screenplay.hpp"
 #include "battle.hpp"
-
-#define ES_NEXT_LINE_IN_FRAME "\x1b[1B\r\x1b[2C"
 
 // Prototypes
 void gameLoop();
@@ -25,58 +22,57 @@ Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
 Player player;
 
 int main( void ) {
-	// Set un-canonical mode
-	// struct termios term, default_term;
-	// tcgetattr(fileno(stdin), &term);
-	// default_term = term;
-	// term.c_lflag &= ~ICANON;
-	// tcsetattr(fileno(stdin), TCSANOW, &term);
+	// Set locale
+	// - これを指定しないとncursesが文字化けを引き起こす
+	setlocale(LC_ALL, "");
+
+	// Initialize ncurses
+	initscr();            // Init window
+  noecho();             // Disable input echo
+  cbreak();             // Turn into Non-Canonical mode
+  clear();              // Clear whole screen
+  curs_set(0);          // Set the cursor invisible
+  keypad(stdscr, true); // Enable support for special chars
 
 	// Temporary variables
 	char c; // Input
 
 	// Initialize
-	disableCursor();
 	initMap(area);
 	initPlayer(&player);
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
 	// Print title menu
-	clearScreen();
 	printTitle();
 
-	int cur = 0;
+  while (1) {
+		renderFrame(4);
+		printw( "Press key to select menu.\n");
+		printw( "[1] START GAME\n" );
+		printw( "[2] SHOW RULES\n" );
+		printw( "[3] ルールを見る\n" );
 
-	while(1) {
-		renderFrame(5);
-		printf( "Press key to select menu.%s", ES_NEXT_LINE_IN_FRAME );
-		printf( "[1] START GAME%s", ES_NEXT_LINE_IN_FRAME );
-		printf( "[2] SHOW RULES%s", ES_NEXT_LINE_IN_FRAME );
-		printf( "[3] ルールを見る%s", ES_NEXT_LINE_IN_FRAME );
-		printf( ">> " );
-		c = getchar();
-
-		// printf("%c\n", c);
-		// break;
+		// Wait for input
+	  c = getch();
 
 		if (c == '1'){ // Start game
-			clearScreen();
+			clear();
 			gameLoop();
 		  break;
 		} else if(c == '2'){ // Show rules
-			clearScreen();
+			clear();
 			printRulesEN();
 		} else if(c == '3'){ // Show rules
-			clearScreen();
+			clear();
 			printRulesJP();
 		} else {
-			clearLines(4);
+			// clearLines(4);
 		}
 	}
+	// Clear ncurses data structures
+	endwin();
 
-	// Restore canonical mode
-	// tcsetattr(fileno(stdin), TCSANOW, &default_term);
 	return 0;
 }
 

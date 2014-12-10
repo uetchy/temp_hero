@@ -1,42 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
+#include <ncurses.h>
 
 #include "renderer.hpp"
 
 UIDescriptor uiDescriptor = {"╗", "╔", "╝", "╚", "═", "║"};
 
-void disableCursor() {
-  printf("\x1b[>5h");
-}
+int winX;
+int winY;
 
-void clearLine(){
-  printf("\x1b[2K\r");
-}
-
-void clearLines(int length){
-  for (int i=0; i < length; i++) {
-    printf("\x1b[2K\r\x1b[1A");
-  }
-}
-
-void clearScreen(){
-  printf("\x1b[2J\x1b[f");
-}
-
-void moveCursor(int x, int y) {
-  printf("\x1b[%d;%df", x, y);
-}
-
-TermEnv getTermEnv(){
-  struct winsize w;
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-  TermEnv tenv = {w.ws_row, w.ws_col};
-
-  return tenv;
-}
+WINDOW *framescr;
 
 void applyUIDescriptor(char *tr, char *tl, char *br, char *bl, char *h, char *v) {
   strcpy(uiDescriptor.frame_tr, tr);
@@ -64,36 +38,43 @@ void renderBar(int length, int color_num) {
   sprintf(tmp, "\x1b[4%dm\x1b[3%dm%s\x1b[0m", color_num, color_num, "|");
 
   for (int i=0; i < length; i++) {
-    printf("%s", tmp);
+    printw("%s", tmp);
   }
 }
 
 void renderFrame(int row){
-  TermEnv tenv = getTermEnv();
+  getmaxyx(stdscr, winY, winX);
 
-  moveCursor(tenv.row-row-1, 0);
+  framescr = newwin(row, winX, winY-row, 0);
+
+  int frameX;
+  int frameY;
+  getmaxyx(framescr, frameY, frameX);
+
+  // move(winY-row-1, 0);
+  move(0, 0);
 
   for ( int i=0; i < row+2; i++ ) {
     if ( i == 0 ) {
-      printf("%s", uiDescriptor.frame_tl);
-      for ( int j=0; j < tenv.column - 2; j++) {
-        printf("%s", uiDescriptor.frame_h);
+      printw("%s", uiDescriptor.frame_tl);
+      for ( int j=0; j < frameX - 2; j++) {
+        printw("%s", uiDescriptor.frame_h);
       }
-      printf("%s", uiDescriptor.frame_tr);
+      printw("%s", uiDescriptor.frame_tr);
     } else if ( i == row+1 ) {
-      printf("%s", uiDescriptor.frame_bl);
-      for ( int j=0; j < tenv.column - 2; j++) {
-        printf("%s", uiDescriptor.frame_h);
+      printw("%s", uiDescriptor.frame_bl);
+      for ( int j=0; j < frameX - 2; j++) {
+        printw("%s", uiDescriptor.frame_h);
       }
-      printf("%s", uiDescriptor.frame_br);
+      printw("%s", uiDescriptor.frame_br);
     } else {
-      printf("%s", uiDescriptor.frame_v);
-      for ( int j=0; j < tenv.column - 2; j++) {
-        printf(" ");
+      printw("%s", uiDescriptor.frame_v);
+      for ( int j=0; j < frameX - 2; j++) {
+        printw(" ");
       }
-      printf("%s", uiDescriptor.frame_v);
+      printw("%s", uiDescriptor.frame_v);
     }
   }
 
-  moveCursor(tenv.row - row, 3);
+  move(0, 3);
 }

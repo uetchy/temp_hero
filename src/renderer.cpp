@@ -23,7 +23,7 @@ void renderBar(int length, int color_num) {
 }
 
 void iprint( int msec, std::vector<std::string> strings) {
-  struct timespec req = {0, msec * MILLI_SEC};
+  struct timespec req = {0, msec * 1000000}; // 1 milli-sec = 1000000
   for ( std::string str : strings ) {
     printw(str.c_str());
     refresh();
@@ -98,7 +98,7 @@ void Frame::print( const char* format, ... ) {
 }
 
 void Frame::iprint( int msec, std::vector<std::string> strings) {
-  struct timespec req = {0, 300 * MILLI_SEC};
+  struct timespec req = {0, msec * 1000000}; // 1 milli-sec = 1000000
   for ( std::string str : strings ) {
     wprintw(inlinescr, str.c_str());
     touchwin(framescr);

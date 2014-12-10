@@ -10,8 +10,6 @@
 #include <string>
 #include <vector>
 
-#define MILLI_SEC 1000000
-
 typedef struct {
   char frame_tr[20];
   char frame_tl[20];

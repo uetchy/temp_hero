@@ -17,7 +17,7 @@ void gameLoop();
 int  getUserMove();
 void movePlayer(int);
 
-// Initializer variables
+// Initialize variables
 Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
 Player player;
 
@@ -44,15 +44,21 @@ int main( void ) {
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
 	// Print title menu
+	for (int x=0; x < COLS; x++)
+		for (int y=0; y < COLS; y++)
+			mvprintw(y, x, "+");
+	move(0, 0);
 	printTitle();
+	refresh();
+
+	// Prepare selection frame
+	Frame sframe(4);
+	sframe.print( "Press key to select menu.\n");
+	sframe.print("[1] START GAME\n");
+	sframe.print("[2] SHOW RULES\n");
+	sframe.print("[3] ルールを見る\n");
 
   while (1) {
-		renderFrame(4);
-		printw( "Press key to select menu.\n");
-		printw( "[1] START GAME\n" );
-		printw( "[2] SHOW RULES\n" );
-		printw( "[3] ルールを見る\n" );
-
 		// Wait for input
 	  c = getch();
 
@@ -69,9 +75,14 @@ int main( void ) {
 		} else {
 			// clearLines(4);
 		}
+
+		refresh();
+		sframe.bringToFront();
 	}
+
 	// Clear ncurses data structures
 	endwin();
+	refresh();
 
 	return 0;
 }
@@ -83,7 +94,7 @@ void checkEncountGauge() {
 // Game loop
 void gameLoop() {
 	while(1) {
-		renderMap(area, &player);
+		// renderMap(area, &player);
 		// checkEncountGauge(); // Zakoがいるなら戦闘
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか
@@ -231,4 +242,9 @@ void movePlayer( int direction ){
 		printf( "You died in battle and your body is eaten by the monsters.\n" );
 		printf( "Of course, the world is destroyed.\n" );
 	}
+}
+
+void signal_handler(int SIG){
+  endwin();
+  exit(EXIT_FAILURE);
 }

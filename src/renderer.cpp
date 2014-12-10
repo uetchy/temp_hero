@@ -1,26 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ncurses.h>
-
 #include "renderer.hpp"
 
-UIDescriptor uiDescriptor = {"╗", "╔", "╝", "╚", "═", "║"};
-
-int winX;
-int winY;
-
-WINDOW *framescr;
-
-void applyUIDescriptor(char *tr, char *tl, char *br, char *bl, char *h, char *v) {
-  strcpy(uiDescriptor.frame_tr, tr);
-  strcpy(uiDescriptor.frame_tl, tl);
-  strcpy(uiDescriptor.frame_br, br);
-  strcpy(uiDescriptor.frame_bl, bl);
-  strcpy(uiDescriptor.frame_h, h);
-  strcpy(uiDescriptor.frame_v, v);
-}
-
+// Helper
 void wrapWithColor(const char *colorname, char *str) {
   char tmp[256];
   strcpy(tmp, str);
@@ -42,39 +22,96 @@ void renderBar(int length, int color_num) {
   }
 }
 
-void renderFrame(int row){
-  getmaxyx(stdscr, winY, winX);
+void iprint( int msec, std::vector<std::string> strings) {
+  struct timespec req = {0, msec * MILLI_SEC};
+  for ( std::string str : strings ) {
+    printw(str.c_str());
+    refresh();
+    nanosleep(&req, NULL);
+  }
+}
 
-  framescr = newwin(row, winX, winY-row, 0);
+// Frame class
+Frame::Frame(int row) {
+  this->row = row;
 
-  int frameX;
-  int frameY;
-  getmaxyx(framescr, frameY, frameX);
+  // DEF: WINDOW *newwin(int nlines, int ncols, int begin_y, int begin_x);
+  framescr = newwin(row+2, COLS, LINES - row - 2, 0);
+  frameX = COLS;
+  frameY = row+2;
 
-  // move(winY-row-1, 0);
-  move(0, 0);
+  render();
 
-  for ( int i=0; i < row+2; i++ ) {
+  inlinescr = subwin(framescr, row, COLS-4, LINES - row - 1, 2);
+  wrefresh(framescr);
+}
+
+int Frame::getRow() {
+  return this->row;
+}
+
+void Frame::applyUIDescriptor(char *tr, char *tl, char *br, char *bl, char *h, char *v) {
+  strcpy(uiDescriptor.frame_tr, tr);
+  strcpy(uiDescriptor.frame_tl, tl);
+  strcpy(uiDescriptor.frame_br, br);
+  strcpy(uiDescriptor.frame_bl, bl);
+  strcpy(uiDescriptor.frame_h, h);
+  strcpy(uiDescriptor.frame_v, v);
+}
+
+void Frame::render() {
+  wmove(framescr, 0, 0);
+
+  for ( int i=0; i < frameY; i++ ) {
     if ( i == 0 ) {
-      printw("%s", uiDescriptor.frame_tl);
+      wprintw(framescr, "%s", uiDescriptor.frame_tl);
       for ( int j=0; j < frameX - 2; j++) {
-        printw("%s", uiDescriptor.frame_h);
+        wprintw(framescr, "%s", uiDescriptor.frame_h);
       }
-      printw("%s", uiDescriptor.frame_tr);
-    } else if ( i == row+1 ) {
-      printw("%s", uiDescriptor.frame_bl);
+      wprintw(framescr, "%s", uiDescriptor.frame_tr);
+    } else if ( i == frameY - 1 ) {
+      wprintw(framescr, "%s", uiDescriptor.frame_bl);
       for ( int j=0; j < frameX - 2; j++) {
-        printw("%s", uiDescriptor.frame_h);
+        wprintw(framescr, "%s", uiDescriptor.frame_h);
       }
-      printw("%s", uiDescriptor.frame_br);
+      wprintw(framescr, "%s", uiDescriptor.frame_br);
     } else {
-      printw("%s", uiDescriptor.frame_v);
+      wprintw(framescr, "%s", uiDescriptor.frame_v);
       for ( int j=0; j < frameX - 2; j++) {
-        printw(" ");
+        // wmove(framescr, i, j+2);
+        wprintw(framescr, " ");
       }
-      printw("%s", uiDescriptor.frame_v);
+      wprintw(framescr, "%s", uiDescriptor.frame_v);
     }
   }
+}
 
-  move(0, 3);
+void Frame::print( const char* format, ... ) {
+  va_list args;
+  va_start( args, format );
+
+  wprintw( inlinescr, format, args );
+  touchwin(framescr);
+  wrefresh(framescr);
+
+  va_end(args);
+}
+
+void Frame::iprint( int msec, std::vector<std::string> strings) {
+  struct timespec req = {0, 300 * MILLI_SEC};
+  for ( std::string str : strings ) {
+    wprintw(inlinescr, str.c_str());
+    touchwin(framescr);
+    wrefresh(framescr);
+    nanosleep(&req, NULL);
+  }
+}
+
+void Frame::clear() {
+  wclear(inlinescr);
+}
+
+void Frame::bringToFront() {
+  touchwin(framescr);
+  wrefresh(framescr);
 }

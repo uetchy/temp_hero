@@ -32,78 +32,130 @@ void iprint( int msec, std::vector<std::string> strings) {
 }
 
 // Frame class
-Frame::Frame(int row) {
-  this->row = row;
+Frame::Frame(int row, int cols, int orientation, int createBorder) {
+  this->frameInfo.row  = row;
+  this->frameInfo.cols = cols;
+  this->orientation = orientation;
+  this->hasBorder = createBorder;
 
+  switch(orientation) {
+    case FO_TOP:
+      this->frameInfo.absoluteX = 0;
+      this->frameInfo.absoluteY = 0;
+      break;
+    case FO_RIGHT:
+      this->frameInfo.absoluteX = COLS - cols;
+      this->frameInfo.absoluteY = 0;
+      break;
+    case FO_BOTTOM:
+      this->frameInfo.absoluteX = 0;
+      this->frameInfo.absoluteY = LINES - row;
+      break;
+    case FO_LEFT:
+      this->frameInfo.absoluteX = 0;
+      this->frameInfo.absoluteY = 0;
+      break;
+  }
+
+  // Frame
   // DEF: WINDOW *newwin(int nlines, int ncols, int begin_y, int begin_x);
-  framescr = newwin(row+2, COLS, LINES - row - 2, 0);
-  frameX = COLS;
-  frameY = row+2;
+  framescr = newwin(
+    this->frameInfo.row,
+    this->frameInfo.cols,
+    this->frameInfo.absoluteY,
+    this->frameInfo.absoluteX
+  );
 
-  render();
+  // Inline frame
+  if ( hasBorder ) {
+    this->inlineFrameInfo.absoluteX = 2;
+    this->inlineFrameInfo.absoluteY = LINES - row - 1;
+    this->inlineFrameInfo.row       = row - 2;
+    this->inlineFrameInfo.cols      = cols - 4;
+    renderBorder();
+  } else {
+    this->inlineFrameInfo.absoluteX = 0;
+    this->inlineFrameInfo.absoluteY = LINES - row;
+    this->inlineFrameInfo.row       = row;
+    this->inlineFrameInfo.cols      = cols;
+  }
 
-  inlinescr = subwin(framescr, row, COLS-4, LINES - row - 1, 2);
+  inlinescr = subwin(
+    framescr,
+    this->inlineFrameInfo.row,
+    this->inlineFrameInfo.cols,
+    this->inlineFrameInfo.absoluteY,
+    this->inlineFrameInfo.absoluteX
+  );
+
+  // Update view
   wrefresh(framescr);
 }
 
-int Frame::getRow() {
-  return this->row;
+int Frame::getRow() { return this->frameInfo.row; }
+int Frame::getCols() { return this->frameInfo.cols; }
+int Frame::getIrow() { return this->inlineFrameInfo.row; }
+int Frame::getIcols() { return this->inlineFrameInfo.cols; }
+
+void Frame::filledWith(const char* str) {
+  wmove(inlinescr, 0, 0);
+  for (int x=0; x < getIcols(); x++)
+    for (int y=0; y < getIrow(); y++)
+      mvwprintw(inlinescr, y, x, str);
+  bringToFront();
 }
 
-void Frame::applyUIDescriptor(char *tr, char *tl, char *br, char *bl, char *h, char *v) {
-  strcpy(uiDescriptor.frame_tr, tr);
-  strcpy(uiDescriptor.frame_tl, tl);
-  strcpy(uiDescriptor.frame_br, br);
-  strcpy(uiDescriptor.frame_bl, bl);
-  strcpy(uiDescriptor.frame_h, h);
-  strcpy(uiDescriptor.frame_v, v);
-}
-
-void Frame::render() {
+void Frame::renderBorder() {
   wmove(framescr, 0, 0);
 
-  for ( int i=0; i < frameY; i++ ) {
+  for ( int i=0; i < getRow(); i++ ) {
     if ( i == 0 ) {
-      wprintw(framescr, "%s", uiDescriptor.frame_tl);
-      for ( int j=0; j < frameX - 2; j++) {
-        wprintw(framescr, "%s", uiDescriptor.frame_h);
+      wprintw(framescr, "%s", borders.frame_tl);
+      for ( int j=0; j < getCols() - 2; j++) {
+        wprintw(framescr, "%s", borders.frame_h);
       }
-      wprintw(framescr, "%s", uiDescriptor.frame_tr);
-    } else if ( i == frameY - 1 ) {
-      wprintw(framescr, "%s", uiDescriptor.frame_bl);
-      for ( int j=0; j < frameX - 2; j++) {
-        wprintw(framescr, "%s", uiDescriptor.frame_h);
+      wprintw(framescr, "%s", borders.frame_tr);
+    } else if ( i == getRow() - 1 ) {
+      wprintw(framescr, "%s", borders.frame_bl);
+      for ( int j=0; j < getCols() - 2; j++) {
+        wprintw(framescr, "%s", borders.frame_h);
       }
-      wprintw(framescr, "%s", uiDescriptor.frame_br);
+      wprintw(framescr, "%s", borders.frame_br);
     } else {
-      wprintw(framescr, "%s", uiDescriptor.frame_v);
-      for ( int j=0; j < frameX - 2; j++) {
+      wprintw(framescr, "%s", borders.frame_v);
+      for ( int j=0; j < getCols() - 2; j++) {
         // wmove(framescr, i, j+2);
         wprintw(framescr, " ");
       }
-      wprintw(framescr, "%s", uiDescriptor.frame_v);
+      wprintw(framescr, "%s", borders.frame_v);
     }
   }
 }
 
-void Frame::print( const char* format, ... ) {
+void Frame::println( const char* format, ... ) {
   va_list args;
   va_start( args, format );
 
   wprintw( inlinescr, format, args );
-  touchwin(framescr);
-  wrefresh(framescr);
+  bringToFront();
 
   va_end(args);
 }
 
-void Frame::iprint( int msec, std::vector<std::string> strings) {
-  struct timespec req = {0, msec * 1000000}; // 1 milli-sec = 1000000
-  for ( std::string str : strings ) {
-    wprintw(inlinescr, str.c_str());
-    touchwin(framescr);
-    wrefresh(framescr);
-    nanosleep(&req, NULL);
+void Frame::print( const std::vector<std::string> strings, int delayMsec ) {
+  wmove( inlinescr, 0, 0 );
+
+  if ( delayMsec > 0 ) {
+    struct timespec req = {0, delayMsec * 1000000}; // 1 milli second = 1000000 micro seconds
+    for ( std::string str : strings ) {
+      wprintw(inlinescr, str.c_str());
+      bringToFront();
+      nanosleep(&req, NULL);
+    }
+  } else {
+    for ( std::string str : strings )
+      wprintw(inlinescr, str.c_str());
+    bringToFront();
   }
 }
 

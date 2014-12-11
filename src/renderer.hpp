@@ -10,6 +10,11 @@
 #include <string>
 #include <vector>
 
+#define FO_TOP 0
+#define FO_RIGHT 1
+#define FO_BOTTOM 2
+#define FO_LEFT 3
+
 typedef struct {
   char frame_tr[20];
   char frame_tl[20];
@@ -17,23 +22,37 @@ typedef struct {
   char frame_bl[20];
   char frame_h[20];
   char frame_v[20];
-} UIDescriptor;
+} Border;
+
+typedef struct {
+  int x;
+  int y;
+  int absoluteX;
+  int absoluteY;
+  int row;
+  int cols;
+} FrameInfo;
 
 class Frame {
 private:
-  int row;
-  int frameX;
-  int frameY;
+  int orientation;
+  int hasBorder;
+  FrameInfo frameInfo;
+  FrameInfo inlineFrameInfo;
   WINDOW *framescr;
   WINDOW *inlinescr;
-  UIDescriptor uiDescriptor = {"╗", "╔", "╝", "╚", "═", "║"};
-public:
-  Frame(int row);
+  Border borders = {"╗", "╔", "╝", "╚", "═", "║"};
+
+  void renderBorder();
   int getRow();
-  void applyUIDescriptor(char *tr, char *tl, char *br, char *bl, char *h, char *v);
-  void render();
-  void print( const char* format, ... );
-  void iprint( int msec, std::vector<std::string> strings);
+  int getCols();
+  int getIrow();
+  int getIcols();
+public:
+  Frame(int row, int cols, int orientation, int hasBorder = false);
+  void filledWith(const char* str);
+  void println( const char* format, ... );
+  void print( const std::vector<std::string> strings, int delayMsec = 0);
   void clear();
   void bringToFront();
 };

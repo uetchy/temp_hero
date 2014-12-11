@@ -43,20 +43,21 @@ int main( void ) {
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
+  refresh();
+
+	Frame title_f(LINES-4, COLS, FO_TOP, false);
+
 	// Print title menu
-	for (int x=0; x < COLS; x++)
-		for (int y=0; y < COLS; y++)
-			mvprintw(y, x, "+");
-	move(0, 0);
-	printTitle();
-	refresh();
+	title_f.filledWith("+");
+	title_f.print( getTitle() );
+  title_f.println("OK");
 
 	// Prepare selection frame
-	Frame sframe(4);
-	sframe.print( "Press key to select menu.\n");
-	sframe.print("[1] START GAME\n");
-	sframe.print("[2] SHOW RULES\n");
-	sframe.print("[3] ルールを見る\n");
+	Frame choices_f(4, COLS, FO_BOTTOM, true);
+	choices_f.println( "Press key to select menu.\n");
+	choices_f.println("[1] START GAME\n");
+	choices_f.println("[2] SHOW RULES\n");
+	choices_f.println("[3] ルールを見る\n");
 
   while (1) {
 		// Wait for input
@@ -68,16 +69,16 @@ int main( void ) {
 		  break;
 		} else if(c == '2'){ // Show rules
 			clear();
-			printRulesEN();
+			title_f.print( getRulesEN() );
 		} else if(c == '3'){ // Show rules
 			clear();
-			printRulesJP();
+			title_f.print( getRulesJP() );
 		} else {
 			// clearLines(4);
 		}
 
 		refresh();
-		sframe.bringToFront();
+		choices_f.bringToFront();
 	}
 
 	// Clear ncurses data structures

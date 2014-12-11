@@ -1,13 +1,11 @@
 #ifndef H_SCREENPLAY
 #define H_SCREENPLAY
 
-#include <stdio.h>
-#include <ncurses.h>
+#include <vector>
+#include <string>
 
-#include "renderer.hpp"
-
-void printTitle();
-void printRulesEN();
-void printRulesJP();
+std::vector<std::string> getTitle();
+std::vector<std::string> getRulesEN();
+std::vector<std::string> getRulesJP();
 
 #endif

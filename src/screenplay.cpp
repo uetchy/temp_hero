@@ -1,7 +1,7 @@
 #include "screenplay.hpp"
 
-void printTitle() {
-  iprint(50, {
+std::vector<std::string> getTitle() {
+  return {
     "\n",
     "\n",
     "\n",
@@ -26,11 +26,11 @@ void printTitle() {
     "\n",
     "\n",
     "\n"
-  });
+  };
 }
 
-void printRulesEN() {
-  iprint(100, {
+std::vector<std::string> getRulesEN() {
+  return {
     "\nRules of Hakken Yuusha:\n",
     "==========================\n" ,
     "1) You are a hero that was summoned inside of a dungeon\n" ,
@@ -51,11 +51,11 @@ void printRulesEN() {
     "16) Or heal for 10 HP when used in battle\n" ,
     "17) Using potion when battling will use your turn, so you can't use potion and attack at the same time\n" ,
     "Good luck with your quest to escape the dungeon\n"
-  });
+  };
 }
 
-void printRulesJP() {
-  iprint(100, {
+std::vector<std::string> getRulesJP() {
+  return {
     "\n派遣勇者のルール:\n",
     "==========================\n" ,
     "01) プレイヤーはダンジョンの中に召喚された勇者です\n" ,
@@ -77,5 +77,5 @@ void printRulesJP() {
     "X) まだ完成していません\n" ,
     "X) もっと詳しいルールは英語の方に書かれてあります\n",
     "では。。。健闘を祈る\n"
-  });
+  };
 }

@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "map.hpp"
-
+//area[areaNo][X][Y]
 void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location
   area[ 0 ][ 4 ][ 4 ].hasPotion = 1;
@@ -128,7 +128,7 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 5 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 0 ][ 5 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_UP ] = DC_OPEN;
   area[ 0 ][ 5 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
   area[ 0 ][ 5 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 5 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
@@ -166,8 +166,8 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
 
   // Row 8
   area[ 0 ][ 7 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 0 ][ 7 ][ 3 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   area[ 0 ][ 7 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;

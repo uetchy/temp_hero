@@ -30,7 +30,7 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
 
   // Unique boss location
   area[ 1 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
-  area[ 1 ][ 6 ][ 1 ].uniqueBossId = 0; // Boss
+  area[ 1 ][ 5 ][ 0 ].uniqueBossId = 0; // Boss
 
   // Player visited
   for ( int a=0; a < MAX_AREA; a++ ) {

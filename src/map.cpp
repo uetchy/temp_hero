@@ -377,17 +377,28 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
 
   for (int x=startPoint; x < startPoint+maxRange; x++) {
     for (int y=startPoint; y < startPoint+maxRange; y++) {
+      int rx = (x+maxRange/2) * 11;
+      int ry = (y+maxRange/2) * 5;
+
       if (!isValid(area, pa, px+x, py+y)) {
+        mvprintw(ry,   rx, "...........");
+        mvprintw(ry+1, rx, "...........");
+        mvprintw(ry+2, rx, "...........");
+        mvprintw(ry+3, rx, "...........");
+        mvprintw(ry+4, rx, "...........");
         continue;
       }
 
       Room room = area[pa][px+x][py+y];
 
-      if ( room.doorInfo[D_UP] == -1 ) continue;
-      if ( !room.playerVisited ) continue;
-
-      int rx = (x+maxRange/2) * 11;
-      int ry = (y+maxRange/2) * 5;
+      if ( room.doorInfo[D_UP] == -1 || !room.playerVisited ) {
+        mvprintw(ry,   rx, "...........");
+        mvprintw(ry+1, rx, "...........");
+        mvprintw(ry+2, rx, "...........");
+        mvprintw(ry+3, rx, "...........");
+        mvprintw(ry+4, rx, "...........");
+        continue;
+      }
 
       // Render room
       switch(room.doorInfo[D_UP]){
@@ -446,6 +457,5 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
           break;
       }
     }
-    printw("\n");
   }
 }

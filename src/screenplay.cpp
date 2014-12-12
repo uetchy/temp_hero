@@ -31,7 +31,7 @@ std::vector<std::string> getTitle() {
 
 std::vector<std::string> getRulesEN() {
   return {
-    "\nRules of Hakken Yuusha:\n",
+    "\nRules of Haken Yuusha:\n",
     "==========================\n" ,
     "1) You are a hero that was summoned inside of a dungeon\n" ,
     "2) You need to get out from the dungeon to save the world\n" ,

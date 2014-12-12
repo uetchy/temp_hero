@@ -100,11 +100,31 @@ void checkEncountGauge() {
 
 // Game loop
 void gameLoop() {
-	char c;
+	int c;
 	while(1) {
 
 		renderMap(stdscr, area, &player);
+
 		c = getch();
+		if (c == KEY_UP){
+			if ( isValid(area, player.c_area, player.x, player.y - 1) ) {
+				player.y = player.y - 1;
+			}
+		} else if (c == KEY_RIGHT){
+			if ( isValid(area, player.c_area, player.x + 1, player.y) ) {
+				player.x = player.x + 1;
+			}
+		}else if (c == KEY_DOWN){
+			if ( isValid(area, player.c_area, player.x, player.y + 1) ) {
+				player.y = player.y + 1;
+			}
+		} else if (c == KEY_LEFT){
+			if ( isValid(area, player.c_area, player.x - 1, player.y) ) {
+				player.x = player.x - 1;
+			}
+		}
+
+		area[player.c_area][player.x][player.y].playerVisited = 1;
 		// checkEncountGauge(); // Zakoがいるなら戦闘
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか

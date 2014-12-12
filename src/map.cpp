@@ -41,6 +41,15 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
     }
   }
 
+  // Init doorinfo
+  for ( int a=0; a < MAX_AREA; a++ ) {
+    for ( int x=0; x < MAX_WIDTH; x++ ) {
+      for ( int y=0; y < MAX_HEIGHT; y++ ) {
+        area[a][x][y].doorInfo[ D_UP ] = -1;
+      }
+    }
+  }
+
   // Area 1 door location
   // Row 1
   area[ 0 ][ 0 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
@@ -351,28 +360,36 @@ int positionToEquals(Player* p, int r_x, int r_y) {
   }
 }
 
+int isValid(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], int a, int x, int y) {
+  return x < MAX_WIDTH && x >= 0 && y < MAX_HEIGHT && y >= 0 && area[a][x][y].doorInfo[D_UP] != -1;
+}
+
 // Rendering map
 void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
-  int a = player->c_area;
-  int x = player->x;
-  int y = player->y;
+  int pa = player->c_area;
+  int px = player->x;
+  int py = player->y;
 
-  Room currentRoom = area[a][x][y];
-  Room nearRooms[3][3] = {
-    {area[a][x-1][y-1], area[a][x][y-1], area[a][x+1][y-1]},
-    {area[a][x-1][y  ], area[a][x][y  ], area[a][x+1][y  ]},
-    {area[a][x-1][y+1], area[a][x][y+1], area[a][x+1][y+1]}
-  };
+  const int maxRange = 5;
+  const int startPoint = maxRange/2 * -1;
 
-  for (int x=0; x < 3; x++) {
-    for (int y=0; y < 3; y++) {
-      Room room = nearRooms[x][y];
+  clear();
 
-      int rx = x * 11;
-      int ry = y * 5;
+  for (int x=startPoint; x < startPoint+maxRange; x++) {
+    for (int y=startPoint; y < startPoint+maxRange; y++) {
+      if (!isValid(area, pa, px+x, py+y)) {
+        continue;
+      }
+
+      Room room = area[pa][px+x][py+y];
+
+      if ( room.doorInfo[D_UP] == -1 ) continue;
+      if ( !room.playerVisited ) continue;
+
+      int rx = (x+maxRange/2) * 11;
+      int ry = (y+maxRange/2) * 5;
 
       // Render room
-      //"╗", "╔", "╝", "╚", "═", "║"
       switch(room.doorInfo[D_UP]){
         case DC_NIL:
           mvprintw(ry, rx, "╔═════════╗");
@@ -383,9 +400,11 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
         case DC_LOCKED:
           mvprintw(ry, rx, "╔═══╝X╚═══╗");
           break;
+        default:
+          mvprintw(ry, rx, "╔════?════╗");
       }
 
-      mvprintw(ry+1, rx, "║         ║");
+      mvprintw(ry+1, rx, "║%d,%d      ║", px+x, py+y);
 
       switch(room.doorInfo[D_LEFT]){
         case DC_NIL:
@@ -399,7 +418,7 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
           break;
       }
 
-      printw("%s", room.playerVisited ? "👽" : " ");
+      printw(positionToEquals(player, px+x, py+y) ? "👽" : " ");
 
       switch(room.doorInfo[D_RIGHT]){
         case DC_NIL:

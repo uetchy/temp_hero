@@ -11,6 +11,6 @@ void initPlayer(Player* player) {
 
   // Area
   player->c_area = 0;
-  player->x      = 7;
-  player->y      = 3;
+  player->x      = 3;
+  player->y      = 7;
 }

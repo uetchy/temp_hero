@@ -6,31 +6,31 @@
 void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location
   area[ 0 ][ 4 ][ 4 ].hasPotion = 1;
-  area[ 0 ][ 4 ][ 2 ].hasPotion = 1;
-  area[ 0 ][ 2 ][ 3 ].hasPotion = 1;
-  area[ 1 ][ 5 ][ 3 ].hasPotion = 1;
-  area[ 1 ][ 2 ][ 1 ].hasPotion = 1;
+  area[ 0 ][ 2 ][ 4 ].hasPotion = 1;
+  area[ 0 ][ 3 ][ 2 ].hasPotion = 1;
+  area[ 1 ][ 3 ][ 5 ].hasPotion = 1;
+  area[ 1 ][ 1 ][ 2 ].hasPotion = 1;
 
   // Key location
-  area[ 0 ][ 2 ][ 1 ].hasKey = 1;
-  area[ 1 ][ 6 ][ 7 ].hasKey = 1;
+  area[ 0 ][ 1 ][ 2 ].hasKey = 1;
+  area[ 1 ][ 7 ][ 6 ].hasKey = 1;
 
   // Hint location
-  strcpy(area[ 0 ][ 6 ][ 3 ].hint, "this is a hint");
-  strcpy(area[ 0 ][ 6 ][ 0 ].hint, "this is a hint");
-  strcpy(area[ 0 ][ 2 ][ 5 ].hint, "this is a hint");
+  strcpy(area[ 0 ][ 3 ][ 6 ].hint, "this is a hint");
+  strcpy(area[ 0 ][ 0 ][ 6 ].hint, "this is a hint");
+  strcpy(area[ 0 ][ 5 ][ 2 ].hint, "this is a hint");
   strcpy(area[ 0 ][ 7 ][ 7 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 3 ][ 5 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 0 ][ 3 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 5 ][ 7 ].hint, "this is a hint");
+  strcpy(area[ 1 ][ 2 ][ 3 ].hint, "this is a hint");
+  strcpy(area[ 1 ][ 3 ][ 0 ].hint, "this is a hint");
+  strcpy(area[ 1 ][ 7 ][ 5 ].hint, "this is a hint");
   strcpy(area[ 1 ][ 7 ][ 7 ].hint, "Hidden Boss hint");
 
   // Stair location
-  area[ 0 ][ 7 ][ 3 ].canJump = 1;
+  area[ 0 ][ 3 ][ 7 ].canJump = 1;
 
   // Unique boss location
   area[ 1 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
-  area[ 1 ][ 5 ][ 0 ].uniqueBossId = 0; // Boss
+  area[ 1 ][ 0 ][ 5 ].uniqueBossId = 0; // Boss
 
   // Player visited
   for ( int a=0; a < MAX_AREA; a++ ) {
@@ -43,73 +43,73 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
 
   // Area 1 door location
   // Row 1
-  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 0 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 0 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 0 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 0 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 0 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 2
-  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 2 ][ 1 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 1 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 1 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 1 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 3 ][ 1 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 3 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 1 ][ 3 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 1 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 1 ][ 4 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 4 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 1 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 1 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 1 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 1 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 1 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 3
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 4 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 2 ][ 4 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 4 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 6 ][ 2 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 2 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 2 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 2 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 2 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 4
-  area[ 0 ][ 2 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 2 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 2 ][ 3 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 2 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
   area[ 0 ][ 3 ][ 3 ].doorInfo[ D_UP ] = DC_OPEN;
   area[ 0 ][ 3 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
   area[ 0 ][ 3 ][ 3 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 0 ][ 3 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 4 ][ 3 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 3 ][ 4 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 4 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 4 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 5
   area[ 0 ][ 4 ][ 4 ].doorInfo[ D_UP ] = DC_NIL;
@@ -117,58 +117,58 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 4 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 4 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 6 ][ 4 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 6 ][ 4 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 4 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 4 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 4 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 4 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 4 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 6
-  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 2 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 2 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 3 ][ 5 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 3 ][ 5 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 3 ][ 5 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 3 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 3 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 4 ][ 5 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 5 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 4 ][ 5 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 4 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 4 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 4 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 4 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 4 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
   area[ 0 ][ 5 ][ 5 ].doorInfo[ D_UP ] = DC_OPEN;
   area[ 0 ][ 5 ][ 5 ].doorInfo[ D_LEFT ] = DC_NIL;
   area[ 0 ][ 5 ][ 5 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 0 ][ 5 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 6 ][ 5 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 5 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 6 ][ 5 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 6 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
-  area[ 0 ][ 7 ][ 5 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 5 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 5 ].doorInfo[ D_RIGHT ] = DC_NIL;
-  area[ 0 ][ 7 ][ 5 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 7
-  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_RIGHT ] = DC_LOCKED;
-  area[ 0 ][ 3 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_RIGHT ] = DC_LOCKED;
+  area[ 0 ][ 6 ][ 3 ].doorInfo[ D_DOWN ] = DC_NIL;
 
-  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 7 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 6 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 6 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 6 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 6 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 8
-  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
-  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
-  area[ 0 ][ 3 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
+  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_UP ] = DC_NIL;
+  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 7 ][ 3 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   area[ 0 ][ 7 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
   area[ 0 ][ 7 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;

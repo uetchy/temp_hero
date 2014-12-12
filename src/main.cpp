@@ -124,14 +124,20 @@ int getUserMove() {
 	// 正しい方向が入力されてないまで繰り返す
 	while( !legalDirection ) {
 		// ユーザーから方向を入力
-		printf( "Enter door direction (N,E,S,W): " );
+		Frame choices_f(4, RFOrientation::BOTTOM);
+		choices_f.println( "Enter direction: .\n");
+		choices_f.println("[w] Up\n");
+		choices_f.println("[a] Left\n");
+		choices_f.println("[d] right\n");
+		choices_f.println("[s] down\n");
+		//printf( "Enter door direction (N,E,S,W): " );
 		c = getchar();
 		// 改行文字をバッファーから削除
 		scanf("%*c");
 
 		// 入力は正しいかどうかを確認
 		switch( c ){
-		case 'N':
+		case 'w':
 			// 北方向にドアがあれば方向決定
 			if( area[ current_area ][ x ][ y ].doorInfo[ D_UP ] == DC_OPEN ){
 				direction = D_UP;
@@ -141,13 +147,13 @@ int getUserMove() {
 					direction = D_UP;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter\n" );
+					printf( "This door is locked. You need key to unlock it\n" );
 				}
 			}else{
 				printf( "You cannot move in this direction\n" );
 			}
 			break;
-		case 'E':
+		case 'd':
 			// 東方向にドアがあれば方向決定
 			if( area[ current_area ][ x ][ y ].doorInfo[ D_RIGHT ] == DC_OPEN ){
 				direction = D_RIGHT;
@@ -157,13 +163,13 @@ int getUserMove() {
 					direction = D_RIGHT;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter\n" );
+					printf( "This door is locked. You need key to unlock it\n" );
 				}
 			}else{
 				printf( "You cannot move in this direction\n" );
 			}
 			break;
-		case 'S':
+		case 's':
 			// 南方向にドアがあれば方向決定
 			if( area[ current_area ][ x ][ y ].doorInfo[ D_DOWN ] == DC_OPEN ){
 				direction = D_DOWN;
@@ -173,13 +179,13 @@ int getUserMove() {
 					direction = D_DOWN;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter\n" );
+					printf( "This door is locked. You need key to unlock it\n" );
 				}
 			}else{
 				printf( "You cannot move in this direction\n" );
 			}
 			break;
-		case 'W':
+		case 'a':
 			// 西方向にドアがあれば方向決定
 			if( area[ current_area ][ x ][ y ].doorInfo[ D_LEFT ] == DC_OPEN ){
 				direction = D_LEFT;
@@ -189,7 +195,7 @@ int getUserMove() {
 					direction = D_LEFT;
 					legalDirection = 1;
 				}else{
-					printf( "This door is locked. You need two keys to enter\n" );
+					printf( "This door is locked. You need key to unlock it\n" );
 				}
 			}else{
 				printf( "You cannot move in this direction\n" );
@@ -197,7 +203,7 @@ int getUserMove() {
 			break;
 		default:
 			// 不正入力
-			printf( "Illegal door direction\n" );
+			printf( "Illegal input\n" );
 			break;
 		}
 	}

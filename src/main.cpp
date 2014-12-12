@@ -34,8 +34,8 @@ int main( void ) {
   curs_set(0);          // Set the cursor invisible
   keypad(stdscr, true); // Enable support for special chars
 
-	// Temporary variables
-	char c; // Input
+	 // Input
+	char c;
 
 	// Initialize
 	initMap(area);
@@ -45,15 +45,12 @@ int main( void ) {
 
   refresh();
 
-	Frame title_f(LINES-4, COLS, FO_TOP, false);
-
 	// Print title menu
-	title_f.filledWith("+");
-	title_f.print( getTitle() );
-  title_f.println("OK");
+	// filledWith("+");
+	print( getTitle(), 100 );
 
 	// Prepare selection frame
-	Frame choices_f(4, COLS, FO_BOTTOM, true);
+	Frame choices_f(4, RFOrientation::BOTTOM);
 	choices_f.println( "Press key to select menu.\n");
 	choices_f.println("[1] START GAME\n");
 	choices_f.println("[2] SHOW RULES\n");
@@ -69,10 +66,10 @@ int main( void ) {
 		  break;
 		} else if(c == '2'){ // Show rules
 			clear();
-			title_f.print( getRulesEN() );
+			print( getRulesEN() );
 		} else if(c == '3'){ // Show rules
 			clear();
-			title_f.print( getRulesJP() );
+			print( getRulesJP() );
 		} else {
 			// clearLines(4);
 		}

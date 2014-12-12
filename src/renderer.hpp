@@ -10,28 +10,35 @@
 #include <string>
 #include <vector>
 
-#define FO_TOP 0
-#define FO_RIGHT 1
-#define FO_BOTTOM 2
-#define FO_LEFT 3
+// Struct
 
-typedef struct {
-  char frame_tr[20];
-  char frame_tl[20];
-  char frame_br[20];
-  char frame_bl[20];
-  char frame_h[20];
-  char frame_v[20];
-} Border;
+struct RFOrientation {
+  static const int TOP;
+  static const int BOTTOM;
+};
 
-typedef struct {
+struct Border {
+  char frame_tr[4];
+  char frame_tl[4];
+  char frame_br[4];
+  char frame_bl[4];
+  char frame_h[4];
+  char frame_v[4];
+};
+
+struct FrameInfo {
   int x;
   int y;
   int absoluteX;
   int absoluteY;
   int row;
   int cols;
-} FrameInfo;
+};
+
+// Functions
+
+void print( const std::vector<std::string> strings, int delayMsec = 0);
+void filledWith(const char* str);
 
 class Frame {
 private:
@@ -49,15 +56,12 @@ private:
   int getIrow();
   int getIcols();
 public:
-  Frame(int row, int cols, int orientation, int hasBorder = false);
+  Frame(int inline_row, int orientation);
   void filledWith(const char* str);
   void println( const char* format, ... );
   void print( const std::vector<std::string> strings, int delayMsec = 0);
   void clear();
   void bringToFront();
 };
-
-void wrapWithColor(const char *color, char *str);
-void iprint( int msec, std::vector<std::string> strings);
 
 #endif

@@ -26,7 +26,7 @@
 #define MAX_HEIGHT 8
 
 // Structures
-typedef struct {
+struct Room {
   int uniqueBossId;  // 固有敵のインデックス（nullならいない）
   int hasPotion;     // ポーションが落ちているか
   int hasKey;        // 鍵が落ちているか？
@@ -34,9 +34,9 @@ typedef struct {
   int doorInfo[4];   // ドア開通状態
   int canJump;       // 次のエリアにジャンプ出来るか
   int playerVisited; // プレイヤーが通ったか
-} Room;
+};
 
-typedef struct {
+struct Player {
   int hp;               // HP
   int hasKey;           // 鍵を持っているか？
   int hasPotion;        // ポーションを持っているか？
@@ -45,9 +45,9 @@ typedef struct {
   int c_area;           // 今プレイヤーがいるエリア
   int x;                // 現在地X
   int y;                // 現在地Y
-} Player;
+};
 
-typedef struct { // _person がタグ名
+struct Monster { // _person がタグ名
   char name[100];    // 文字配列型のメンバ name
   int hp;
   int power;
@@ -56,6 +56,6 @@ typedef struct { // _person がタグ名
   char point3[100];
   char point4[100];
   int wp;           //wpは弱点部位のインデックスを示す　
-} Monster;
+};
 
 #endif

@@ -1,63 +1,52 @@
 #include "renderer.hpp"
 
-// Helper
-void wrapWithColor(const char *colorname, char *str) {
-  char tmp[256];
-  strcpy(tmp, str);
-  if ( strcmp(colorname, "red") == 0) {
-    sprintf(str, "\x1b[31m%s\x1b[0m", tmp);
-  } else if ( strcmp(colorname, "green") == 0) {
-    sprintf(str, "\x1b[32m%s\x1b[0m", tmp);
-  } else if ( strcmp(colorname, "allred") == 0) {
-    sprintf(str, "\x1b[41m\x1b[31m%s\x1b[0m", tmp);
+const int RFOrientation::TOP    = 0;
+const int RFOrientation::BOTTOM = 1;
+
+// Stdscr syntax sugar
+void print( const std::vector<std::string> strings, int delayMsec ) {
+  move(0, 0);
+
+  if ( delayMsec > 0 ) {
+    struct timespec req = {0, delayMsec * 1000000}; // 1 milli second = 1000000 micro seconds
+    for ( std::string str : strings ) {
+      printw(str.c_str());
+      nanosleep(&req, NULL);
+    }
+  } else {
+    for ( std::string str : strings )
+      printw(str.c_str());
   }
 }
 
-void renderBar(int length, int color_num) {
-  char tmp[256];
-  sprintf(tmp, "\x1b[4%dm\x1b[3%dm%s\x1b[0m", color_num, color_num, "|");
-
-  for (int i=0; i < length; i++) {
-    printw("%s", tmp);
-  }
-}
-
-void iprint( int msec, std::vector<std::string> strings) {
-  struct timespec req = {0, msec * 1000000}; // 1 milli-sec = 1000000
-  for ( std::string str : strings ) {
-    printw(str.c_str());
-    refresh();
-    nanosleep(&req, NULL);
-  }
+void filledWith(const char* str) {
+  move(0, 0);
+  for (int x=0; x < COLS; x++)
+    for (int y=0; y < LINES; y++)
+      mvprintw(y, x, str);
 }
 
 // Frame class
-Frame::Frame(int row, int cols, int orientation, int createBorder) {
-  this->frameInfo.row  = row;
-  this->frameInfo.cols = cols;
+Frame::Frame(int inline_row, int orientation) {
+  // Define frame val
+  int frame_row = inline_row + 2;
+
+  this->frameInfo.row  = frame_row;
+  this->frameInfo.cols = COLS;
   this->orientation = orientation;
-  this->hasBorder = createBorder;
 
   switch(orientation) {
-    case FO_TOP:
+    case RFOrientation::TOP:
       this->frameInfo.absoluteX = 0;
       this->frameInfo.absoluteY = 0;
       break;
-    case FO_RIGHT:
-      this->frameInfo.absoluteX = COLS - cols;
-      this->frameInfo.absoluteY = 0;
-      break;
-    case FO_BOTTOM:
+    case RFOrientation::BOTTOM:
       this->frameInfo.absoluteX = 0;
-      this->frameInfo.absoluteY = LINES - row;
-      break;
-    case FO_LEFT:
-      this->frameInfo.absoluteX = 0;
-      this->frameInfo.absoluteY = 0;
+      this->frameInfo.absoluteY = LINES - frame_row;
       break;
   }
 
-  // Frame
+  // Create frame
   // DEF: WINDOW *newwin(int nlines, int ncols, int begin_y, int begin_x);
   framescr = newwin(
     this->frameInfo.row,
@@ -66,20 +55,14 @@ Frame::Frame(int row, int cols, int orientation, int createBorder) {
     this->frameInfo.absoluteX
   );
 
-  // Inline frame
-  if ( hasBorder ) {
-    this->inlineFrameInfo.absoluteX = 2;
-    this->inlineFrameInfo.absoluteY = LINES - row - 1;
-    this->inlineFrameInfo.row       = row - 2;
-    this->inlineFrameInfo.cols      = cols - 4;
-    renderBorder();
-  } else {
-    this->inlineFrameInfo.absoluteX = 0;
-    this->inlineFrameInfo.absoluteY = LINES - row;
-    this->inlineFrameInfo.row       = row;
-    this->inlineFrameInfo.cols      = cols;
-  }
+  // Define inline frame val
+  this->inlineFrameInfo.absoluteX = 2;
+  this->inlineFrameInfo.absoluteY = LINES - inline_row - 1;
+  this->inlineFrameInfo.row       = inline_row;
+  this->inlineFrameInfo.cols      = COLS - 4;
+  renderBorder();
 
+  // Create inline frame
   inlinescr = subwin(
     framescr,
     this->inlineFrameInfo.row,

@@ -152,7 +152,7 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 7 ][ 5 ].doorInfo[ D_LEFT ] = DC_OPEN;
   area[ 0 ][ 7 ][ 5 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 0 ][ 7 ][ 5 ].doorInfo[ D_DOWN ] = DC_NIL;
-  
+
   // Row 7
   area[ 0 ][ 3 ][ 6 ].doorInfo[ D_UP ] = DC_NIL;
   area[ 0 ][ 3 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
@@ -163,7 +163,7 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 7 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
   area[ 0 ][ 7 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 7 ][ 6 ].doorInfo[ D_DOWN ] = DC_NIL;
-  
+
   // Row 8
   area[ 0 ][ 3 ][ 7 ].doorInfo[ D_UP ] = DC_NIL;
   area[ 0 ][ 3 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
@@ -352,155 +352,81 @@ int positionToEquals(Player* p, int r_x, int r_y) {
 }
 
 // Rendering map
-void renderMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
-  int x, y;
+void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
+  int a = player->c_area;
+  int x = player->x;
+  int y = player->y;
 
-  // Show per room
-  for( y = 1; y <= MAX_HEIGHT; y++ ) {
+  Room currentRoom = area[a][x][y];
+  Room nearRooms[3][3] = {
+    {area[a][x-1][y-1], area[a][x][y-1], area[a][x+1][y-1]},
+    {area[a][x-1][y  ], area[a][x][y  ], area[a][x+1][y  ]},
+    {area[a][x-1][y+1], area[a][x][y+1], area[a][x+1][y+1]}
+  };
 
-    // 1. North wall
-    for( x = 1; x <= MAX_WIDTH; x++ ) {
-      if( area[ player->c_area ][ x ][ y ].playerVisited ) {
-        if( area[ player->c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_NIL ) {
-          printf( "*******" );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_OPEN ) {
-          printf( "***D***" );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_UP ] == DC_LOCKED ) {
-          printf( "***L***" );
-        }
+  for (int x=0; x < 3; x++) {
+    for (int y=0; y < 3; y++) {
+      Room room = nearRooms[x][y];
+
+      int rx = x * 11;
+      int ry = y * 5;
+
+      // Render room
+      //"╗", "╔", "╝", "╚", "═", "║"
+      switch(room.doorInfo[D_UP]){
+        case DC_NIL:
+          mvprintw(ry, rx, "╔═════════╗");
+          break;
+        case DC_OPEN:
+          mvprintw(ry, rx, "╔═══╝ ╚═══╗");
+          break;
+        case DC_LOCKED:
+          mvprintw(ry, rx, "╔═══╝X╚═══╗");
+          break;
       }
-      else
-      {
-        printf( "       " );
+
+      mvprintw(ry+1, rx, "║         ║");
+
+      switch(room.doorInfo[D_LEFT]){
+        case DC_NIL:
+          mvprintw(ry+2, rx, "║    ");
+          break;
+        case DC_OPEN:
+          mvprintw(ry+2, rx, "     ");
+          break;
+        case DC_LOCKED:
+          mvprintw(ry+2, rx, "X    ");
+          break;
       }
-    }
-    printf( "\n" );
 
-    // 2. White space
-    for( x = 1; x <= MAX_WIDTH; x++ ) {
-      if( area[ player->c_area ][ x ][ y ].playerVisited ) {
-        printf( "*     *" );
-      } else {
-        printf( "       " );
+      printw("%s", room.playerVisited ? "👽" : " ");
+
+      switch(room.doorInfo[D_RIGHT]){
+        case DC_NIL:
+          printw("    ║");
+          break;
+        case DC_OPEN:
+          printw("     ");
+          break;
+        case DC_LOCKED:
+          printw("    X");
+          break;
       }
-    }
-    printf( "\n" );
 
-    // 3. Visited info
-    for ( x = 1; x <= MAX_WIDTH; x++ ) {
-      if ( area[ player->c_area ][ x ][ y ].playerVisited ) {
-        printf( "*     *" );
-      } else {
-        printf( "       " );
-      }
-    }
-    printf( "\n" );
+      mvprintw(ry+3, rx, "║         ║");
 
-    // 4. Door info
-    for ( x = 1; x <= MAX_WIDTH; x++ ) {
-      if ( area[ player->c_area ][ x ][ y ].playerVisited ) {
-        if ( area[ player->c_area ][ x ][ y ].doorInfo[ D_LEFT ] == DC_NIL ) {
-          printf( "* " );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_LEFT ] == DC_OPEN ) {
-          printf( "D " );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_LEFT ] == DC_LOCKED ) {
-          printf( "L " );
-        }
-
-        // Indicate player and items
-        if ( positionToEquals(player, x, y) ) {
-          if ( player->hasPotion ) {
-            printf( "Pp" );
-          } else {
-            printf( "P " );
-          }
-        }
-        else
-        {
-          printf( "  " );
-        }
-
-        // Unique boss indicated?
-        if ( area[ player->c_area ][ x ][ y ].uniqueBossId == B_BOSS ) {
-          printf( "B " );
-        } else if( area[ player->c_area ][ x ][ y ].uniqueBossId == B_HIDDEN_BOSS ) {
-          printf( "U " );
-        } else {
-          printf( "  " );
-        }
-
-        // Room has key?
-        if ( area[ player->c_area ][ x ][ y ].hasKey ) {
-          printf( "K " );
-        } else {
-          printf( "  " );
-        }
-
-        // Door information
-        if( area[ player->c_area ][ x ][ y ].doorInfo[ D_RIGHT ] == DC_NIL ) {
-          printf( "*" );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_RIGHT ] == DC_OPEN ) {
-          printf( "D" );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_RIGHT ] == DC_LOCKED ) {
-          printf( "L" );
-        }
-      }
-      else {
-        printf( "       " );
+      switch(room.doorInfo[D_DOWN]){
+        case DC_NIL:
+          mvprintw(ry+4, rx, "╚═════════╝");
+          break;
+        case DC_OPEN:
+          mvprintw(ry+4, rx, "╚═══╗ ╔═══╝");
+          break;
+        case DC_LOCKED:
+          mvprintw(ry+4, rx, "╚═══╗X╔═══╝");
+          break;
       }
     }
-    printf( "\n" );
-
-    // 5. Key and Postion
-    for ( x = 1; x <= MAX_WIDTH; x++ ) {
-      if( area[ player->c_area ][ x ][ y ].playerVisited ) {
-        if ( player->hasKey ) {
-          printf( "* K " );
-        } else {
-          printf( "*   " );
-        }
-        if ( area[ player->c_area ][ x ][ y ].hasPotion ) {
-          printf( "p *" );
-        } else {
-          printf( "  *" );
-        }
-      } else {
-        printf( "       " );
-      }
-    }
-    printf( "\n" );
-
-    // 6. South wall
-    for ( x = 1; x <= MAX_WIDTH; x++ ) {
-      if ( area[ player->c_area ][ x ][ y ].playerVisited ) {
-        if( area[ player->c_area ][ x ][ y ].doorInfo[ D_DOWN ] == DC_NIL ) {
-          printf( "*******" );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_DOWN ] == DC_OPEN ) {
-          printf( "***D***" );
-        }
-        else if( area[ player->c_area ][ x ][ y ].doorInfo[ D_DOWN ] == DC_LOCKED ) {
-          printf( "***L***" );
-        }
-      } else {
-        printf( "       " );
-      }
-    }
-    printf( "\n" );
-
+    printw("\n");
   }
-
-  // 記号の説明
-  printf( "P = Player\n" );
-  printf( "K = Key, p = potion\n" );
-  printf( "D = Open Door, L = Locked door, * = Wall \n" );
-
-  // 健康状況を表示
-  printf( "\nPlayer HP: %d\n", player->hp );
 }

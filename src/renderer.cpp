@@ -142,6 +142,7 @@ void Frame::print( const std::vector<std::string> strings, int delayMsec ) {
 
 void Frame::clear() {
   wclear(inlinescr);
+  wmove(inlinescr, 0, 0);
 }
 
 void Frame::bringToFront() {

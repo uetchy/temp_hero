@@ -33,6 +33,8 @@ int main( void ) {
   clear();              // Clear whole screen
   curs_set(0);          // Set the cursor invisible
   keypad(stdscr, true); // Enable support for special chars
+  start_color();
+  init_pair(1, COLOR_WHITE, COLOR_WHITE);
 
 	 // Input
 	char c;
@@ -53,7 +55,7 @@ int main( void ) {
 
 	Frame title_f(LINES-8, RFOrientation::TOP);
 	title_f.filledWith("□");
-	title_f.print( getTitle(), 100 );
+	title_f.print( getTitle(), 50 );
 
 	// Prepare selection frame
 	Frame choices_f(4, RFOrientation::BOTTOM);
@@ -62,23 +64,21 @@ int main( void ) {
 	choices_f.println("[2] SHOW RULES\n");
 	choices_f.println("[3] ルールを見る\n");
 
-	// Frame choices_f2(1, RFOrientation::TOP);
-	// choices_f2.println( "ようこそ、派遣勇者の世界へ！" );
-
   while (1) {
 		// Wait for input
 	  c = getch();
 
 		if (c == '1'){ // Start game
 			clear();
+			refresh();
 			gameLoop();
 		  break;
 		} else if(c == '2'){ // Show rules
-			clear();
-			print( getRulesEN() );
+			title_f.clear();
+			title_f.print( getRulesEN(), 70 );
 		} else if(c == '3'){ // Show rules
-			clear();
-			print( getRulesJP() );
+			title_f.clear();
+			title_f.print( getRulesJP(), 70 );
 		} else {
 			// clearLines(4);
 		}
@@ -100,15 +100,18 @@ void checkEncountGauge() {
 
 // Game loop
 void gameLoop() {
+	char c;
 	while(1) {
-		// renderMap(area, &player);
+
+		renderMap(stdscr, area, &player);
+		c = getch();
 		// checkEncountGauge(); // Zakoがいるなら戦闘
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか
 		// tryTakeKey(); // 鍵があるかどうか
 		// int moveDirection = getUserMove(); // ユーザーから移動方向を入力してもらう
 		// movePlayer( moveDirection );
-		battle(&player, area[ player.c_area ][ player.x ][ player.y ].uniqueBossId);
+		// battle(&player, area[ player.c_area ][ player.x ][ player.y ].uniqueBossId);
 	}
 }
 

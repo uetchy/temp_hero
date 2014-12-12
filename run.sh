@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make && ./src/main
+make && ./src/main.out

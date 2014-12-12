@@ -43,11 +43,17 @@ int main( void ) {
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
-  refresh();
+
 
 	// Print title menu
-	// filledWith("+");
-	print( getTitle(), 100 );
+	//
+	// print( getTitle(), 100 );
+
+	refresh();
+
+	Frame title_f(LINES-8, RFOrientation::TOP);
+	title_f.filledWith("□");
+	title_f.print( getTitle(), 100 );
 
 	// Prepare selection frame
 	Frame choices_f(4, RFOrientation::BOTTOM);
@@ -55,6 +61,9 @@ int main( void ) {
 	choices_f.println("[1] START GAME\n");
 	choices_f.println("[2] SHOW RULES\n");
 	choices_f.println("[3] ルールを見る\n");
+
+	// Frame choices_f2(1, RFOrientation::TOP);
+	// choices_f2.println( "ようこそ、派遣勇者の世界へ！" );
 
   while (1) {
 		// Wait for input

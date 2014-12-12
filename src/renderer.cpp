@@ -29,9 +29,7 @@ void filledWith(const char* str) {
 // Frame class
 Frame::Frame(int inline_row, int orientation) {
   // Define frame val
-  int frame_row = inline_row + 2;
-
-  this->frameInfo.row  = frame_row;
+  this->frameInfo.row  = inline_row + 2;
   this->frameInfo.cols = COLS;
   this->orientation = orientation;
 
@@ -42,7 +40,7 @@ Frame::Frame(int inline_row, int orientation) {
       break;
     case RFOrientation::BOTTOM:
       this->frameInfo.absoluteX = 0;
-      this->frameInfo.absoluteY = LINES - frame_row;
+      this->frameInfo.absoluteY = LINES - this->frameInfo.row;
       break;
   }
 
@@ -56,8 +54,8 @@ Frame::Frame(int inline_row, int orientation) {
   );
 
   // Define inline frame val
-  this->inlineFrameInfo.absoluteX = 2;
-  this->inlineFrameInfo.absoluteY = LINES - inline_row - 1;
+  this->inlineFrameInfo.absoluteX = this->frameInfo.absoluteX + 2;
+  this->inlineFrameInfo.absoluteY = this->frameInfo.absoluteY + 1;
   this->inlineFrameInfo.row       = inline_row;
   this->inlineFrameInfo.cols      = COLS - 4;
   renderBorder();

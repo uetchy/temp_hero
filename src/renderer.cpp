@@ -26,6 +26,28 @@ void filledWith(const char* str) {
       mvprintw(y, x, str);
 }
 
+std::vector<std::string> centerizedStrings(std::vector<std::string> strings) {
+  int width = 0;
+  for (std::string str : strings) {
+    if (str.length() > width) {
+      width = str.length();
+    }
+  }
+
+  int leftMargin = (COLS - width) / 2;
+  std::string leftMarginStr = "";
+  for (int i=0; i<leftMargin; i++) {
+    leftMarginStr.append(" ");
+  }
+  std::vector<std::string> result;
+
+  for (std::string str : strings) {
+    result.push_back(leftMarginStr+str);
+  }
+
+  return result;
+}
+
 // Frame class
 Frame::Frame(int inline_row, int orientation) {
   // Define frame val

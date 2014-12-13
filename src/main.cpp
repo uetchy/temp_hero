@@ -55,7 +55,7 @@ int main( void ) {
 
 	Frame title_f(LINES-8, RFOrientation::TOP);
 	title_f.filledWith("□");
-	title_f.print( centerizedStrings(getTitle()), 50 );
+	title_f.print( centerizedStrings(getTitle()) );
 
 	// Prepare selection frame
 	Frame choices_f(4, RFOrientation::BOTTOM);

@@ -48,6 +48,16 @@ std::vector<std::string> centerizedStrings(std::vector<std::string> strings) {
   return result;
 }
 
+std::string seqStr(int width, std::string start, std::string mid, std::string end) {
+  std::string res;
+  res += start;
+  for (int i=0; i<width-2; i++) {
+    res += mid;
+  }
+  res += end;
+  return res;
+}
+
 // Frame class
 Frame::Frame(int inline_row, int orientation) {
   // Define frame val

@@ -40,6 +40,7 @@ struct FrameInfo {
 void print( const std::vector<std::string> strings, int delayMsec = 0);
 void filledWith(const char* str);
 std::vector<std::string> centerizedStrings(std::vector<std::string> strings);
+std::string seqStr(int width, std::string start, std::string mid, std::string end);
 
 class Frame {
 private:

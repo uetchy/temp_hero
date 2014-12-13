@@ -1,6 +1,9 @@
 #ifndef H_MAP
 #define H_MAP
 
+#include <stdio.h>
+#include <string.h>
+#include <string>
 #include <ncurses.h>
 
 #include "define.hpp"

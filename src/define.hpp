@@ -42,6 +42,7 @@ struct Player {
   int hasPotion;        // ポーションを持っているか？
   int beatenBoss;       // ボスを倒したか？
   int beatenHBoss;      // 裏ボスを倒したか？
+  int direction;        // 向き
   int c_area;           // 今プレイヤーがいるエリア
   int x;                // 現在地X
   int y;                // 現在地Y

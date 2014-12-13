@@ -415,7 +415,24 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
           break;
       }
 
-      mvprintw(mapY+roomHeight/2, mapX+roomWidth/2, positionToEquals(player, areaX, areaY) ? "👽" : " ");
+      // Player graphic
+      if (positionToEquals(player, areaX, areaY)) {
+        mvprintw(mapY+roomHeight/2, mapX+roomWidth/2, "俺");
+        switch(player->direction) {
+          case D_UP:
+            mvprintw(mapY+roomHeight/2-1, mapX+roomWidth/2, "↑");
+            break;
+          case D_RIGHT:
+            mvprintw(mapY+roomHeight/2, mapX+roomWidth/2+1, "→");
+            break;
+          case D_DOWN:
+            mvprintw(mapY+roomHeight/2+1, mapX+roomWidth/2, "↓");
+            break;
+          case D_LEFT:
+            mvprintw(mapY+roomHeight/2, mapX+roomWidth/2-1, "←");
+            break;
+        }
+      }
 
       for (int i=1; i < roomHeight-1; i++) {
         mvprintw(mapY+i, mapX+roomWidth-1, "║");

@@ -45,8 +45,6 @@ int main( void ) {
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
-
-
 	// Print title menu
 	//
 	// print( getTitle(), 100 );
@@ -106,22 +104,36 @@ void gameLoop() {
 		renderMap(stdscr, area, &player);
 
 		c = getch();
+
+		// Move
 		if (c == KEY_UP){
 			if ( isValid(area, player.c_area, player.x, player.y - 1) && area[player.c_area][player.x][player.y].doorInfo[D_UP] == DC_OPEN ) {
-				player.y = player.y - 1;
+				if (player.direction == D_UP) {
+					player.y = player.y - 1;
+				}
 			}
+			player.direction = D_UP;
 		} else if (c == KEY_RIGHT){
 			if ( isValid(area, player.c_area, player.x + 1, player.y) && area[player.c_area][player.x][player.y].doorInfo[D_RIGHT] == DC_OPEN ) {
-				player.x = player.x + 1;
+				if (player.direction == D_RIGHT) {
+					player.x = player.x + 1;
+				}
 			}
+			player.direction = D_RIGHT;
 		}else if (c == KEY_DOWN){
 			if ( isValid(area, player.c_area, player.x, player.y + 1) && area[player.c_area][player.x][player.y].doorInfo[D_DOWN] == DC_OPEN ) {
-				player.y = player.y + 1;
+				if (player.direction == D_DOWN) {
+					player.y = player.y + 1;
+				}
 			}
+			player.direction = D_DOWN;
 		} else if (c == KEY_LEFT){
 			if ( isValid(area, player.c_area, player.x - 1, player.y) && area[player.c_area][player.x][player.y].doorInfo[D_LEFT] == DC_OPEN ) {
-				player.x = player.x - 1;
+				if (player.direction == D_LEFT) {
+					player.x = player.x - 1;
+				}
 			}
+			player.direction = D_LEFT;
 		}
 
 		area[player.c_area][player.x][player.y].playerVisited = 1;

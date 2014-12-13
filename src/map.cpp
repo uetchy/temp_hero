@@ -153,13 +153,13 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 5 ][ 5 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
   area[ 0 ][ 5 ][ 6 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_LEFT ] = DC_NIL;
-  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_RIGHT ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_LEFT ] = DC_OPEN;
+  area[ 0 ][ 5 ][ 6 ].doorInfo[ D_RIGHT ] = DC_NIL;
   area[ 0 ][ 5 ][ 6 ].doorInfo[ D_DOWN ] = DC_OPEN;
 
   area[ 0 ][ 5 ][ 7 ].doorInfo[ D_UP ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_LEFT ] = DC_OPEN;
-  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_RIGHT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_LEFT ] = DC_NIL;
+  area[ 0 ][ 5 ][ 7 ].doorInfo[ D_RIGHT ] = DC_OPEN;
   area[ 0 ][ 5 ][ 7 ].doorInfo[ D_DOWN ] = DC_NIL;
 
   // Row 7

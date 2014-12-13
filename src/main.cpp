@@ -107,19 +107,19 @@ void gameLoop() {
 
 		c = getch();
 		if (c == KEY_UP){
-			if ( isValid(area, player.c_area, player.x, player.y - 1) ) {
+			if ( isValid(area, player.c_area, player.x, player.y - 1) && area[player.c_area][player.x][player.y].doorInfo[D_UP] == DC_OPEN ) {
 				player.y = player.y - 1;
 			}
 		} else if (c == KEY_RIGHT){
-			if ( isValid(area, player.c_area, player.x + 1, player.y) ) {
+			if ( isValid(area, player.c_area, player.x + 1, player.y) && area[player.c_area][player.x][player.y].doorInfo[D_RIGHT] == DC_OPEN ) {
 				player.x = player.x + 1;
 			}
 		}else if (c == KEY_DOWN){
-			if ( isValid(area, player.c_area, player.x, player.y + 1) ) {
+			if ( isValid(area, player.c_area, player.x, player.y + 1) && area[player.c_area][player.x][player.y].doorInfo[D_DOWN] == DC_OPEN ) {
 				player.y = player.y + 1;
 			}
 		} else if (c == KEY_LEFT){
-			if ( isValid(area, player.c_area, player.x - 1, player.y) ) {
+			if ( isValid(area, player.c_area, player.x - 1, player.y) && area[player.c_area][player.x][player.y].doorInfo[D_LEFT] == DC_OPEN ) {
 				player.x = player.x - 1;
 			}
 		}

@@ -105,6 +105,18 @@ Frame::Frame(int inline_row, int orientation) {
   wrefresh(framescr);
 }
 
+void Frame::destroy() {
+  delwin(inlinescr);
+  delwin(framescr);
+}
+
+WINDOW* Frame::getView() {
+  return inlinescr;
+}
+
+int Frame::cols() { return this->inlineFrameInfo.cols; }
+int Frame::lines() { return this->inlineFrameInfo.row; }
+
 int Frame::getRow() { return this->frameInfo.row; }
 int Frame::getCols() { return this->frameInfo.cols; }
 int Frame::getIrow() { return this->inlineFrameInfo.row; }

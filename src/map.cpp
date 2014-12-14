@@ -350,13 +350,15 @@ int isValid(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], int a, int x, int y) {
 }
 
 // Rendering map
-void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
+void renderMap(Frame target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
   const int roomHeight = 9;
   const int roomWidth = roomHeight*2.2; // Square room
-  const int mapCols = COLS/roomWidth;
-  const int mapLines  = LINES/roomHeight;
+  const int mapCols = target.cols()/roomWidth;
+  const int mapLines  = target.lines()/roomHeight;
 
-  clear();
+  WINDOW* view = target.getView();
+
+  target.clear();
 
   for (int i=0; i < mapCols; i++) {
     for (int j=0; j < mapLines; j++) {
@@ -370,7 +372,7 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
       // Check is invalid
       if (!isValid(area, player->c_area, areaX, areaY) || !room.playerVisited) {
         for (int i=0; i < roomHeight; i++) {
-          mvprintw(mapY+i, mapX, seqStr(roomWidth, ".", ".", ".").c_str());
+          mvwprintw(view, mapY+i, mapX, seqStr(roomWidth, ".", ".", ".").c_str());
         }
         continue;
       }
@@ -378,17 +380,17 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
       // Render room
       switch(room.doorInfo[D_UP]){
         case DC_NIL:
-          mvprintw(mapY, mapX, seqStr(roomWidth, "╔", "═", "╗").c_str());
+          mvwprintw(view, mapY, mapX, seqStr(roomWidth, "╔", "═", "╗").c_str());
           break;
         case DC_OPEN:
-          mvprintw(mapY, mapX, (
+          mvwprintw(view, mapY, mapX, (
             seqStr(roomWidth/2, "╔", "═", "╝") +
             " " +
             seqStr(roomWidth/2, "╚", "═", "╗")
           ).c_str());
           break;
         case DC_LOCKED:
-          mvprintw(mapY, mapX, (
+          mvwprintw(view, mapY, mapX, (
             seqStr(roomWidth/2, "╔", "═", "╝") +
             "X" +
             seqStr(roomWidth/2, "╚", "═", "╗")
@@ -397,74 +399,74 @@ void renderMap(WINDOW* target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Playe
       }
 
       for (int i=1; i < roomHeight-1; i++) {
-        mvprintw(mapY+i, mapX, "║");
+        mvwprintw(view, mapY+i, mapX, "║");
       }
 
       switch(room.doorInfo[D_LEFT]){
         case DC_NIL:
           break;
         case DC_OPEN:
-          mvprintw(mapY+roomHeight/2-1, mapX, "╝");
-          mvprintw(mapY+roomHeight/2,   mapX, " ");
-          mvprintw(mapY+roomHeight/2+1, mapX, "╗");
+          mvwprintw(view, mapY+roomHeight/2-1, mapX, "╝");
+          mvwprintw(view, mapY+roomHeight/2,   mapX, " ");
+          mvwprintw(view, mapY+roomHeight/2+1, mapX, "╗");
           break;
         case DC_LOCKED:
-          mvprintw(mapY+roomHeight/2-1, mapX, "╝");
-          mvprintw(mapY+roomHeight/2,   mapX, "X");
-          mvprintw(mapY+roomHeight/2+1, mapX, "╗");
+          mvwprintw(view, mapY+roomHeight/2-1, mapX, "╝");
+          mvwprintw(view, mapY+roomHeight/2,   mapX, "X");
+          mvwprintw(view, mapY+roomHeight/2+1, mapX, "╗");
           break;
       }
 
       // Player graphic
       if (positionToEquals(player, areaX, areaY)) {
-        mvprintw(mapY+roomHeight/2, mapX+roomWidth/2, "俺");
+        mvwprintw(view, mapY+roomHeight/2, mapX+roomWidth/2, "俺");
         switch(player->direction) {
           case D_UP:
-            mvprintw(mapY+roomHeight/2-1, mapX+roomWidth/2, "↑");
+            mvwprintw(view, mapY+roomHeight/2-1, mapX+roomWidth/2, "↑");
             break;
           case D_RIGHT:
-            mvprintw(mapY+roomHeight/2, mapX+roomWidth/2+1, "→");
+            mvwprintw(view, mapY+roomHeight/2, mapX+roomWidth/2+2, "→");
             break;
           case D_DOWN:
-            mvprintw(mapY+roomHeight/2+1, mapX+roomWidth/2, "↓");
+            mvwprintw(view, mapY+roomHeight/2+1, mapX+roomWidth/2, "↓");
             break;
           case D_LEFT:
-            mvprintw(mapY+roomHeight/2, mapX+roomWidth/2-1, "←");
+            mvwprintw(view, mapY+roomHeight/2, mapX+roomWidth/2-2, "←");
             break;
         }
       }
 
       for (int i=1; i < roomHeight-1; i++) {
-        mvprintw(mapY+i, mapX+roomWidth-1, "║");
+        mvwprintw(view, mapY+i, mapX+roomWidth-1, "║");
       };
       switch(room.doorInfo[D_RIGHT]){
         case DC_NIL:
           break;
         case DC_OPEN:
-          mvprintw(mapY+roomHeight/2-1, mapX+roomWidth-1, "╚");
-          mvprintw(mapY+roomHeight/2,   mapX+roomWidth-1, " ");
-          mvprintw(mapY+roomHeight/2+1, mapX+roomWidth-1, "╔");
+          mvwprintw(view, mapY+roomHeight/2-1, mapX+roomWidth-1, "╚");
+          mvwprintw(view, mapY+roomHeight/2,   mapX+roomWidth-1, " ");
+          mvwprintw(view, mapY+roomHeight/2+1, mapX+roomWidth-1, "╔");
           break;
         case DC_LOCKED:
-          mvprintw(mapY+roomHeight/2-1, mapX+roomWidth-1, "╚");
-          mvprintw(mapY+roomHeight/2,   mapX+roomWidth-1, "X");
-          mvprintw(mapY+roomHeight/2+1, mapX+roomWidth-1, "╔");
+          mvwprintw(view, mapY+roomHeight/2-1, mapX+roomWidth-1, "╚");
+          mvwprintw(view, mapY+roomHeight/2,   mapX+roomWidth-1, "X");
+          mvwprintw(view, mapY+roomHeight/2+1, mapX+roomWidth-1, "╔");
           break;
       }
 
       switch(room.doorInfo[D_DOWN]){
         case DC_NIL:
-          mvprintw(mapY+roomHeight-1, mapX, seqStr(roomWidth, "╚", "═", "╝").c_str());
+          mvwprintw(view, mapY+roomHeight-1, mapX, seqStr(roomWidth, "╚", "═", "╝").c_str());
           break;
         case DC_OPEN:
-          mvprintw(mapY+roomHeight-1, mapX, (
+          mvwprintw(view, mapY+roomHeight-1, mapX, (
             seqStr(roomWidth/2, "╚", "═", "╗") +
             " " +
             seqStr(roomWidth/2, "╔", "═", "╝")
           ).c_str());
           break;
         case DC_LOCKED:
-          mvprintw(mapY+roomHeight-1, mapX, (
+          mvwprintw(view, mapY+roomHeight-1, mapX, (
             seqStr(roomWidth/2, "╚", "═", "╗") +
             "X" +
             seqStr(roomWidth/2, "╔", "═", "╝")

@@ -59,6 +59,10 @@ private:
   int getIcols();
 public:
   Frame(int inline_row, int orientation);
+  void destroy();
+  WINDOW* getView();
+  int cols();
+  int lines();
   void filledWith(const char* str);
   void println( const char* format, ... );
   void print( const std::vector<std::string> strings, int delayMsec = 0);

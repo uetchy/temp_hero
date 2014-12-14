@@ -67,6 +67,7 @@ int main( void ) {
 	  c = getch();
 
 		if (c == '1'){ // Start game
+			title_f.destroy();
 			clear();
 			refresh();
 			gameLoop();
@@ -77,11 +78,8 @@ int main( void ) {
 		} else if(c == '3'){ // Show rules
 			title_f.clear();
 			title_f.print( getRulesJP(), 70 );
-		} else {
-			// clearLines(4);
 		}
 
-		refresh();
 		choices_f.bringToFront();
 	}
 
@@ -99,9 +97,12 @@ void checkEncountGauge() {
 // Game loop
 void gameLoop() {
 	int c;
-	while(1) {
+	Frame viewFrame(LINES-2, RFOrientation::TOP);
+	Frame textFrame(4, RFOrientation::BOTTOM);
 
-		renderMap(stdscr, area, &player);
+	while(1) {
+		renderMap(viewFrame, area, &player);
+		viewFrame.bringToFront();
 
 		c = getch();
 
@@ -134,7 +135,12 @@ void gameLoop() {
 				}
 			}
 			player.direction = D_LEFT;
+		} else if (c == 'z') {
+			textFrame.println("何も無いようだ...");
+			textFrame.bringToFront();
 		}
+
+		refresh();
 
 		area[player.c_area][player.x][player.y].playerVisited = 1;
 		// checkEncountGauge(); // Zakoがいるなら戦闘

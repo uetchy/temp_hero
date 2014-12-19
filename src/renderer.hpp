@@ -67,7 +67,7 @@ public:
   void println( const char* format, ... );
   void print( const std::vector<std::string> strings, int delayMsec = 0);
   void clear();
-  void bringToFront();
+  void update();
 };
 
 #endif

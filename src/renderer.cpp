@@ -127,7 +127,7 @@ void Frame::filledWith(const char* str) {
   for (int x=0; x < getIcols(); x++)
     for (int y=0; y < getIrow(); y++)
       mvwprintw(inlinescr, y, x, str);
-  bringToFront();
+  update();
 }
 
 void Frame::renderBorder() {
@@ -162,7 +162,7 @@ void Frame::println( const char* format, ... ) {
   va_start( args, format );
 
   wprintw( inlinescr, format, args );
-  bringToFront();
+  update();
 
   va_end(args);
 }
@@ -174,13 +174,13 @@ void Frame::print( const std::vector<std::string> strings, int delayMsec ) {
     struct timespec req = {0, delayMsec * 1000000}; // 1 milli second = 1000000 micro seconds
     for ( std::string str : strings ) {
       wprintw(inlinescr, str.c_str());
-      bringToFront();
+      update();
       nanosleep(&req, NULL);
     }
   } else {
     for ( std::string str : strings )
       wprintw(inlinescr, str.c_str());
-    bringToFront();
+    update();
   }
 }
 
@@ -189,7 +189,7 @@ void Frame::clear() {
   wmove(inlinescr, 0, 0);
 }
 
-void Frame::bringToFront() {
+void Frame::update() {
   touchwin(framescr);
   wrefresh(framescr);
 }

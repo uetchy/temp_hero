@@ -23,7 +23,7 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   strcpy(area[ 1 ][ 7 ][ 7 ].hint, "Hidden Boss hint");
 
   // Stair location
-  area[ 0 ][ 3 ][ 7 ].canJump = 1;
+  area[ 0 ][ 7 ][ 3 ].canJump = 1;
 
   // Unique boss location
   area[ 1 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
@@ -417,9 +417,13 @@ void renderMap(Frame target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player*
           break;
       }
 
+      if (room.hasKey) {
+        mvwprintw(view, mapY+1, mapX+roomWidth/2, "🔑");
+      }
+
       // Player graphic
       if (positionToEquals(player, areaX, areaY)) {
-        mvwprintw(view, mapY+roomHeight/2, mapX+roomWidth/2, "俺");
+        mvwprintw(view, mapY+roomHeight/2, mapX+roomWidth/2, "👳");
         switch(player->direction) {
           case D_UP:
             mvwprintw(view, mapY+roomHeight/2-1, mapX+roomWidth/2, "↑");

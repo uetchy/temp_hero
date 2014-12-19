@@ -79,7 +79,7 @@ int main( void ) {
 			title_f.print( getRulesJP(), 70 );
 		}
 
-		choices_f.bringToFront();
+		choices_f.update();
 	}
 
 	// Clear ncurses data structures
@@ -98,26 +98,32 @@ void gameLoop() {
 	int c;
 	Frame viewFrame(LINES-2, RFOrientation::TOP);
 	Frame textFrame(4, RFOrientation::BOTTOM);
+	Frame inventoryFrame(2, RFOrientation::TOP);
+
+	int hasText = 0;
+
+	renderMap(viewFrame, area, &player);
+	viewFrame.update();
 
 	while(1) {
-		renderMap(viewFrame, area, &player);
-		viewFrame.bringToFront();
-
 		c = getch();
-
-		// Move
 		if (c == KEY_UP){
-			if ( isValid(area, player.c_area, player.x, player.y - 1) && area[player.c_area][player.x][player.y].doorInfo[D_UP] == DC_OPEN ) {
-				if (player.direction == D_UP) {
-					player.y = player.y - 1;
-				}
+			if (isValid(area, player.c_area, player.x, player.y - 1) &&
+					area[player.c_area][player.x][player.y].doorInfo[D_UP] == DC_OPEN &&
+					player.direction == D_UP) {
+				player.y = player.y - 1;
 			}
 			player.direction = D_UP;
 		} else if (c == KEY_RIGHT){
-			if ( isValid(area, player.c_area, player.x + 1, player.y) && area[player.c_area][player.x][player.y].doorInfo[D_RIGHT] == DC_OPEN ) {
-				if (player.direction == D_RIGHT) {
-					player.x = player.x + 1;
-				}
+			if (isValid(area, player.c_area, player.x + 1, player.y) &&
+					area[player.c_area][player.x][player.y].doorInfo[D_RIGHT] == DC_OPEN &&
+					player.direction == D_RIGHT) {
+				player.x = player.x + 1;
+			} else if (isValid(area, player.c_area, player.x + 1, player.y) &&
+								 area[player.c_area][player.x][player.y].doorInfo[D_RIGHT] == DC_LOCKED &&
+								 player.hasKey) {
+				area[player.c_area][player.x][player.y].doorInfo[D_RIGHT] = DC_OPEN;
+				player.hasKey = 0;
 			}
 			player.direction = D_RIGHT;
 		}else if (c == KEY_DOWN){
@@ -134,11 +140,42 @@ void gameLoop() {
 				}
 			}
 			player.direction = D_LEFT;
-		} else if (c == 'b') {
-			battle(&player, area[ player.c_area ][ player.x ][ player.y ].uniqueBossId);
+		}
+
+		hasText = 0;
+
+		// Render view
+		if (c == 'b') {
+			battle(&player, area[player.c_area][player.x][player.y].uniqueBossId);
+		} else if (c == 'z') {
+			textFrame.clear();
+			if (area[player.c_area][player.x][player.y].hasKey) {
+				textFrame.println("キーを見つけた...!");
+				hasText = 1;
+				player.hasKey = 1;
+				area[player.c_area][player.x][player.y].hasKey = 0;
+			} else if (area[player.c_area][player.x][player.y].canJump) {
+				player.c_area = 1;
+				player.x = 2;
+				player.y = 7;
+			} else {
+				textFrame.println("何も無いようだ...");
+				hasText = 1;
+			}
 		}
 
 		area[player.c_area][player.x][player.y].playerVisited = 1;
+
+		renderMap(viewFrame, area, &player);
+		viewFrame.update();
+		if (hasText) textFrame.update();
+
+		if (player.hasKey) {
+			inventoryFrame.clear();
+			inventoryFrame.println("🔑");
+			inventoryFrame.update();
+		}
+
 		// checkEncountGauge(); // Zakoがいるなら戦闘
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか

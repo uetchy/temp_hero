@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ncurses.h>
 #include <locale.h>
+#include <unistd.h>
 
 #include "define.hpp"
 #include "main.hpp"
@@ -44,15 +45,11 @@ int main( void ) {
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
-	// Print title menu
-	//
-	// print( getTitle(), 100 );
-
 	refresh();
 
 	Frame title_f(LINES-8, RFOrientation::TOP);
 	title_f.filledWith("□");
-	title_f.print( centerizedStrings(getTitle()) );
+	title_f.print( centerizedStrings(getTitle()), 50 );
 
 	// Prepare selection frame
 	Frame choices_f(4, RFOrientation::BOTTOM);
@@ -60,6 +57,8 @@ int main( void ) {
 	choices_f.println("[1] START GAME\n");
 	choices_f.println("[2] SHOW RULES\n");
 	choices_f.println("[3] ルールを見る\n");
+
+	player.hasKey = 1;
 
   while (1) {
 		// Wait for input
@@ -155,9 +154,11 @@ void gameLoop() {
 				player.hasKey = 1;
 				area[player.c_area][player.x][player.y].hasKey = 0;
 			} else if (area[player.c_area][player.x][player.y].canJump) {
+				viewFrame.move(0, 0);
+				viewFrame.print(filledWith(viewFrame, "□"), 10);
 				player.c_area = 1;
-				player.x = 2;
-				player.y = 7;
+				player.x = 7;
+				player.y = 2;
 			} else {
 				textFrame.println("何も無いようだ...");
 				hasText = 1;

@@ -3,27 +3,17 @@
 const int RFOrientation::TOP    = 0;
 const int RFOrientation::BOTTOM = 1;
 
-// Stdscr syntax sugar
-void print( const std::vector<std::string> strings, int delayMsec ) {
-  move(0, 0);
-
-  if ( delayMsec > 0 ) {
-    struct timespec req = {0, delayMsec * 1000000}; // 1 milli second = 1000000 micro seconds
-    for ( std::string str : strings ) {
-      printw(str.c_str());
-      nanosleep(&req, NULL);
+std::vector<std::string> filledWith(Frame frame, const char* str) {
+  std::vector<std::string> strings;
+  for (int y=0; y < frame.getIrow(); y++) {
+    std::string i = "";
+    for (int x=0; x < frame.getIcols(); x++) {
+      i.append(str);
     }
-  } else {
-    for ( std::string str : strings )
-      printw(str.c_str());
+    strings.push_back(i);
   }
-}
 
-void filledWith(const char* str) {
-  move(0, 0);
-  for (int x=0; x < COLS; x++)
-    for (int y=0; y < LINES; y++)
-      mvprintw(y, x, str);
+  return strings;
 }
 
 std::vector<std::string> centerizedStrings(std::vector<std::string> strings) {
@@ -122,12 +112,24 @@ int Frame::getCols() { return this->frameInfo.cols; }
 int Frame::getIrow() { return this->inlineFrameInfo.row; }
 int Frame::getIcols() { return this->inlineFrameInfo.cols; }
 
-void Frame::filledWith(const char* str) {
+void Frame::filledWith(const char* str, int delayMsec) {
   wmove(inlinescr, 0, 0);
-  for (int x=0; x < getIcols(); x++)
-    for (int y=0; y < getIrow(); y++)
-      mvwprintw(inlinescr, y, x, str);
-  update();
+
+  if (delayMsec > 0) {
+    struct timespec req = {0, delayMsec * 10000}; // 1 milli second = 1000000 micro seconds
+    for (int x=0; x < getIcols(); x++) {
+      for (int y=0; y < getIrow(); y++) {
+        mvwprintw(inlinescr, y, x, str);
+        update();
+        nanosleep(&req, NULL);
+      }
+    }
+  } else {
+    for (int x=0; x < getIcols(); x++)
+      for (int y=0; y < getIrow(); y++)
+        mvwprintw(inlinescr, y, x, str);
+    update();
+  }
 }
 
 void Frame::renderBorder() {
@@ -155,6 +157,10 @@ void Frame::renderBorder() {
       wprintw(framescr, "%s", borders.frame_v);
     }
   }
+}
+
+void Frame::move(int y, int x) {
+  wmove(inlinescr, y, x);
 }
 
 void Frame::println( const char* format, ... ) {

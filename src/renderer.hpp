@@ -37,11 +37,6 @@ struct FrameInfo {
 
 // Functions
 
-void print( const std::vector<std::string> strings, int delayMsec = 0);
-void filledWith(const char* str);
-std::vector<std::string> centerizedStrings(std::vector<std::string> strings);
-std::string seqStr(int width, std::string start, std::string mid, std::string end);
-
 class Frame {
 private:
   int orientation;
@@ -55,19 +50,24 @@ private:
   void renderBorder();
   int getRow();
   int getCols();
-  int getIrow();
-  int getIcols();
 public:
   Frame(int inline_row, int orientation);
   void destroy();
   WINDOW* getView();
   int cols();
   int lines();
-  void filledWith(const char* str);
+  int getIrow();
+  int getIcols();
+  void move(int y, int x);
+  void filledWith(const char* str, int delayMsec = 0);
   void println( const char* format, ... );
   void print( const std::vector<std::string> strings, int delayMsec = 0);
   void clear();
   void update();
 };
+
+std::vector<std::string> filledWith(Frame frame, const char* str);
+std::vector<std::string> centerizedStrings(std::vector<std::string> strings);
+std::string seqStr(int width, std::string start, std::string mid, std::string end);
 
 #endif

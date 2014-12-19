@@ -181,7 +181,7 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
 
   // 2行列目
 
-  // area[ 1 ] (3,2)
+  // area[ 1 ] (2,3)
   area[ 1 ][ 1 ][ 2 ].doorInfo[ D_UP ] = DC_NIL;
   area[ 1 ][ 1 ][ 2 ].doorInfo[ D_LEFT ] = DC_OPEN;
   area[ 1 ][ 1 ][ 2 ].doorInfo[ D_RIGHT ] = DC_NIL;

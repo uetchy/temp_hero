@@ -1,6 +1,8 @@
 #ifndef H_DEFINE
 #define H_DEFINE
 
+#include <string>
+
 // Constants
 #define PERSON_NUM 100
 #define MAX_PLAYER_HP 15
@@ -30,7 +32,7 @@ struct Room {
   int uniqueBossId;  // 固有敵のインデックス（nullならいない）
   int hasPotion;     // ポーションが落ちているか
   int hasKey;        // 鍵が落ちているか？
-  char hint[256];    // ヒント内容（nullならヒント無し）
+  std::string hint;    // ヒント内容（nullならヒント無し）
   int doorInfo[4];   // ドア開通状態
   int canJump;       // 次のエリアにジャンプ出来るか
   int playerVisited; // プレイヤーが通ったか

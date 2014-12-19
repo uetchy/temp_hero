@@ -153,7 +153,11 @@ void gameLoop() {
 				hasText = 1;
 				player.hasKey = 1;
 				area[player.c_area][player.x][player.y].hasKey = 0;
-			} else if (area[player.c_area][player.x][player.y].canJump) {
+			} else if (area[player.c_area][player.x][player.y].hint != "") {
+				textFrame.println("ヒントを見つけた...\n");
+				textFrame.println(area[player.c_area][player.x][player.y].hint.c_str());
+				hasText = 1;
+			}else if (area[player.c_area][player.x][player.y].canJump) {
 				viewFrame.move(0, 0);
 				viewFrame.print(filledWith(viewFrame, "□"), 10);
 				player.c_area = 1;

@@ -13,14 +13,18 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 1 ][ 7 ][ 6 ].hasKey = 1;
 
   // Hint location
-  strcpy(area[ 0 ][ 3 ][ 6 ].hint, "this is a hint");
-  strcpy(area[ 0 ][ 0 ][ 6 ].hint, "this is a hint");
-  strcpy(area[ 0 ][ 5 ][ 2 ].hint, "this is a hint");
-  strcpy(area[ 0 ][ 7 ][ 7 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 2 ][ 3 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 3 ][ 0 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 7 ][ 5 ].hint, "this is a hint");
-  strcpy(area[ 1 ][ 7 ][ 7 ].hint, "Hidden Boss hint");
+  for ( int a=0; a < MAX_AREA; a++ )
+    for ( int x=0; x < MAX_WIDTH; x++ )
+      for ( int y=0; y < MAX_HEIGHT; y++ )
+        area[a][x][y].hint = "";
+  area[ 0 ][ 3 ][ 6 ].hint = "this is a hint";
+  area[ 0 ][ 0 ][ 6 ].hint = "this is a hint";
+  area[ 0 ][ 5 ][ 2 ].hint = "this is a hint";
+  area[ 0 ][ 7 ][ 7 ].hint = "this is a hint";
+  area[ 1 ][ 2 ][ 3 ].hint = "this is a hint";
+  area[ 1 ][ 3 ][ 0 ].hint = "this is a hint";
+  area[ 1 ][ 7 ][ 5 ].hint = "this is a hint";
+  area[ 1 ][ 7 ][ 7 ].hint = "Hidden Boss hint";
 
   // Stair location
   area[ 0 ][ 7 ][ 3 ].canJump = 1;

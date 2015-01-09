@@ -34,16 +34,17 @@ int battle(Player* player, int uniqueBossId) {
 		case 2: // Hidden boss
 		  monster_index = 11;
 		  break;
-		default:
+		default: // Zako
 		  monster_index = rand() % 10;
 		  break;
 	}
 
 	Monster monster = monsters[monster_index];
-	int enemyHP = monster.hp;
+
+	int monsterHP = monster.hp;
 
 	printw( "\nPrince HP: %d\n", player->hp );
-	printw( "%s HP: %d\n", monster.name, enemyHP );
+	printw( "%s HP: %d\n", monster.name, monsterHP );
 
 	while(1) {
 		clear();
@@ -100,10 +101,10 @@ int battle(Player* player, int uniqueBossId) {
 
 		} else if (input <= 4) {//攻撃すると宣言
 			// Playerは攻撃する
-			enemyHP -= playerAttack( player, &monster);
-			printw("雑魚HP %d \n", enemyHP);
+			monsterHP -= playerAttack( player, &monster);
+			printw("雑魚HP %d \n", monsterHP);
 			// Zakoを倒したかどうかのチェック
-			if ( enemyHP <= 0 ) {
+			if ( monsterHP <= 0 ) {
 				printw("ヒーロー勝利 \n");
 				player->hp =player->hp;
 				return EOB_PLAYER_WON;

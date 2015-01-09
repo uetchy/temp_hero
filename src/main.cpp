@@ -21,6 +21,8 @@ void gameOver();
 Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
 Player player;
 
+int encountGauge;
+
 int main( void ) {
 	// Set locale
 	// - これを指定しないとncursesが文字化けを引き起こす
@@ -45,8 +47,11 @@ int main( void ) {
 
 	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
 
+	encountGauge = 0;
+
 	refresh();
 
+	// Prepare title frame
 	Frame title_f(LINES-8, RFOrientation::TOP);
 	title_f.filledWith("□");
 	title_f.print( centerizedStrings(getTitle()), 50 );
@@ -89,17 +94,28 @@ int main( void ) {
 }
 
 void checkEncountGauge() {
+	encountGauge += 1;
 
+	if (encountGauge > 8) {
+		battle(&player, area[player.c_area][player.x][player.y].uniqueBossId);
+
+		encountGauge = 0;
+	}
 }
 
 // Game loop
 void gameLoop() {
-	int c;
-	Frame viewFrame(LINES-2, RFOrientation::TOP);
-	Frame textFrame(4, RFOrientation::BOTTOM);
-	Frame inventoryFrame(2, RFOrientation::TOP);
+	int c; // char
+
+	// Init frames
+	Frame viewFrame(LINES-2, RFOrientation::TOP   );
+	Frame textFrame(      4, RFOrientation::BOTTOM);
+	Frame inventoryFrame( 2, RFOrientation::TOP   );
 
 	int hasText = 0;
+	int plA = player.c_area;
+	int plX = player.x;
+	int plY = player.y;
 
 	renderMap(viewFrame, area, &player);
 	viewFrame.update();
@@ -144,9 +160,7 @@ void gameLoop() {
 		hasText = 0;
 
 		// Render view
-		if (c == 'b') {
-			battle(&player, area[player.c_area][player.x][player.y].uniqueBossId);
-		} else if (c == 'z') {
+		if (c == 'z') {
 			textFrame.clear();
 			if (area[player.c_area][player.x][player.y].hasKey) {
 				textFrame.println("キーを見つけた...!");
@@ -181,10 +195,18 @@ void gameLoop() {
 			inventoryFrame.update();
 		}
 
-		// checkEncountGauge(); // Zakoがいるなら戦闘
+		// 前回描画した時からプレイヤーは移動したか？
+		if (isPlayerMoved(plA, plX, plY, player.c_area, player.x, player.y)) {
+			// Zakoがいるなら戦闘
+			checkEncountGauge();
+		}
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか
 		// tryTakeKey(); // 鍵があるかどうか
+
+		plA = player.c_area;
+		plX = player.x;
+		plY = player.y;
 	}
 }
 

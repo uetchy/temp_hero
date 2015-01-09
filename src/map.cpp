@@ -356,9 +356,9 @@ int isValid(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], int a, int x, int y) {
 // Rendering map
 void renderMap(Frame target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player* player) {
   const int roomHeight = 9;
-  const int roomWidth = roomHeight*2.2; // Square room
-  const int mapCols = target.cols()/roomWidth;
-  const int mapLines  = target.lines()/roomHeight;
+  const int roomWidth  = roomHeight * 2.2; // Square room
+  const int mapCols    = target.cols()  / roomWidth;
+  const int mapLines   = target.lines() / roomHeight;
 
   WINDOW* view = target.getView();
 

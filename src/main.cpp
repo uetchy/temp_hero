@@ -191,6 +191,7 @@ void gameLoop() {
 				textFrame.println("ヒントを見つけた...\n");
 				textFrame.println(area[player.c_area][player.x][player.y].hint.c_str());
 				showedHint = 1;
+				showedNothingMessage = 1;
 				hasText = 1;
 			} else if (area[player.c_area][player.x][player.y].hasPotion && player.hasPotion) {
 				textFrame.println("ポーション見つけたが、持てない...");
@@ -214,6 +215,34 @@ void gameLoop() {
 				showedNothingMessage = 0;
 				hasText = 0;
 				showedHint = 0;
+			}
+		} else if (c == 's') {
+			textFrame.clear();
+			if (player.hasPotion) {
+				textFrame.println("ポーション使う...?");
+				textFrame.println("z = はい");
+				textFrame.println("x = いいえ");
+				while(1) {
+					c = getch();
+					if (c == 'z') {
+						textFrame.clear();
+						textFrame.println("ポーション使いました...");
+						textFrame.println("HP全回しました");
+						player.hp = 15;
+						hasText = 1;
+						player.hasPotion = 0;
+						break;
+					} else if (c == 'x'){
+						textFrame.clear();
+						textFrame.println("ポーション使うのをやめた...");
+						textFrame.println("HP全回しました、なんてウソです");
+						hasText = 1;
+						break;
+					}
+				}
+			} else if (!player.hasPotion) {
+				textFrame.println("ポーションない...");
+				hasText = 1;
 			}
 		}
 

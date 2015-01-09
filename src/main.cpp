@@ -22,6 +22,9 @@ Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
 Player player;
 
 int encountGauge;
+int plA;
+int plX;
+int plY;
 
 int main( void ) {
 	// Set locale
@@ -113,9 +116,9 @@ void gameLoop() {
 	Frame inventoryFrame( 2, RFOrientation::TOP   );
 
 	int hasText = 0;
-	int plA = player.c_area;
-	int plX = player.x;
-	int plY = player.y;
+	plA = player.c_area;
+	plX = player.x;
+	plY = player.y;
 
 	renderMap(viewFrame, area, &player);
 	viewFrame.update();

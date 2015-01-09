@@ -4,7 +4,7 @@
 #include <string>
 
 // Constants
-#define PERSON_NUM 100
+#define PERSON_NUM 3
 #define MAX_PLAYER_HP 15
 
 // Boss

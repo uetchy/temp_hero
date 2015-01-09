@@ -189,12 +189,12 @@ void gameLoop() {
 				textFrame.println("ヒントを見つけた...\n");
 				textFrame.println(area[player.c_area][player.x][player.y].hint.c_str());
 				hasText = 1;
-			} else if (area[player.c_area][player.x][player.y].hasPotion != "" && player.hasKey = 0) {
+			} else if (!area[player.c_area][player.x][player.y].hasPotion && !player.hasKey) {
 				textFrame.println("ポーション見つけた...!");
 				hasText = 1;
 				player.hasPotion = 1;
 				area[player.c_area][player.x][player.y].hasPotion = 0;
-			} else if (area[player.c_area][player.x][player.y].hasPotion != "" && player.hasKey = 1) {
+			} else if (!area[player.c_area][player.x][player.y].hasPotion && player.hasKey) {
 				textFrame.println("ポーション見つけたが、持てない...");
 				hasText = 1;
 			} else if (area[player.c_area][player.x][player.y].canJump) {

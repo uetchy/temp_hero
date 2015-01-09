@@ -32,33 +32,33 @@ struct Room {
   int uniqueBossId;  // 固有敵のインデックス（nullならいない）
   int hasPotion;     // ポーションが落ちているか
   int hasKey;        // 鍵が落ちているか？
-  std::string hint;    // ヒント内容（nullならヒント無し）
+  std::string hint;  // ヒント内容（nullならヒント無し）
   int doorInfo[4];   // ドア開通状態
   int canJump;       // 次のエリアにジャンプ出来るか
   int playerVisited; // プレイヤーが通ったか
 };
 
 struct Player {
-  int hp;               // HP
-  int hasKey;           // 鍵を持っているか？
-  int hasPotion;        // ポーションを持っているか？
-  int beatenBoss;       // ボスを倒したか？
-  int beatenHBoss;      // 裏ボスを倒したか？
-  int direction;        // 向き
-  int c_area;           // 今プレイヤーがいるエリア
-  int x;                // 現在地X
-  int y;                // 現在地Y
+  int hp;          // HP
+  int hasKey;      // 鍵を持っているか？
+  int hasPotion;   // ポーションを持っているか？
+  int beatenBoss;  // ボスを倒したか？
+  int beatenHBoss; // 裏ボスを倒したか？
+  int direction;   // 向き
+  int c_area;      // 今プレイヤーがいるエリア
+  int x;           // 現在地X
+  int y;           // 現在地Y
 };
 
 struct Monster { // _person がタグ名
-  char name[100];    // 文字配列型のメンバ name
+  char name[100]; // 文字配列型のメンバ name
   int hp;
   int power;
-  char point1[100]; //wpは攻撃部位
+  char point1[100]; // wpは攻撃部位
   char point2[100];
   char point3[100];
   char point4[100];
-  int wp;           //wpは弱点部位のインデックスを示す　
+  int wp; // wpは弱点部位のインデックスを示す　
 };
 
 #endif

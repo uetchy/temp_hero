@@ -176,11 +176,9 @@ void Frame::move(int y, int x) {
 void Frame::println( const char* format, ... ) {
   va_list args;
   va_start( args, format );
-
   wprintw( inlinescr, format, args );
-  update();
-
   va_end(args);
+  update();
 }
 
 void Frame::print( const std::vector<std::string> strings, int delayMsec ) {

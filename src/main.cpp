@@ -120,6 +120,12 @@ void renderInventory(Frame inventoryFrame, Player player) {
 	inventoryFrame.update();
 }
 
+void renderStatus(Frame statusFrame, Player player) {
+	statusFrame.clear();
+	wprintw(statusFrame.getView(), "HP: %d/15", player.hp);
+	statusFrame.update();
+}
+
 // Game loop
 void gameLoop() {
 	int c; // char
@@ -127,7 +133,8 @@ void gameLoop() {
 	// Init frames
 	Frame viewFrame(COLS-2, LINES-2, RFOrientation::TOP_LEFT);
 	Frame textFrame(COLS-2,       4, RFOrientation::BOTTOM_LEFT);
-	Frame inventoryFrame(18,  4, RFOrientation::TOP_RIGHT);
+	Frame inventoryFrame(18,  4, RFOrientation::BOTTOM_RIGHT);
+	Frame statusFrame(15,  4, RFOrientation::TOP_RIGHT);
 
 	int hasText = 0;
 	int showedHint = 0;
@@ -139,6 +146,7 @@ void gameLoop() {
 	renderMap(viewFrame, area, &player);
 	viewFrame.update();
 	renderInventory(inventoryFrame, player);
+	renderStatus(statusFrame, player);
 
 	while(1) {
 		c = getch();
@@ -253,6 +261,7 @@ void gameLoop() {
 		if (hasText) textFrame.update();
 
 		renderInventory(inventoryFrame, player);
+		renderStatus(statusFrame, player);
 
 		// 前回描画した時からプレイヤーは移動したか？
 		if (isPlayerMoved(plA, plX, plY, player.c_area, player.x, player.y)) {

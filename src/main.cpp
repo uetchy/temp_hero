@@ -130,6 +130,8 @@ void gameLoop() {
 	Frame inventoryFrame(18,  4, RFOrientation::TOP_RIGHT);
 
 	int hasText = 0;
+	int showedHint = 0;
+	int showedNothingMessage = 0;
 	plA = player.c_area;
 	plX = player.x;
 	plY = player.y;
@@ -185,27 +187,33 @@ void gameLoop() {
 				hasText = 1;
 				player.hasKey = 1;
 				area[player.c_area][player.x][player.y].hasKey = 0;
-			} else if (area[player.c_area][player.x][player.y].hint != "") {
+			} else if (area[player.c_area][player.x][player.y].hint != "" && !showedHint) {
 				textFrame.println("ヒントを見つけた...\n");
 				textFrame.println(area[player.c_area][player.x][player.y].hint.c_str());
+				showedHint = 1;
 				hasText = 1;
-			} else if (!area[player.c_area][player.x][player.y].hasPotion && !player.hasKey) {
+			} else if (area[player.c_area][player.x][player.y].hasPotion && player.hasPotion) {
+				textFrame.println("ポーション見つけたが、持てない...");
+				hasText = 1;
+			} else if (area[player.c_area][player.x][player.y].hasPotion) {
 				textFrame.println("ポーション見つけた...!");
 				hasText = 1;
 				player.hasPotion = 1;
 				area[player.c_area][player.x][player.y].hasPotion = 0;
-			} else if (!area[player.c_area][player.x][player.y].hasPotion && player.hasKey) {
-				textFrame.println("ポーション見つけたが、持てない...");
-				hasText = 1;
 			} else if (area[player.c_area][player.x][player.y].canJump) {
 				viewFrame.move(0, 0);
 				viewFrame.print(filledWith(viewFrame, "□"), 10);
 				player.c_area = 1;
 				player.x = 7;
 				player.y = 2;
-			} else {
+			} else if (!showedNothingMessage) {
 				textFrame.println("何も無いようだ...");
+				showedNothingMessage = 1;
 				hasText = 1;
+			} else {
+				showedNothingMessage = 0;
+				hasText = 0;
+				showedHint = 0;
 			}
 		}
 

@@ -13,8 +13,10 @@
 // Struct
 
 struct RFOrientation {
-  static const int TOP;
-  static const int BOTTOM;
+  static const int TOP_LEFT;
+  static const int TOP_RIGHT;
+  static const int BOTTOM_LEFT;
+  static const int BOTTOM_RIGHT;
 };
 
 struct Border {
@@ -51,7 +53,7 @@ private:
   int getRow();
   int getCols();
 public:
-  Frame(int inline_row, int orientation);
+  Frame(int inline_cols, int inline_row, int orientation);
   void destroy();
   WINDOW* getView();
   int cols();

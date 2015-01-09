@@ -55,18 +55,19 @@ int main( void ) {
 	refresh();
 
 	// Prepare title frame
-	Frame title_f(LINES-8, RFOrientation::TOP);
+	Frame title_f(COLS-2, LINES-8, RFOrientation::TOP_LEFT);
 	title_f.filledWith("□");
 	title_f.print( centerizedStrings(getTitle()), 50 );
 
 	// Prepare selection frame
-	Frame choices_f(4, RFOrientation::BOTTOM);
+	Frame choices_f(COLS-2, 4, RFOrientation::BOTTOM_LEFT);
 	choices_f.println( "Press key to select menu.\n");
 	choices_f.println("[1] START GAME\n");
 	choices_f.println("[2] SHOW RULES\n");
 	choices_f.println("[3] ルールを見る\n");
 
-	player.hasKey = 1;
+	// TODO: Debug
+	// player.hasKey = 1;
 
   while (1) {
 		// Wait for input
@@ -106,14 +107,27 @@ void checkEncountGauge() {
 	}
 }
 
+void renderInventory(Frame inventoryFrame, Player player) {
+	inventoryFrame.clear();
+	inventoryFrame.println("持ち物\n");
+	inventoryFrame.println("=============\n");
+	if (player.hasKey) {
+		inventoryFrame.println("🔑   キー\n");
+	}
+	if (player.hasPotion) {
+		inventoryFrame.println("💉   ポーション");
+	}
+	inventoryFrame.update();
+}
+
 // Game loop
 void gameLoop() {
 	int c; // char
 
 	// Init frames
-	Frame viewFrame(LINES-2, RFOrientation::TOP   );
-	Frame textFrame(      4, RFOrientation::BOTTOM);
-	Frame inventoryFrame( 2, RFOrientation::TOP   );
+	Frame viewFrame(COLS-2, LINES-2, RFOrientation::TOP_LEFT);
+	Frame textFrame(COLS-2,       4, RFOrientation::BOTTOM_LEFT);
+	Frame inventoryFrame(18,  4, RFOrientation::TOP_RIGHT);
 
 	int hasText = 0;
 	plA = player.c_area;
@@ -122,6 +136,7 @@ void gameLoop() {
 
 	renderMap(viewFrame, area, &player);
 	viewFrame.update();
+	renderInventory(inventoryFrame, player);
 
 	while(1) {
 		c = getch();
@@ -192,11 +207,7 @@ void gameLoop() {
 		viewFrame.update();
 		if (hasText) textFrame.update();
 
-		if (player.hasKey) {
-			inventoryFrame.clear();
-			inventoryFrame.println("🔑");
-			inventoryFrame.update();
-		}
+		renderInventory(inventoryFrame, player);
 
 		// 前回描画した時からプレイヤーは移動したか？
 		if (isPlayerMoved(plA, plX, plY, player.c_area, player.x, player.y)) {

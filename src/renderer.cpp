@@ -1,7 +1,9 @@
 #include "renderer.hpp"
 
-const int RFOrientation::TOP    = 0;
-const int RFOrientation::BOTTOM = 1;
+const int RFOrientation::TOP_LEFT     = 0;
+const int RFOrientation::TOP_RIGHT    = 1;
+const int RFOrientation::BOTTOM_LEFT  = 2;
+const int RFOrientation::BOTTOM_RIGHT = 3;
 
 std::vector<std::string> filledWith(Frame frame, const char* str) {
   std::vector<std::string> strings;
@@ -49,19 +51,27 @@ std::string seqStr(int width, std::string start, std::string mid, std::string en
 }
 
 // Frame class
-Frame::Frame(int inline_row, int orientation) {
+Frame::Frame(int inline_cols, int inline_row, int orientation) {
   // Define frame val
   this->frameInfo.row  = inline_row + 2;
-  this->frameInfo.cols = COLS;
+  this->frameInfo.cols = inline_cols + 2;
   this->orientation = orientation;
 
   switch(orientation) {
-    case RFOrientation::TOP:
+    case RFOrientation::TOP_LEFT:
       this->frameInfo.absoluteX = 0;
       this->frameInfo.absoluteY = 0;
       break;
-    case RFOrientation::BOTTOM:
+    case RFOrientation::TOP_RIGHT:
+      this->frameInfo.absoluteX = COLS - this->frameInfo.cols;
+      this->frameInfo.absoluteY = 0;
+      break;
+    case RFOrientation::BOTTOM_LEFT:
       this->frameInfo.absoluteX = 0;
+      this->frameInfo.absoluteY = LINES - this->frameInfo.row;
+      break;
+    case RFOrientation::BOTTOM_RIGHT:
+      this->frameInfo.absoluteX = COLS - this->frameInfo.cols;
       this->frameInfo.absoluteY = LINES - this->frameInfo.row;
       break;
   }
@@ -79,7 +89,7 @@ Frame::Frame(int inline_row, int orientation) {
   this->inlineFrameInfo.absoluteX = this->frameInfo.absoluteX + 2;
   this->inlineFrameInfo.absoluteY = this->frameInfo.absoluteY + 1;
   this->inlineFrameInfo.row       = inline_row;
-  this->inlineFrameInfo.cols      = COLS - 4;
+  this->inlineFrameInfo.cols      = inline_cols - 4;
   renderBorder();
 
   // Create inline frame

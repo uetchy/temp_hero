@@ -428,6 +428,10 @@ void renderMap(Frame target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player*
         mvwprintw(view, mapY+1, mapX+roomWidth/2, "🔑");
       }
 
+      if (room.hasPotion) {
+        mvwprintw(view, mapY+1, mapX+roomWidth/2, "💉");
+      }
+
       // Player graphic
       if (positionToEquals(player, areaX, areaY)) {
         mvwprintw(view, mapY+roomHeight/2, mapX+roomWidth/2, "👳");

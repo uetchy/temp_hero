@@ -39,7 +39,7 @@ int battle(Player* player, int uniqueBossId) {
 		  monster_index = 1;
 		  break;
 		default: // Zako
-		  monster_index = rand() * 10 + 2;
+		  monster_index = rand() % 10 + 2;
 		  break;
 	}
 

@@ -11,23 +11,28 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
 
   // Key location
   area[ 0 ][ 1 ][ 2 ].hasKey = 1;
-  area[ 1 ][ 7 ][ 0 ].hasKey = 1;
+  area[ 1 ][ 3 ][ 0 ].hasKey = 1;
 
   // Hint location
   for ( int a=0; a < MAX_AREA; a++ )
     for ( int x=0; x < MAX_WIDTH; x++ )
       for ( int y=0; y < MAX_HEIGHT; y++ )
         area[a][x][y].hint = "";
-  area[ 0 ][ 3 ][ 6 ].hint = "あ、もうオシマイだ。。。by.冒険者I";
+  area[ 0 ][ 3 ][ 6 ].hint = "あ、もうオシマイだ。。。by.冒険者Y";
   area[ 0 ][ 0 ][ 6 ].hint = "このダンジョンのボスは１つではない";
   area[ 0 ][ 2 ][ 5 ].hint = "おなか減った。by.冒険者A";
+  area[ 0 ][ 3 ][ 4 ].hint = "エイリアンのアンテナは鉄からできた";
+  area[ 0 ][ 5 ][ 5 ].hint = "ドリアンって意外においしい？by.冒険者I";
   area[ 0 ][ 5 ][ 2 ].hint = "ウサギの弱点は耳ではない";
   area[ 0 ][ 1 ][ 4 ].hint = "オレ、プログラム嫌いになった by.UE様";
   area[ 0 ][ 7 ][ 7 ].hint = "コウモリは鼻に弱い";
-  area[ 1 ][ 2 ][ 3 ].hint = "ボスはピンタが嫌い";
-  area[ 1 ][ 3 ][ 0 ].hint = "裏ボスの尻尾は柔らかいが欠が固い";
-  area[ 1 ][ 7 ][ 5 ].hint = "ゴキブリ。。。潰せ‼‼‼";
-  area[ 1 ][ 7 ][ 7 ].hint = "Hidden Boss hint";
+  area[ 1 ][ 3 ][ 4 ].hint = "裏ボスの名前ってピコちゃんだったっけ。。by.冒険者M";
+  area[ 1 ][ 1 ][ 5 ].hint = "ヒントないよ‼‼　by.冒険者A";
+  area[ 1 ][ 4 ][ 3 ].hint = "クモって足多いから切っても無駄だよ";
+  area[ 1 ][ 3 ][ 1 ].hint = "ボスの頭と足は恐ろしいほど固い";
+  area[ 1 ][ 5 ][ 3 ].hint = "裏ボスを倒したらいいことある。。。かも。。";
+  area[ 1 ][ 5 ][ 6 ].hint = "ゴキブリ。。。潰せ‼‼‼";
+  area[ 1 ][ 7 ][ 0 ].hint = "裏ボスはピンタが大嫌いらしい";
 
   // Stair location
   area[ 0 ][ 7 ][ 3 ].canJump = 1;

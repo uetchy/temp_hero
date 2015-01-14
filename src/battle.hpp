@@ -10,6 +10,12 @@
 #include "define.hpp"
 #include "renderer.hpp"
 
+// PlayerとZakoの戦闘結果
+#define EOB_IN_BATTLE 0
+#define EOB_PLAYER_WON 1
+#define EOB_PLAYER_LOST 2
+#define EOB_PLAYER_BEATEN_BOSS 3
+
 struct Monster { // _person がタグ名
   char name[100]; // 文字配列型のメンバ name
   int hp;

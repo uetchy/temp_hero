@@ -38,8 +38,12 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   area[ 0 ][ 7 ][ 3 ].canJump = 1;
 
   // Unique boss location
-  area[ 1 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
-  area[ 1 ][ 0 ][ 5 ].uniqueBossId = 0; // Boss
+  for ( int a=0; a < MAX_AREA; a++ )
+    for ( int x=0; x < MAX_WIDTH; x++ )
+      for ( int y=0; y < MAX_HEIGHT; y++ )
+        area[a][x][y].uniqueBossId = -1;
+  area[ 0 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
+  area[ 1 ][ 7 ][ 7 ].uniqueBossId = 0; // Boss
 
   // Player visited
   for ( int a=0; a < MAX_AREA; a++ )

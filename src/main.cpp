@@ -15,11 +15,12 @@
 
 // Prototypes
 void gameLoop();
-void gameOver();
+void gameOver(Frame* frame);
+void gameWon(Frame* frame);
 
 void renderInventory(Frame* inventoryFrame, Player* player);
 void renderStatus(Frame* frame, Player* player);
-void checkEncountGauge(Frame* viewFrame, Frame* inventoryFrame, Frame* statusFrame);
+int checkEncountGauge(Frame* viewFrame, Frame* inventoryFrame, Frame* statusFrame);
 
 // Initialize variables
 Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
@@ -70,19 +71,17 @@ int main( void ) {
 	choices_f.println("[2] SHOW RULES\n");
 	choices_f.println("[3] ルールを見る\n");
 
-	// TODO: Debug
-	// player.hasKey = 1;
-
   while (1) {
 		// Wait for input
 	  c = getch();
 
 		if (c == '1'){ // Start game
-			title_f.destroy();
 			clear();
 			refresh();
 			gameLoop();
-		  break;
+			title_f.clear();
+			title_f.filledWith("□");
+			title_f.print( centerizedStrings(getTitle()), 50 );
 		} else if(c == '2'){ // Show rules
 			title_f.clear();
 			title_f.print( getRulesEN(), 70 );
@@ -101,19 +100,27 @@ int main( void ) {
 	return 0;
 }
 
-void checkEncountGauge(Frame* frame, Frame* inventoryFrame, Frame* statusFrame) {
+int battleSequence(Frame* frame) {
+	frame->move(0, 0);
+	frame->print(filledWith(*frame, "□"), 15);
+	int eob = battle(&player, area[player.c_area][player.x][player.y].uniqueBossId);
+	return eob;
+}
+
+int checkEncountGauge(Frame* frame, Frame* inventoryFrame, Frame* statusFrame) {
 	encountGauge += 1;
 
 	if (encountGauge > 8) {
-		frame->move(0, 0);
-		frame->print(filledWith(*frame, "□"), 15);
-		battle(&player, area[player.c_area][player.x][player.y].uniqueBossId);
+		int eob = battleSequence(frame);
 		encountGauge = 0;
 		renderMap(*frame, area, &player);
 		frame->update();
 		renderInventory(inventoryFrame, &player);
 		renderStatus(statusFrame, &player);
+		return eob;
 	}
+
+	return -1;
 }
 
 void renderInventory(Frame* frame, Player* player) {
@@ -183,6 +190,11 @@ void gameLoop() {
 				if (player.direction == D_DOWN) {
 					player.y = player.y + 1;
 				}
+			} else if (isValid(area, player.c_area, player.y + 1, player.y) &&
+								 area[player.c_area][player.x][player.y].doorInfo[D_DOWN] == DC_LOCKED &&
+								 player.hasKey) {
+				area[player.c_area][player.x][player.y].doorInfo[D_DOWN] = DC_OPEN;
+				player.hasKey = 0;
 			}
 			player.direction = D_DOWN;
 		} else if (c == KEY_LEFT){
@@ -275,11 +287,24 @@ void gameLoop() {
 		// 前回描画した時からプレイヤーは移動したか？
 		if (isPlayerMoved(plA, plX, plY, player.c_area, player.x, player.y)) {
 			// Zakoがいるなら戦闘
-			checkEncountGauge(&viewFrame, &inventoryFrame, &statusFrame);
+			int eob = checkEncountGauge(&viewFrame, &inventoryFrame, &statusFrame);
+			if (eob == EOB_PLAYER_LOST) {
+				gameOver(&viewFrame);
+				return;
+			}
 		}
-		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
-		// tryReadHint(); // ヒントあるかどうか
-		// tryTakeKey(); // 鍵があるかどうか
+
+		// 特殊ボス会敵
+		if (area[player.c_area][player.x][player.y].uniqueBossId > -1) {
+			int eob = battleSequence(&viewFrame);
+			if (eob == EOB_PLAYER_LOST) {
+				gameOver(&viewFrame);
+				return;
+			} else if (eob == EOB_PLAYER_BEATEN_BOSS) {
+				gameWon(&viewFrame);
+				return;
+			}
+		}
 
 		plA = player.c_area;
 		plX = player.x;
@@ -288,10 +313,34 @@ void gameLoop() {
 }
 
 // Gameover
-void gameOver() {
-	printf( "*************\n" );
-	printf( "* GAME OVER *\n" );
-	printf( "*************\n\n" );
+void gameOver(Frame* frame) {
+	frame->clear();
+	std::vector<std::string> str = {
+		"\n",
+		"\n",
+		"\n",
+		"*************\n",
+		"* GAME OVER *\n",
+		"*************\n"
+	};
+	frame->print(centerizedStrings(str));
+	frame->update();
+	getch();
+}
+
+void gameWon(Frame* frame) {
+	frame->clear();
+	std::vector<std::string> str = {
+		"\n",
+		"\n",
+		"\n",
+		"*************\n",
+		"* GAME WON! *\n",
+		"*************\n"
+	};
+	frame->print(centerizedStrings(str));
+	frame->update();
+	getch();
 }
 
 void signal_handler(int SIG){

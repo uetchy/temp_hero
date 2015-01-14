@@ -17,6 +17,10 @@
 void gameLoop();
 void gameOver();
 
+void renderInventory(Frame* inventoryFrame, Player* player);
+void renderStatus(Frame* frame, Player* player);
+void checkEncountGauge(Frame* viewFrame, Frame* inventoryFrame, Frame* statusFrame);
+
 // Initialize variables
 Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT];
 Player player;
@@ -97,33 +101,38 @@ int main( void ) {
 	return 0;
 }
 
-void checkEncountGauge() {
+void checkEncountGauge(Frame* frame, Frame* inventoryFrame, Frame* statusFrame) {
 	encountGauge += 1;
 
 	if (encountGauge > 8) {
+		frame->move(0, 0);
+		frame->print(filledWith(*frame, "□"), 15);
 		battle(&player, area[player.c_area][player.x][player.y].uniqueBossId);
-
 		encountGauge = 0;
+		renderMap(*frame, area, &player);
+		frame->update();
+		renderInventory(inventoryFrame, &player);
+		renderStatus(statusFrame, &player);
 	}
 }
 
-void renderInventory(Frame inventoryFrame, Player player) {
-	inventoryFrame.clear();
-	inventoryFrame.println("持ち物\n");
-	inventoryFrame.println("=============\n");
-	if (player.hasKey) {
-		inventoryFrame.println("🔑   キー\n");
+void renderInventory(Frame* frame, Player* player) {
+	frame->clear();
+	frame->println("持ち物\n");
+	frame->println("=============\n");
+	if (player->hasKey) {
+		frame->println("🔑   キー\n");
 	}
-	if (player.hasPotion) {
-		inventoryFrame.println("💉   ポーション");
+	if (player->hasPotion) {
+		frame->println("💉   ポーション");
 	}
-	inventoryFrame.update();
+	frame->update();
 }
 
-void renderStatus(Frame statusFrame, Player player) {
-	statusFrame.clear();
-	wprintw(statusFrame.getView(), "HP: %d/15", player.hp);
-	statusFrame.update();
+void renderStatus(Frame* frame, Player* player) {
+	frame->clear();
+	wprintw(frame->getView(), "HP: %d/15", player->hp);
+	frame->update();
 }
 
 // Game loop
@@ -132,9 +141,9 @@ void gameLoop() {
 
 	// Init frames
 	Frame viewFrame(COLS-2, LINES-2, RFOrientation::TOP_LEFT);
-	Frame textFrame(COLS-2,       4, RFOrientation::BOTTOM_LEFT);
-	Frame inventoryFrame(18,  4, RFOrientation::BOTTOM_RIGHT);
-	Frame statusFrame(15,  4, RFOrientation::TOP_RIGHT);
+	Frame textFrame(COLS-2, 4, RFOrientation::BOTTOM_LEFT);
+	Frame inventoryFrame(18, 4, RFOrientation::BOTTOM_RIGHT);
+	Frame statusFrame(15, 4, RFOrientation::TOP_RIGHT);
 
 	int hasText = 0;
 	int showedHint = 0;
@@ -145,8 +154,8 @@ void gameLoop() {
 
 	renderMap(viewFrame, area, &player);
 	viewFrame.update();
-	renderInventory(inventoryFrame, player);
-	renderStatus(statusFrame, player);
+	renderInventory(&inventoryFrame, &player);
+	renderStatus(&statusFrame, &player);
 
 	while(1) {
 		c = getch();
@@ -260,13 +269,13 @@ void gameLoop() {
 		viewFrame.update();
 		if (hasText) textFrame.update();
 
-		renderInventory(inventoryFrame, player);
-		renderStatus(statusFrame, player);
+		renderInventory(&inventoryFrame, &player);
+		renderStatus(&statusFrame, &player);
 
 		// 前回描画した時からプレイヤーは移動したか？
 		if (isPlayerMoved(plA, plX, plY, player.c_area, player.x, player.y)) {
 			// Zakoがいるなら戦闘
-			checkEncountGauge();
+			checkEncountGauge(&viewFrame, &inventoryFrame, &statusFrame);
 		}
 		// tryDrinkPotion(); // ポーションがあるか、使うかのチェック
 		// tryReadHint(); // ヒントあるかどうか

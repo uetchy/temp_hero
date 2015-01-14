@@ -20,16 +20,19 @@ Monster monsters[PERSON_NUM] = {
 };
 
 int weakpoint;
+int input;
+char c;
+// int monsterHP;
 
-// Prototypes
-int playerAttack( Player*, Monster* );
-int enemyAttack( Monster* );
+void printChoices(Frame* frame) {
+	frame->println("[a] 攻撃\n");
+	frame->println("[s] ポーションを使う");
+	frame->update();
+}
 
 // １回のPlayerとZakoの戦闘シミュレーション
 // 戦闘の終了のＨＰを呼び出された関数に伝えるためにポインタplayer->hpを使用
 int battle(Player* player, int uniqueBossId) {
-	Frame battleFrame(COLS-2, LINES-2, RFOrientation::TOP_LEFT);
-
 	int monster_index;
 	switch ( uniqueBossId ) {
 		case 1: // Boss
@@ -44,92 +47,126 @@ int battle(Player* player, int uniqueBossId) {
 	}
 
 	Monster monster = monsters[monster_index];
+	// monsterHP = monster.hp;
 
-	int monsterHP = monster.hp;
-	int input;
-	char c;
+	Frame battleFrame(COLS-2, LINES-2, RFOrientation::TOP_LEFT);
+	Frame battleTextFrame(COLS-2, 4, RFOrientation::BOTTOM_LEFT);
+
+	battleTextFrame.clear();
+	wprintw(battleTextFrame.getView(), "%s があらわれた！ [HP: %d]\n\n", monster.name, monster.hp);
+	printChoices(&battleTextFrame);
 
 	while(1) {
-		battleFrame.clear();
+		// Wait for input
+	  c = getch();
 
-		if ( player->hasPotion ) {
-			battleFrame.println("ポーションを保持している\n");
+	  if (c == 'a'){ // Attack
+			battleTextFrame.clear();
+			int eob = attack(&battleTextFrame, &battleFrame, player, &monster, (int)(c - '0'));
+		  break;
+		} else if(c == 's'){ // Potion
+			battleTextFrame.clear();
+			usePotion(&battleTextFrame, player);
+			printChoices(&battleTextFrame);
 		}
 
-		battleFrame.println("どの部位を攻撃しますか？ \n");
-		wprintw(battleFrame.getView(), "%s :1 \n", monster.point1);
-		wprintw(battleFrame.getView(), "%s :2 \n", monster.point2);
-
-		// 部位は最低2個なので3個以上は判定が必要
-		// atoi: char -> int converter
-		if (1 != atoi(monster.point3)) {
-			wprintw(battleFrame.getView(), "%s :3 \n", monster.point3);
-		}
-		if (1 != atoi(monster.point4)) {
-			wprintw(battleFrame.getView(), "%s :4 \n", monster.point4);
-		}
-
-		//プレイヤーがどこを攻撃するか決める　数字が入力される。
-		battleFrame.println("数値を入力して下さい：");
-		c = getch();
-		input = (int)(c - '0');
-		battleFrame.println("入力された数値は %d です\n", input);
-
-		// 入力された値が弱点か弱点ではないか判断
-		if (input == monster.wp) {
-			weakpoint = 1;
-		} else if (input <= 4) {
-			weakpoint = 0;
-		}
-
-		// ポーションを使うと宣言
-		if ( !input && player->hasPotion) {
-			player->hp += 10;
-			player->hasPotion = 0;
-			if (player->hp >= MAX_PLAYER_HP) {
-				player->hp = MAX_PLAYER_HP;
-			}
-			battleFrame.println("へーローHP %d \n", player->hp);
-			player->hp -= enemyAttack(&monster);
-			battleFrame.println("へーローHP %d \n", player->hp);
-			// Playerが死んだかどうかのチェック
-			if ( player->hp <= 0 ) {
-				battleFrame.println("%s 勝利 \n", monster.name);
-				return EOB_PLAYER_LOST;
-			}
-
-		} else if (input <= 4) {//攻撃すると宣言
-			// Playerは攻撃する
-			monsterHP -= playerAttack( player, &monster);
-			battleFrame.println("雑魚HP %d \n", monsterHP);
-			// Zakoを倒したかどうかのチェック
-			if ( monsterHP <= 0 ) {
-				battleFrame.println("ヒーロー勝利 \n");
-				player->hp =player->hp;
-				return EOB_PLAYER_WON;
-			}
-
-			// Zakoは反撃する
-			player->hp -= enemyAttack(&monster);
-			battleFrame.println("へーローHP %d \n",player->hp);
-			// Playerが死んだかどうかのチェック
-			if ( player->hp <= 0 ) {
-				battleFrame.println("雑魚勝利 \n");
-				return EOB_PLAYER_LOST;
-			}
-		} else if (input > 4) {//それ以外の数字が入力された
-			battleFrame.println("入力の数字が間違っています。 \n");
-		}
-
-		refresh();
+		battleTextFrame.update();
 	}
 
 	return EXIT_SUCCESS;
 }
 
-// Player attack func
-int playerAttack(Player* player, Monster* monster){
-	// 攻撃のダメージ
+void printPartChoices(Frame* frame, Monster* monster) {
+	frame->println("どの部位を攻撃する？\n");
+	wprintw(frame->getView(), "[1] %s   [2] %s", monster->point1, monster->point2);
+
+	// 部位は最低2個なので3個以上は判定が必要
+	if (1 != atoi(monster->point3)) {
+		wprintw(frame->getView(), "   [3] %s", monster->point3);
+	}
+	if (1 != atoi(monster->point4)) {
+		wprintw(frame->getView(), "   [4] %s\n", monster->point4);
+	} else {
+		frame->println("\n");
+	}
+}
+
+int attack(Frame* textFrame, Frame* viewFrame, Player* player, Monster* monster, int input) {
+	wprintw(textFrame->getView(), "%s [HP: %d]\n\n", monster->name, monster->hp);
+	printPartChoices(textFrame, monster);
+	textFrame->update();
+
+	while(1) {
+		c = getch();
+		input = (c - '0') % 48;
+
+		// 入力された値が弱点か弱点ではないか判断
+		if (input == monster->wp) {
+			weakpoint = 1;
+		} else if (input <= 4) {
+			weakpoint = 0;
+		}
+
+		textFrame->clear();
+
+		// Playerの攻撃
+		int damage = computeDamage(player);
+		int prevMonsterHP = monster->hp;
+		monster->hp -= damage;
+		wprintw(textFrame->getView(), "%s に %d のダメージを与えた! [モンスターHP: %d -> %d] \n", monster->name, damage, prevMonsterHP, monster->hp);
+		textFrame->update();
+		getch();
+
+		// Enemyが死んだかどうかのチェック
+		if (monster->hp <= 0) {
+			wprintw(textFrame->getView(), "%s を打ち倒した!\n", monster->name);
+			textFrame->update();
+			getch();
+			return EOB_PLAYER_WON;
+		}
+
+		// Enemyの反撃
+		int prevHP = player->hp;
+		player->hp -= monster->power;
+		wprintw(textFrame->getView(), "勇者は %d のダメージを受けた... [HP: %d -> %d] \n", monster->power, prevHP, player->hp);
+
+		// Playerが死んだかどうかのチェック
+		if (player->hp <= 0) {
+			textFrame->println("負けた...\n");
+			textFrame->update();
+			getch();
+			return EOB_PLAYER_LOST;
+		}
+
+		textFrame->update();
+		getch();
+
+		textFrame->clear();
+		wprintw(textFrame->getView(), "%s [HP: %d]\n\n", monster->name, monster->hp);
+		printPartChoices(textFrame, monster);
+		textFrame->update();
+	}
+
+	return 0;
+}
+
+void usePotion(Frame* frame, Player* player) {
+	if (player->hasPotion) {
+		int prevHP = player->hp;
+		player->hp += 10;
+		if (player->hp >= MAX_PLAYER_HP) {
+			player->hp = MAX_PLAYER_HP;
+		}
+
+		player->hasPotion = 0;
+
+		wprintw(frame->getView(), "勇者はポーションを使った! [HP: %d -> %d]\n\n", prevHP, player->hp);
+	} else {
+		frame->println("ポーションを持ってない\n\n");
+	}
+}
+
+int computeDamage(Player* player) {
 	int damage = 1;
 
 	// 刀があると攻撃力アップ
@@ -140,14 +177,5 @@ int playerAttack(Player* player, Monster* monster){
 		damage = damage * 2;
 	}
 
-	printw("へーローの攻撃  %dダメージ \n", damage);
-
-	return damage;
-}
-
-// Enemy attack func
-int enemyAttack(Monster* monster) {
-	int damage = monster->power;
-	printw("%s の攻撃  %dダメージ \n", monster->name, damage);
 	return damage;
 }

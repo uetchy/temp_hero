@@ -369,8 +369,9 @@ void renderMap(Frame target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player*
   const int mapLines   = target.lines() / roomHeight;
 
   WINDOW* view = target.getView();
-
   target.clear();
+  target.move(0, 0);
+  target.print(filledWith(target, "."));
 
   for (int i=0; i < mapCols; i++) {
     for (int j=0; j < mapLines; j++) {
@@ -383,10 +384,11 @@ void renderMap(Frame target, Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT], Player*
 
       // Check is invalid
       if (!isValid(area, player->c_area, areaX, areaY) || !room.playerVisited) {
-        for (int i=0; i < roomHeight; i++) {
-          mvwprintw(view, mapY+i, mapX, seqStr(roomWidth, ".", ".", ".").c_str());
-        }
         continue;
+      }
+
+      for (int i=0; i < roomHeight; i++) {
+        mvwprintw(view, mapY+i, mapX, seqStr(roomWidth, " ", " ", " ").c_str());
       }
 
       // Render room

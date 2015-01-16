@@ -31,6 +31,13 @@ int plA;
 int plX;
 int plY;
 
+void initAll() {
+	initMap(area);
+	initPlayer(&player);
+	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
+	encountGauge = 0;
+}
+
 int main( void ) {
 	// Set locale
 	// - これを指定しないとncursesが文字化けを引き起こす
@@ -50,12 +57,7 @@ int main( void ) {
 	char c;
 
 	// Initialize
-	initMap(area);
-	initPlayer(&player);
-
-	area[ player.c_area ][ player.x ][ player.y ].playerVisited = 1;
-
-	encountGauge = 0;
+	initAll();
 
 	refresh();
 
@@ -79,6 +81,7 @@ int main( void ) {
 			clear();
 			refresh();
 			gameLoop();
+			initAll();
 			title_f.clear();
 			title_f.filledWith("□");
 			title_f.print( centerizedStrings(getTitle()), 50 );

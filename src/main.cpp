@@ -295,7 +295,16 @@ void gameLoop() {
 		}
 
 		// 特殊ボス会敵
-		if (area[player.c_area][player.x][player.y].uniqueBossId > -1) {
+		if (area[player.c_area][player.x][player.y].uniqueBossId == 1 && !player.beatenHBoss) {
+			int eob = battleSequence(&viewFrame);
+			if (eob == EOB_PLAYER_LOST) {
+				gameOver(&viewFrame);
+				return;
+			} else if (eob == EOB_PLAYER_BEATEN_BOSS) {
+				gameWon(&viewFrame);
+				return;
+			}
+		} else if (area[player.c_area][player.x][player.y].uniqueBossId == 0) {
 			int eob = battleSequence(&viewFrame);
 			if (eob == EOB_PLAYER_LOST) {
 				gameOver(&viewFrame);

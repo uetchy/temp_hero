@@ -1,5 +1,7 @@
 #include "map.hpp"
 
+int hbosss = 0;
+
 void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
   // Potion location
   area[ 0 ][ 2 ][ 4 ].hasPotion = 1;
@@ -44,7 +46,9 @@ void initMap(Room area[MAX_AREA][MAX_WIDTH][MAX_HEIGHT]) {
         area[a][x][y].uniqueBossId = -1;
   area[ 0 ][ 7 ][ 7 ].uniqueBossId = 1; // Hidden-boos
   area[ 1 ][ 7 ][ 7 ].uniqueBossId = 0; // Boss
-
+if(player->beatenHBoss == 1){
+  area[ 0 ][ 7 ][ 7 ].uniqueBossId = 100;
+};
   // Player visited
   for ( int a=0; a < MAX_AREA; a++ )
     for ( int x=0; x < MAX_WIDTH; x++ )
